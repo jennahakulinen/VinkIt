@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Button,
   CircularProgress,
@@ -16,6 +17,7 @@ import BackButton from '../components/BackButton';
 const Modify = () => {
   const location = useLocation();
   const file = location.state.file;
+
   const {description, filters} = safeParseJson(file.description) || {
     description: file.description,
     filters: {
@@ -48,7 +50,7 @@ const Modify = () => {
 
   const doModify = async () => {
     try {
-      console.log('doModify');
+      console.log('doUpload');
       // lisätään filtterit descriptioniin
       const desc = {
         description: inputs.description,

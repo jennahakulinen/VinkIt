@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import {CircularProgress, ImageList} from '@mui/material';
 import {useMedia} from '../hooks/ApiHooks';

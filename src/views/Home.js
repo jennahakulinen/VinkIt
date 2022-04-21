@@ -1,3 +1,4 @@
+import React from 'react';
 import MediaTable from '../components/MediaTable';
 import {Typography} from '@mui/material';
 
