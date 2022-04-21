@@ -14,12 +14,12 @@ import {
 import {safeParseJson} from '../utils/functions';
 import BackButton from '../components/BackButton';
 import {useEffect, useState} from 'react';
-import {useTag} from '../hooks/ApiHooks';
+import {useTag, useComment} from '../hooks/ApiHooks';
 
 const Single = () => {
   const [avatar, setAvatar] = useState({});
+  const [comments, setComments] = useState({});
   const location = useLocation();
-  console.log(location);
   const file = location.state.file;
   const {description, filters} = safeParseJson(file.description) || {
     description: file.description,
@@ -32,6 +32,20 @@ const Single = () => {
   };
 
   const {getTag} = useTag();
+  const {getComment} = useComment();
+
+  const fetchComments = async () => {
+    try {
+      if (file) {
+        const comment = await getComment(file.file_id);
+        setComments(comment);
+      }
+    } catch (err) {
+      // console.log(err);
+    }
+  };
+
+  console.log('moro', comments);
 
   const fetchAvatar = async () => {
     try {
@@ -47,10 +61,11 @@ const Single = () => {
   };
 
   useEffect(() => {
+    fetchComments();
     fetchAvatar();
   }, []);
 
-  console.log(avatar);
+  // console.log(avatar);
 
   return (
     <>
@@ -84,6 +99,43 @@ const Single = () => {
               </ListItemAvatar>
               <Typography variant="subtitle2">{file.user_id}</Typography>
             </ListItem>
+          </List>
+          <ListItem className="commentTitle">
+            <Typography variant="h5">Comments</Typography>
+            {comments.length > 0 ? (
+              <Typography variant="h5" sx={{marginLeft: 1}}>
+                ({comments.length})
+              </Typography>
+            ) : (
+              <Typography variant="h5"></Typography>
+            )}
+          </ListItem>
+
+          <List>
+            {comments.length > 0 ? (
+              comments.map((item) => {
+                return (
+                  <ListItem
+                    sx={{flexDirection: 'column', alignItems: 'flex-start'}}
+                    key={item.comment_id}
+                  >
+                    <Typography variant="subtitle1">{item.comment}</Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 'bold',
+                      }}
+                      variant="subtitle2"
+                    >
+                      {item.user_id}
+                    </Typography>
+                  </ListItem>
+                );
+              })
+            ) : (
+              <ListItem>
+                <Typography variant="subtitle2">No comments</Typography>
+              </ListItem>
+            )}
           </List>
         </CardContent>
       </Card>
