@@ -10,15 +10,25 @@ import {
   ListItem,
   ListItemAvatar,
   Avatar,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  IconButton,
+  TextField,
 } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import {safeParseJson} from '../utils/functions';
 import BackButton from '../components/BackButton';
 import {useEffect, useState} from 'react';
 import {useTag, useComment} from '../hooks/ApiHooks';
+import useCommentForm from '../hooks/CommentHook';
 
 const Single = () => {
   const [avatar, setAvatar] = useState({});
   const [comments, setComments] = useState({});
+  const [open, setOpen] = useState(false);
   const location = useLocation();
   const file = location.state.file;
   const {description, filters} = safeParseJson(file.description) || {
@@ -31,8 +41,35 @@ const Single = () => {
     },
   };
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const {getTag} = useTag();
-  const {getComment} = useComment();
+  const {getComment, postComment} = useComment();
+
+  const doComment = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const commentData = await postComment(
+        {
+          file_id: file.file_id,
+          comment: inputs.comment,
+        },
+        token
+      );
+      confirm('Jee kommentti lisätty!', commentData);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  const {handleSubmitComment, inputs, handleInputChangeComment} =
+    useCommentForm(doComment);
 
   const fetchComments = async () => {
     try {
@@ -44,8 +81,6 @@ const Single = () => {
       // console.log(err);
     }
   };
-
-  console.log('moro', comments);
 
   const fetchAvatar = async () => {
     try {
@@ -100,6 +135,49 @@ const Single = () => {
               <Typography variant="subtitle2">{file.user_id}</Typography>
             </ListItem>
           </List>
+          <Button variant="outlined" onClick={handleClickOpen}>
+            Leave a comment
+          </Button>
+          <Dialog fullWidth maxWidth="sm" open={open} onClose={handleClose}>
+            <DialogTitle>Comment</DialogTitle>
+            <IconButton
+              aria-label="close"
+              onClick={handleClose}
+              sx={{
+                position: 'absolute',
+                right: 8,
+                top: 8,
+                color: (theme) => theme.palette.grey[500],
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+            <form onSubmit={handleSubmitComment}>
+              <DialogContent>
+                <TextField
+                  margin="dense"
+                  id="name"
+                  label="Write a comment..."
+                  name="comment"
+                  value={inputs.comment}
+                  fullWidth
+                  variant="standard"
+                  onChange={handleInputChangeComment}
+                />
+              </DialogContent>
+              <DialogActions sx={{margin: 'auto'}}>
+                <Button
+                  width="50%"
+                  color="primary"
+                  type="submit"
+                  variant="contained"
+                  onClick={handleClose}
+                >
+                  Send
+                </Button>
+              </DialogActions>
+            </form>
+          </Dialog>
           <ListItem className="commentTitle">
             <Typography variant="h5">Comments</Typography>
             {comments.length > 0 ? (
