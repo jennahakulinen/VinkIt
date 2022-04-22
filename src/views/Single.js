@@ -51,6 +51,7 @@ const Single = () => {
 
   const {getTag} = useTag();
   const {getComment, postComment} = useComment();
+  // const {getUsername} = useUser();
 
   const doComment = async () => {
     try {
@@ -98,7 +99,7 @@ const Single = () => {
   useEffect(() => {
     fetchComments();
     fetchAvatar();
-  }, []);
+  }, [comments]);
 
   // console.log(avatar);
 
@@ -204,7 +205,7 @@ const Single = () => {
                       }}
                       variant="subtitle2"
                     >
-                      {item.user_id}
+                      {file.user_id}
                     </Typography>
                   </ListItem>
                 );
