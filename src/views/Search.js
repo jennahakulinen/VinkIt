@@ -18,7 +18,7 @@ const Search = () => {
         style={{width: 300}}
         id="standard-bare"
         variant="outlined"
-        placeholder="Search vinks.."
+        placeholder="Search vinks..."
         InputProps={{
           endAdornment: (
             <IconButton
