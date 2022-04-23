@@ -17,6 +17,7 @@ import {
   Button,
   IconButton,
   TextField,
+  Divider,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import {safeParseJson} from '../utils/functions';
@@ -218,22 +219,27 @@ const Single = () => {
 
           <List>
             {comments.length > 0 ? (
-              comments.map((item) => {
+              comments.map((item, index) => {
                 return (
-                  <ListItem
-                    sx={{flexDirection: 'column', alignItems: 'flex-start'}}
-                    key={item.comment_id}
-                  >
-                    <Typography variant="subtitle1">{item.comment}</Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 'bold',
-                      }}
-                      variant="subtitle2"
+                  <React.Fragment key={index}>
+                    <ListItem
+                      sx={{flexDirection: 'column', alignItems: 'flex-start'}}
+                      key={item.comment_id}
                     >
-                      {item.username}
-                    </Typography>
-                  </ListItem>
+                      <Typography variant="subtitle1">
+                        {item.comment}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontWeight: 'bold',
+                        }}
+                        variant="subtitle2"
+                      >
+                        {item.username}
+                      </Typography>
+                    </ListItem>
+                    <Divider />
+                  </React.Fragment>
                 );
               })
             ) : (
