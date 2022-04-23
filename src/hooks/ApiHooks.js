@@ -1,4 +1,3 @@
-// TODO: add necessary imports
 import {useContext, useEffect, useState} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
 import {appID, baseUrl} from '../utils/variables';

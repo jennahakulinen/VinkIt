@@ -1,9 +1,11 @@
 import React from 'react';
 import {
+  Autocomplete,
   Button,
   CircularProgress,
   Grid,
   Slider,
+  TextField,
   Typography,
 } from '@mui/material';
 import {useMedia, useTag} from '../hooks/ApiHooks';
@@ -13,6 +15,7 @@ import {useState, useEffect} from 'react';
 import {appID} from '../utils/variables';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import BackButton from '../components/BackButton';
+import topCategories from '../utils/categories';
 
 const Upload = () => {
   const [preview, setPreview] = useState('logo192.png');
@@ -129,6 +132,16 @@ const Upload = () => {
               name="file"
               accept="image/*, video/*, audio/*"
               onChange={handleInputChange}
+            />
+
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              options={topCategories}
+              sx={{width: 300}}
+              renderInput={(params) => (
+                <TextField {...params} label="Category" />
+              )}
             />
 
             {loading ? (

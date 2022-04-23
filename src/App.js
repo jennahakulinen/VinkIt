@@ -15,6 +15,7 @@ import Upload from './views/Upload';
 import MyFiles from './views/MyFiles';
 import Modify from './views/Modify';
 import Search from './views/Search';
+import SearchResults from './views/SearchResults';
 
 const theme = createTheme(themeOptions);
 
@@ -36,6 +37,7 @@ const App = () => {
               <Route path="/myfiles" element={<MyFiles />} />
               <Route path="/modify" element={<Modify />} />
               <Route path="/search" element={<Search />} />
+              <Route path="/searchresults" element={<SearchResults />} />
             </Routes>
           </Container>
         </ThemeProvider>

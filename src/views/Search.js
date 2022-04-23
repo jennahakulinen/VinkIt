@@ -1,10 +1,11 @@
-// eslint-disable-next-line no-unused-vars
 import {Typography} from '@mui/material';
 import React from 'react';
 import BackButton from '../components/BackButton';
 import {TextField, IconButton} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import MediaTable from '../components/MediaTable';
+import {Link} from 'react-router-dom';
 
 const Search = () => {
   return (
@@ -20,7 +21,13 @@ const Search = () => {
         placeholder="Search vinks.."
         InputProps={{
           endAdornment: (
-            <IconButton>
+            <IconButton
+              color="primary"
+              type="submit"
+              aria-label="search"
+              component={Link}
+              to={'/searchresults'}
+            >
               <SearchIcon />
             </IconButton>
           ),
@@ -38,6 +45,7 @@ const Search = () => {
           <FilterListIcon />
         </IconButton>
       </div>
+      <MediaTable />
     </>
   );
 };
