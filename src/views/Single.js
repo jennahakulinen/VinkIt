@@ -106,13 +106,14 @@ const Single = () => {
   };
 
   const fetchAvatar = async () => {
+    const username = await fetchUser(file.user_id);
+    file.username = username;
     try {
       if (file) {
         const avatars = await getTag('avatar_' + file.user_id);
         const ava = avatars.pop();
         ava.filename = mediaUrl + ava.filename;
-        const username = await fetchUser(file.user_id);
-        file.username = username;
+
         setAvatar(ava);
       }
     } catch (err) {
