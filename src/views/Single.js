@@ -86,6 +86,8 @@ const Single = () => {
   const {handleSubmitComment, inputs, handleInputChangeComment} =
     useCommentForm(doComment);
 
+  // hae kommentit
+
   const fetchComments = async () => {
     try {
       if (file) {
