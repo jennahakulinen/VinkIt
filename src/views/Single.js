@@ -17,12 +17,13 @@ import {
   Button,
   IconButton,
   TextField,
+  Divider,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import {safeParseJson} from '../utils/functions';
 import BackButton from '../components/BackButton';
 import {useEffect, useState} from 'react';
-import {useTag, useComment} from '../hooks/ApiHooks';
+import {useTag, useComment, useUser} from '../hooks/ApiHooks';
 import useCommentForm from '../hooks/CommentHook';
 
 const Single = () => {
@@ -45,12 +46,24 @@ const Single = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = async () => {
     setOpen(false);
   };
 
   const {getTag} = useTag();
   const {getComment, postComment} = useComment();
+  const {getUserById} = useUser();
+
+  const fetchUser = async (userId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const user = await getUserById(userId, token);
+      const username = user.username;
+      return username;
+    } catch (err) {
+      // console.log(err);
+    }
+  };
 
   const doComment = async () => {
     try {
@@ -62,7 +75,9 @@ const Single = () => {
         },
         token
       );
-      confirm('Jee kommentti lisätty!', commentData);
+      console.log('Jee kommentti lisätty!', commentData);
+      inputs.comment = '';
+      fetchComments();
     } catch (err) {
       console.log(err.message);
     }
@@ -75,6 +90,12 @@ const Single = () => {
     try {
       if (file) {
         const comment = await getComment(file.file_id);
+        for (let i = 0; i < comment.length; i++) {
+          const item = comment[i];
+          const userId = item.user_id;
+          const username = await fetchUser(userId);
+          item.username = username;
+        }
         setComments(comment);
       }
     } catch (err) {
@@ -88,6 +109,8 @@ const Single = () => {
         const avatars = await getTag('avatar_' + file.user_id);
         const ava = avatars.pop();
         ava.filename = mediaUrl + ava.filename;
+        const username = await fetchUser(file.user_id);
+        file.username = username;
         setAvatar(ava);
       }
     } catch (err) {
@@ -99,8 +122,6 @@ const Single = () => {
     fetchComments();
     fetchAvatar();
   }, []);
-
-  // console.log(avatar);
 
   return (
     <>
@@ -132,7 +153,14 @@ const Single = () => {
               <ListItemAvatar>
                 <Avatar variant={'circle'} src={avatar.filename} />
               </ListItemAvatar>
-              <Typography variant="subtitle2">{file.user_id}</Typography>
+              <Typography
+                sx={{
+                  fontWeight: 'bold',
+                }}
+                variant="subtitle2"
+              >
+                {file.username}
+              </Typography>
             </ListItem>
           </List>
           <Button variant="outlined" onClick={handleClickOpen}>
@@ -191,22 +219,27 @@ const Single = () => {
 
           <List>
             {comments.length > 0 ? (
-              comments.map((item) => {
+              comments.map((item, index) => {
                 return (
-                  <ListItem
-                    sx={{flexDirection: 'column', alignItems: 'flex-start'}}
-                    key={item.comment_id}
-                  >
-                    <Typography variant="subtitle1">{item.comment}</Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 'bold',
-                      }}
-                      variant="subtitle2"
+                  <React.Fragment key={index}>
+                    <ListItem
+                      sx={{flexDirection: 'column', alignItems: 'flex-start'}}
+                      key={item.comment_id}
                     >
-                      {item.user_id}
-                    </Typography>
-                  </ListItem>
+                      <Typography variant="subtitle1">
+                        {item.comment}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontWeight: 'bold',
+                        }}
+                        variant="subtitle2"
+                      >
+                        {item.username}
+                      </Typography>
+                    </ListItem>
+                    <Divider />
+                  </React.Fragment>
                 );
               })
             ) : (
