@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {useLocation} from 'react-router-dom';
 import {mediaUrl} from '../utils/variables';
 import {
@@ -25,8 +25,10 @@ import BackButton from '../components/BackButton';
 import {useEffect, useState} from 'react';
 import {useTag, useComment, useUser} from '../hooks/ApiHooks';
 import useCommentForm from '../hooks/CommentHook';
+import {MediaContext} from '../contexts/MediaContext';
 
 const Single = () => {
+  const {user} = useContext(MediaContext);
   const [avatar, setAvatar] = useState({});
   const [comments, setComments] = useState({});
   const [open, setOpen] = useState(false);
@@ -225,23 +227,55 @@ const Single = () => {
               comments.map((item, index) => {
                 return (
                   <React.Fragment key={index}>
-                    <ListItem
-                      sx={{flexDirection: 'column', alignItems: 'flex-start'}}
-                      key={item.comment_id}
-                    >
-                      <Typography variant="subtitle1">
-                        {item.comment}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontWeight: 'bold',
-                        }}
-                        variant="subtitle2"
-                      >
-                        {item.username}
-                      </Typography>
-                    </ListItem>
-                    <Divider />
+                    {item.user_id === user.user_id ? (
+                      <>
+                        <ListItem
+                          sx={{
+                            flexDirection: 'column',
+                            alignItems: 'flex-start',
+                            borderLeft: 5,
+                            borderLeftColor: '#76CFDB ',
+                          }}
+                          key={item.comment_id}
+                        >
+                          <Typography variant="subtitle1">
+                            {item.comment}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              fontWeight: 'bold',
+                            }}
+                            variant="subtitle2"
+                          >
+                            {item.username}
+                          </Typography>
+                        </ListItem>
+                        <Divider />
+                      </>
+                    ) : (
+                      <>
+                        <ListItem
+                          sx={{
+                            flexDirection: 'column',
+                            alignItems: 'flex-start',
+                          }}
+                          key={item.comment_id}
+                        >
+                          <Typography variant="subtitle1">
+                            {item.comment}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              fontWeight: 'bold',
+                            }}
+                            variant="subtitle2"
+                          >
+                            {item.username}
+                          </Typography>
+                        </ListItem>
+                        <Divider />
+                      </>
+                    )}
                   </React.Fragment>
                 );
               })
