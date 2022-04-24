@@ -222,7 +222,9 @@ const Single = () => {
           }}
         />
         <CardContent>
-          <Typography variant="h4">{file.title}</Typography>
+          <Typography component="h3" variant="fontH3">
+            {file.title}
+          </Typography>
           <Typography variant="subtitle">{description}</Typography>
           <Button
             color="primaryVariant"
@@ -273,13 +275,15 @@ const Single = () => {
             </form>
           </Dialog>
           <ListItem className="commentTitle">
-            <Typography variant="h5">Comments</Typography>
+            <Typography component="h3" variant="fontH4">
+              Comments
+            </Typography>
             {comments.length > 0 ? (
-              <Typography variant="h5" sx={{marginLeft: 1}}>
+              <Typography component="h3" variant="fontH4" sx={{marginLeft: 1}}>
                 ({comments.length})
               </Typography>
             ) : (
-              <Typography variant="h5"></Typography>
+              <Typography component="h3" variant="fontH4"></Typography>
             )}
           </ListItem>
 
@@ -299,14 +303,15 @@ const Single = () => {
                           }}
                           key={item.comment_id}
                         >
-                          <Typography variant="subtitle1">
+                          <Typography component="body1" variant="body1">
                             {item.comment}
                           </Typography>
                           <Typography
                             sx={{
-                              fontWeight: 'bold',
+                              fontWeight: 900,
                             }}
-                            variant="subtitle2"
+                            component="h5"
+                            variant="fontH6"
                           >
                             {item.username}
                           </Typography>
@@ -330,14 +335,15 @@ const Single = () => {
                           }}
                           key={item.comment_id}
                         >
-                          <Typography variant="subtitle1">
+                          <Typography component="body1" variant="body1">
                             {item.comment}
                           </Typography>
                           <Typography
                             sx={{
-                              fontWeight: 'bold',
+                              fontWeight: 900,
                             }}
-                            variant="subtitle2"
+                            component="h5"
+                            variant="fontH6"
                           >
                             {item.username}
                           </Typography>
