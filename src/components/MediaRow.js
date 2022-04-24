@@ -44,6 +44,7 @@ const MediaRow = ({file, userId, deleteMedia}) => {
         alt={file.title}
         loading="lazy"
         style={{
+          borderRadius: 15,
           filter: `
         brightness(${filters.brightness}%)
         contrast(${filters.contrast}%)
@@ -53,9 +54,11 @@ const MediaRow = ({file, userId, deleteMedia}) => {
         }}
       />
       <ImageListItemBar
+        sx={{borderBottomLeftRadius: 15, borderBottomRightRadius: 15}}
         actionIcon={
           <>
             <Button
+              color="primaryVariant"
               variant="contained"
               component={Link}
               to={'/single'}
@@ -73,6 +76,7 @@ const MediaRow = ({file, userId, deleteMedia}) => {
             {userId === file.user_id && (
               <>
                 <Button
+                  color="primaryVariant"
                   variant="contained"
                   component={Link}
                   to={'/modify'}
@@ -80,7 +84,11 @@ const MediaRow = ({file, userId, deleteMedia}) => {
                 >
                   Edit
                 </Button>
-                <Button variant="contained" onClick={doDelete}>
+                <Button
+                  variant="contained"
+                  color="primaryVariant"
+                  onClick={doDelete}
+                >
                   Delete
                 </Button>
               </>

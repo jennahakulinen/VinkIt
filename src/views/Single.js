@@ -166,7 +166,13 @@ const Single = () => {
 
   return (
     <>
-      <Card sx={{borderRadius: 0, position: 'relative', boxShadow: 'none'}}>
+      <Card
+        sx={{
+          borderRadius: 0,
+          position: 'relative',
+          boxShadow: 'none',
+        }}
+      >
         <BackButton />
         <Box
           sx={{
@@ -205,6 +211,7 @@ const Single = () => {
           src={mediaUrl + file.filename}
           alt={file.title}
           sx={{
+            width: '100vw',
             height: '60vh',
             filter: `
           brightness(${filters.brightness}%)
@@ -217,7 +224,12 @@ const Single = () => {
         <CardContent>
           <Typography variant="h4">{file.title}</Typography>
           <Typography variant="subtitle">{description}</Typography>
-          <Button variant="outlined" onClick={handleClickOpen}>
+          <Button
+            color="primaryVariant"
+            variant="contained"
+            sx={{color: '#F7F7F7'}}
+            onClick={handleClickOpen}
+          >
             Leave a comment
           </Button>
           <Dialog fullWidth maxWidth="sm" open={open} onClose={handleClose}>

@@ -26,8 +26,8 @@ const App = () => {
     <Router basename={process.env.PUBLIC_URL}>
       <MediaProvider>
         <ThemeProvider theme={theme}>
-          <Container maxWidth="lg">
-            <Nav />
+          <Nav />
+          <Container maxWidth="md" disableGutters={true}>
             <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/home" element={<Home />} />
