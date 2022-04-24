@@ -12,7 +12,6 @@ import {
   ListItemAvatar,
   ListItemIcon,
   ListItemText,
-  Typography,
 } from '@mui/material';
 import {AccountCircle, Badge, ContactMail} from '@mui/icons-material';
 import BackButton from '../components/BackButton';
@@ -39,12 +38,9 @@ const Profile = () => {
 
   return (
     <>
-      <BackButton />
-      <Typography component="h1" variant="h2">
-        Profile
-      </Typography>
       {user && (
-        <Card>
+        <Card sx={{borderRadius: 0, position: 'relative', boxShadow: 'none'}}>
+          <BackButton />
           <CardContent>
             <List>
               <ListItem>

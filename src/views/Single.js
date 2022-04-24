@@ -18,6 +18,7 @@ import {
   IconButton,
   TextField,
   Divider,
+  Box,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import {safeParseJson} from '../utils/functions';
@@ -165,11 +166,38 @@ const Single = () => {
 
   return (
     <>
-      <BackButton />
-      <Typography component="h1" variant="h2">
-        {file.title}
-      </Typography>
-      <Card>
+      <Card sx={{borderRadius: 0, position: 'relative', boxShadow: 'none'}}>
+        <BackButton />
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: 'auto',
+            height: 60,
+            position: 'absolute',
+            zIndex: 100,
+            right: 0,
+            backgroundColor: '#76CFDB',
+            borderBottomLeftRadius: 15,
+          }}
+        >
+          <List sx={{marginLeft: 3, marginRight: 3}}>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar variant={'circle'} src={avatar.filename} />
+              </ListItemAvatar>
+              <Typography
+                sx={{
+                  fontWeight: 'bold',
+                }}
+                variant="subtitle2"
+              >
+                {username}
+              </Typography>
+            </ListItem>
+          </List>
+        </Box>
         <CardMedia
           component={file.media_type === 'image' ? 'img' : file.media_type}
           controls={true}
@@ -187,22 +215,8 @@ const Single = () => {
           }}
         />
         <CardContent>
-          <Typography>{description}</Typography>
-          <List>
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar variant={'circle'} src={avatar.filename} />
-              </ListItemAvatar>
-              <Typography
-                sx={{
-                  fontWeight: 'bold',
-                }}
-                variant="subtitle2"
-              >
-                {username}
-              </Typography>
-            </ListItem>
-          </List>
+          <Typography variant="h4">{file.title}</Typography>
+          <Typography variant="subtitle">{description}</Typography>
           <Button variant="outlined" onClick={handleClickOpen}>
             Leave a comment
           </Button>
@@ -284,14 +298,14 @@ const Single = () => {
                           >
                             {item.username}
                           </Typography>
-                          <Button
-                            variant="contained"
+                          <IconButton
+                            sx={{position: 'absolute', right: 0, top: '20%'}}
                             onClick={(e) => {
                               doDelete(e, item.comment_id);
                             }}
                           >
-                            Delete
-                          </Button>
+                            <CloseIcon sx={{color: '#48A0B3'}} />
+                          </IconButton>
                         </ListItem>
                         <Divider />
                       </>

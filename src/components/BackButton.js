@@ -1,19 +1,25 @@
 import React from 'react';
-import {ArrowBack} from '@mui/icons-material';
-import {Button} from '@mui/material';
+import {ArrowBackIosNew} from '@mui/icons-material';
+import {IconButton} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 
 const BackButton = () => {
   const navigate = useNavigate();
   return (
-    <Button
-      startIcon={<ArrowBack />}
+    <IconButton
+      sx={{
+        position: 'absolute',
+        top: 8,
+        left: 8,
+        zIndex: 100,
+        backgroundColor: '#76CFDB',
+      }}
       onClick={() => {
         navigate(-1);
       }}
     >
-      Back
-    </Button>
+      <ArrowBackIosNew sx={{color: '#05192C'}} />
+    </IconButton>
   );
 };
 
