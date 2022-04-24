@@ -186,7 +186,7 @@ const Single = () => {
             position: 'absolute',
             zIndex: 100,
             right: 0,
-            backgroundColor: '#76CFDB',
+            backgroundColor: '#48A0B3',
             borderBottomLeftRadius: 15,
           }}
         >
@@ -201,9 +201,11 @@ const Single = () => {
               </ListItemAvatar>
               <Typography
                 sx={{
+                  color: '#F7F7F7',
                   fontWeight: '900',
                   fontSize: 14,
                   marginLeft: -1,
+                  letterSpacing: 1,
                 }}
                 component="h5"
                 variant="fontH6"
@@ -333,7 +335,7 @@ const Single = () => {
             )}
           </ListItem>
 
-          <List>
+          <List className="commentList">
             {comments.length > 0 ? (
               comments.map((item, index) => {
                 return (

@@ -19,3 +19,11 @@ td {
 .commentTitle {
   flex-direction: row;
 }
+
+.commentList {
+  transform: rotate(180deg);
+}
+
+.commentList li {
+  transform: rotate(-180deg);
+}

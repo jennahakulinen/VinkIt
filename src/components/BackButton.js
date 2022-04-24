@@ -14,7 +14,7 @@ const BackButton = () => {
         top: 5,
         left: 7,
         zIndex: 100,
-        backgroundColor: '#76CFDB',
+        backgroundColor: '#48A0B3',
         boxShadow:
           'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
       }}
