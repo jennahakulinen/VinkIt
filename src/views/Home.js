@@ -8,7 +8,7 @@ import {Link} from 'react-router-dom';
 const Home = () => {
   return (
     <>
-      <Typography component="h1" variant="h2">
+      <Typography component="h1" variant="logoFont">
         Home
       </Typography>
       <IconButton color="primary" component={Link} to={'/search'}>

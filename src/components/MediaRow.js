@@ -88,7 +88,7 @@ const MediaRow = ({file, userId, deleteMedia}) => {
           </>
         }
         title={file.title}
-        subtitle={description}
+        body1={description}
       />
     </ImageListItem>
   );
