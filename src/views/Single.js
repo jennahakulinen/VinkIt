@@ -182,7 +182,7 @@ const Single = () => {
             justifyContent: 'center',
             alignItems: 'center',
             width: 'auto',
-            height: 60,
+            height: 50,
             position: 'absolute',
             zIndex: 100,
             right: 0,
@@ -190,17 +190,23 @@ const Single = () => {
             borderBottomLeftRadius: 15,
           }}
         >
-          <List sx={{marginLeft: 3, marginRight: 3}}>
+          <List sx={{marginLeft: 2, marginRight: 2}}>
             <ListItem>
               <ListItemAvatar>
-                <Avatar variant={'circle'} src={avatar.filename} />
+                <Avatar
+                  sx={{width: 36, height: 36}}
+                  variant={'circle'}
+                  src={avatar.filename}
+                />
               </ListItemAvatar>
               <Typography
                 sx={{
                   fontWeight: '900',
+                  fontSize: 14,
+                  marginLeft: -1,
                 }}
-                component="h3"
-                variant="fontH5"
+                component="h5"
+                variant="fontH6"
               >
                 {username}
               </Typography>
