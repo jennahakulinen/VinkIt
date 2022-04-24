@@ -112,7 +112,7 @@ const Single = () => {
   const {handleSubmitComment, inputs, handleInputChangeComment} =
     useCommentForm(doComment);
 
-  // hae kommentit
+  // hae kaikki kommentit
 
   const fetchComments = async () => {
     try {
