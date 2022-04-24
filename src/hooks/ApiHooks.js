@@ -1,6 +1,6 @@
-import {useEffect, useState, useContext} from 'react';
-import {baseUrl, appID} from '../utils/variables';
+import {useContext, useEffect, useState} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
+import {appID, baseUrl} from '../utils/variables';
 
 const fetchJson = async (url, options = {}) => {
   try {
@@ -25,10 +25,12 @@ const useMedia = (showAllFiles, userId) => {
     try {
       setLoading(true);
       let media = await useTag().getTag(appID);
-      // jos !showAllFiles, filteröi kirjautuneen käyttäjän tiedostot mediataulukkoon
+      // jos !showAllFiles, filteröi kirjautuneen
+      // käyttäjän tiedostot media taulukkoon
       if (!showAllFiles) {
         media = media.filter((file) => file.user_id === userId);
       }
+
       const allFiles = await Promise.all(
         media.map(async (file) => {
           return await fetchJson(`${baseUrl}media/${file.file_id}`);
@@ -164,9 +166,8 @@ const useTag = () => {
       },
       body: JSON.stringify(data),
     };
-    return await fetchJson(baseUrl + 'tags/', fetchOptions);
+    return await fetchJson(baseUrl + 'tags', fetchOptions);
   };
-
   return {getTag, postTag};
 };
 

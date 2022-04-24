@@ -30,6 +30,7 @@ import {MediaContext} from '../contexts/MediaContext';
 const Single = () => {
   const {user} = useContext(MediaContext);
   const [avatar, setAvatar] = useState({});
+  const [username, setUsername] = useState();
   const [comments, setComments] = useState({});
   const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -56,7 +57,7 @@ const Single = () => {
   const {getComment, postComment} = useComment();
   const {getUserById} = useUser();
 
-  const fetchUser = async (userId) => {
+  const getUsernameByUserId = async (userId) => {
     try {
       const token = localStorage.getItem('token');
       const user = await getUserById(userId, token);
@@ -97,7 +98,7 @@ const Single = () => {
         for (let i = 0; i < comment.length; i++) {
           const item = comment[i];
           const userId = item.user_id;
-          const username = await fetchUser(userId);
+          const username = await getUsernameByUserId(userId);
           item.username = username;
         }
         setComments(comment);
@@ -108,7 +109,7 @@ const Single = () => {
   };
 
   const fetchAvatar = async () => {
-    const username = await fetchUser(file.user_id);
+    const username = await getUsernameByUserId(file.user_id);
     file.username = username;
     try {
       if (file) {
@@ -123,9 +124,21 @@ const Single = () => {
     }
   };
 
+  const getUsernameByUserIdname = async () => {
+    try {
+      if (file) {
+        const username = await getUsernameByUserId(file.user_id);
+        setUsername(username);
+      }
+    } catch (err) {
+      // console.log(err);
+    }
+  };
+
   useEffect(() => {
     fetchComments();
     fetchAvatar();
+    getUsernameByUserIdname();
   }, []);
 
   return (
@@ -164,7 +177,8 @@ const Single = () => {
                 }}
                 variant="subtitle2"
               >
-                {file.username}
+                {console.log(file)}
+                {username}
               </Typography>
             </ListItem>
           </List>
