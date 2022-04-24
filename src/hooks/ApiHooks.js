@@ -195,4 +195,28 @@ const useComment = () => {
   return {getComment, postComment};
 };
 
-export {useMedia, useLogin, useUser, useTag, useComment};
+const useSearch = () => {
+  const getResults = async (fileId) => {
+    const searchResults = await fetchJson(baseUrl + 'media/search');
+    if (searchResults.length > 0) {
+      return searchResults;
+    } else {
+      throw new Error('No results');
+    }
+  };
+
+  const postResults = async (data, token) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    return await fetchJson(baseUrl + 'media/search', fetchOptions);
+  };
+  return {getResults, postResults};
+};
+
+export {useMedia, useLogin, useUser, useTag, useComment, useSearch};
