@@ -192,18 +192,7 @@ const useComment = () => {
     };
     return await fetchJson(baseUrl + 'comments', fetchOptions);
   };
-
-  const deleteComment = async (commentId, token) => {
-    const fetchOptions = {
-      method: 'DELETE',
-      headers: {
-        'x-access-token': token,
-      },
-    };
-    return await fetchJson(baseUrl + 'comments/' + commentId, fetchOptions);
-  };
-
-  return {getComment, postComment, deleteComment};
+  return {getComment, postComment};
 };
 
 const useSearch = () => {
@@ -216,14 +205,14 @@ const useSearch = () => {
     }
   };
 
-  const postResults = async (data, token) => {
+  const postResults = async (title, description, token) => {
     const fetchOptions = {
       method: 'POST',
       headers: {
         'x-access-token': token,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(title, description),
     };
     return await fetchJson(baseUrl + 'media/search', fetchOptions);
   };

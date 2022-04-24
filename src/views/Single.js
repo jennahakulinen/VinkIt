@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import {useLocation} from 'react-router-dom';
 import {mediaUrl} from '../utils/variables';
+import Rating from '@mui/material/Rating';
 import {
   Card,
   CardContent,
@@ -187,6 +188,7 @@ const Single = () => {
           }}
         />
         <CardContent>
+          <Rating name="no-value" value={null} />
           <Typography>{description}</Typography>
           <List>
             <ListItem>
