@@ -1,4 +1,3 @@
-// TODO: add necessary imports
 import {useContext, useEffect, useState} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
 import {appID, baseUrl} from '../utils/variables';
@@ -177,7 +176,40 @@ const useTag = () => {
   return {getTag, postTag};
 };
 
-export {useMedia, useLogin, useUser, useTag};
+const useComment = () => {
+  const getComment = async (fileId) => {
+    const commentResult = await fetchJson(baseUrl + 'comments/file/' + fileId);
+    if (commentResult.length > 0) {
+      return commentResult;
+    } else {
+      throw new Error('No results');
+    }
+  };
+
+  const postComment = async (data, token) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    return await fetchJson(baseUrl + 'comments', fetchOptions);
+  };
+
+  const deleteComment = async (commentId, token) => {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await fetchJson(baseUrl + 'comments/' + commentId, fetchOptions);
+  };
+
+  return {getComment, postComment, deleteComment};
+};
 
 const useFavourite = () => {
   const getFavourite = async (favorite) => {
@@ -212,4 +244,4 @@ const useFavourite = () => {
   return {getFavourite, addFavorite, deleteFavourite};
 };
 
-export {useFavourite};
+export {useMedia, useLogin, useUser, useTag, useComment, useFavourite};

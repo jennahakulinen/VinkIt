@@ -14,7 +14,12 @@ import {ThemeProvider, createTheme} from '@mui/material/styles';
 import Upload from './views/Upload';
 import MyFiles from './views/MyFiles';
 import Modify from './views/Modify';
+<<<<<<< HEAD
 import MyFavorites from './views/Favorite';
+=======
+import Search from './views/Search';
+import SearchResults from './views/SearchResults';
+>>>>>>> 551c057d27beb31b1a53c81d584043bf49702f17
 
 const theme = createTheme(themeOptions);
 
@@ -35,7 +40,12 @@ const App = () => {
               <Route path="/upload" element={<Upload />} />
               <Route path="/myfiles" element={<MyFiles />} />
               <Route path="/modify" element={<Modify />} />
+<<<<<<< HEAD
               <Route path="/myfavorites" element={<MyFavorites />} />
+=======
+              <Route path="/search" element={<Search />} />
+              <Route path="/searchresults" element={<SearchResults />} />
+>>>>>>> 551c057d27beb31b1a53c81d584043bf49702f17
             </Routes>
           </Container>
         </ThemeProvider>

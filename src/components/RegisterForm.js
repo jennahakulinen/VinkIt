@@ -1,15 +1,14 @@
 // eslint-disable-next-line no-unused-vars
-import React from 'react';
 import PropTypes from 'prop-types';
 import {useUser} from '../hooks/ApiHooks';
 import useForm from '../hooks/FormHooks';
 import {Grid} from '@mui/material';
 import {Typography} from '@mui/material';
 import {Button} from '@mui/material';
-import {TextValidator, ValidatorForm} from 'react-material-ui-form-validator';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {useEffect} from 'react';
 
-const RegisterForm = (setToggle) => {
+const RegisterForm = ({setToggle}) => {
   const alkuarvot = {
     username: '',
     password: '',
@@ -20,17 +19,22 @@ const RegisterForm = (setToggle) => {
 
   const validators = {
     username: ['required', 'minStringLength: 3', 'isAvailable'],
-    password: ['required', 'minStringLength: 8'],
+    password: ['required', 'minStringLength: 5'],
     confirm: ['required', 'isPasswordMatch'],
     email: ['required', 'isEmail'],
     full_name: ['minStringLength: 2'],
   };
+
   const errorMessages = {
-    username: ['required field', 'min 3 characters', 'username not available'],
-    password: ['required field', 'min 8 characters'],
-    confirm: ['required field', 'passwords do not match'],
-    email: ['required field', 'must be email'],
-    full_name: ['min 2 characters'],
+    username: [
+      'required field',
+      'minimum 3 characters',
+      'username not available',
+    ],
+    password: ['required field', 'minimum 5 characters'],
+    confirm: ['required field', 'password missmatch'],
+    email: ['required field', 'email is not valid'],
+    full_name: ['minimum 2 characters'],
   };
 
   const {postUser, getUsername} = useUser();
@@ -38,15 +42,10 @@ const RegisterForm = (setToggle) => {
   const doRegister = async () => {
     console.log('doRegister');
     try {
-      // const checkUser = await getUsername(inputs.username);
-      // if (checkUser) {}
       delete inputs.confirm;
       const userData = await postUser(inputs);
-
-      // userData && setToggle(true);
-      if (userData) {
-        setToggle(true);
-      }
+      userData && setToggle(true);
+      console.log(userData);
     } catch (err) {
       alert(err.message);
     }
@@ -62,20 +61,22 @@ const RegisterForm = (setToggle) => {
       try {
         return await getUsername(value);
       } catch (err) {
-        return false;
+        return true;
       }
     });
 
     ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+      // sama if lausetta käyttämällä, alla lyhyemmin
       // if (value !== inputs.password) {
       //   return false;
       // }
       // return true;
+
       return value === inputs.password ? true : false;
     });
 
     return () => {
-      ValidatorForm.addValidationRule('isAvailable');
+      ValidatorForm.removeValidationRule('isAvailable');
     };
   }, [inputs]);
 
@@ -112,8 +113,8 @@ const RegisterForm = (setToggle) => {
           />
           <TextValidator
             fullWidth
-            label="re-type password"
-            placeholder="re-type password"
+            label="repeat password"
+            placeholder="repeat password"
             name="confirm"
             type="password"
             onChange={handleInputChange}
