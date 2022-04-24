@@ -54,8 +54,10 @@ const Single = () => {
   };
 
   const {getTag} = useTag();
-  const {getComment, postComment} = useComment();
+  const {getComment, postComment, deleteComment} = useComment();
   const {getUserById} = useUser();
+
+  console.log(deleteComment);
 
   const getUsernameByUserId = async (userId) => {
     try {
@@ -65,6 +67,24 @@ const Single = () => {
       return username;
     } catch (err) {
       // console.log(err);
+    }
+  };
+
+  const doDelete = async (e, commentId) => {
+    const ok = confirm('Do you want to delete comment?');
+    if (ok) {
+      try {
+        const deleteInfo = await deleteComment(
+          commentId,
+          localStorage.getItem('token')
+        );
+        console.log(deleteInfo);
+        if (deleteInfo) {
+          fetchComments();
+        }
+      } catch (err) {
+        // console.log(err);
+      }
     }
   };
 
@@ -85,6 +105,8 @@ const Single = () => {
       console.log(err.message);
     }
   };
+
+  console.log(comments);
 
   const {handleSubmitComment, inputs, handleInputChangeComment} =
     useCommentForm(doComment);
@@ -177,7 +199,6 @@ const Single = () => {
                 }}
                 variant="subtitle2"
               >
-                {console.log(file)}
                 {username}
               </Typography>
             </ListItem>
@@ -263,6 +284,14 @@ const Single = () => {
                           >
                             {item.username}
                           </Typography>
+                          <Button
+                            variant="contained"
+                            onClick={(e) => {
+                              doDelete(e, item.comment_id);
+                            }}
+                          >
+                            Delete
+                          </Button>
                         </ListItem>
                         <Divider />
                       </>

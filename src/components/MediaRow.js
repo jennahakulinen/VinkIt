@@ -9,11 +9,11 @@ import {safeParseJson} from '../utils/functions';
 
 const MediaRow = ({file, userId, deleteMedia}) => {
   const {update, setUpdate} = useContext(MediaContext);
-  const doDelete = () => {
+  const doDelete = async () => {
     const ok = confirm('Do juu delte?');
     if (ok) {
       try {
-        const deleteInfo = deleteMedia(
+        const deleteInfo = await deleteMedia(
           file.file_id,
           localStorage.getItem('token')
         );

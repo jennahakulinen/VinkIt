@@ -192,7 +192,18 @@ const useComment = () => {
     };
     return await fetchJson(baseUrl + 'comments', fetchOptions);
   };
-  return {getComment, postComment};
+
+  const deleteComment = async (commentId, token) => {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await fetchJson(baseUrl + 'comments/' + commentId, fetchOptions);
+  };
+
+  return {getComment, postComment, deleteComment};
 };
 
 export {useMedia, useLogin, useUser, useTag, useComment};
