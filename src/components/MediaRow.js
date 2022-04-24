@@ -52,6 +52,7 @@ const MediaRow = ({file, userId, deleteMedia}) => {
         `,
         }}
       />
+
       <ImageListItemBar
         actionIcon={
           <>
@@ -88,7 +89,7 @@ const MediaRow = ({file, userId, deleteMedia}) => {
           </>
         }
         title={file.title}
-        body1={description}
+        subtitle={description}
       />
     </ImageListItem>
   );
