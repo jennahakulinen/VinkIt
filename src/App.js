@@ -14,6 +14,7 @@ import {ThemeProvider, createTheme} from '@mui/material/styles';
 import Upload from './views/Upload';
 import MyFiles from './views/MyFiles';
 import Modify from './views/Modify';
+import MyFavorites from './views/Favorite';
 
 const theme = createTheme(themeOptions);
 
@@ -34,6 +35,7 @@ const App = () => {
               <Route path="/upload" element={<Upload />} />
               <Route path="/myfiles" element={<MyFiles />} />
               <Route path="/modify" element={<Modify />} />
+              <Route path="/myfavorites" element={<MyFavorites />} />
             </Routes>
           </Container>
         </ThemeProvider>

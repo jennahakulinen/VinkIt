@@ -6,6 +6,7 @@ import {MediaContext} from '../contexts/MediaContext';
 import {Link} from 'react-router-dom';
 import {mediaUrl} from '../utils/variables';
 import {safeParseJson} from '../utils/functions';
+import HeartButton from './HeartButton';
 
 const MediaRow = ({file, userId, deleteMedia}) => {
   const {update, setUpdate} = useContext(MediaContext);
@@ -62,6 +63,13 @@ const MediaRow = ({file, userId, deleteMedia}) => {
             >
               View
             </Button>
+            <HeartButton
+              variant="contained"
+              component={Link}
+              to={'/favorites'}
+              state={{file}}
+            ></HeartButton>
+
             {userId === file.user_id && (
               <>
                 <Button
