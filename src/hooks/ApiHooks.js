@@ -197,31 +197,18 @@ const useComment = () => {
     };
     return await fetchJson(baseUrl + 'comments', fetchOptions);
   };
-  return {getComment, postComment};
-};
 
-const useSearch = () => {
-  const getResults = async (fileId) => {
-    const searchResults = await fetchJson(baseUrl + 'media/search');
-    if (searchResults.length > 0) {
-      return searchResults;
-    } else {
-      throw new Error('No results');
-    }
-  };
-
-  const postResults = async (title, description, token) => {
+  const deleteComment = async (commentId, token) => {
     const fetchOptions = {
-      method: 'POST',
+      method: 'DELETE',
       headers: {
         'x-access-token': token,
-        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(title, description),
     };
-    return await fetchJson(baseUrl + 'media/search', fetchOptions);
+    return await fetchJson(baseUrl + 'comments/' + commentId, fetchOptions);
   };
-  return {getResults, postResults};
+
+  return {getComment, postComment, deleteComment};
 };
 
 const useFavourite = () => {
@@ -257,4 +244,27 @@ const useFavourite = () => {
   return {getFavourite, addFavorite, deleteFavourite};
 };
 
-export {useMedia, useLogin, useUser, useTag, useComment, useFavourite};
+const useSearch = () => {
+  const postResults = async (search, token) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(search),
+    };
+    return await fetchJson(baseUrl + 'media/search', fetchOptions);
+  };
+  return {postResults};
+};
+
+export {
+  useMedia,
+  useLogin,
+  useUser,
+  useTag,
+  useComment,
+  useFavourite,
+  useSearch,
+};
