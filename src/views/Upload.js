@@ -1,12 +1,14 @@
 import React from 'react';
 import {
-  Autocomplete,
   Button,
   CircularProgress,
   Grid,
   Slider,
-  TextField,
   Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material';
 import {useMedia, useTag} from '../hooks/ApiHooks';
 import {useNavigate} from 'react-router-dom';
@@ -15,10 +17,10 @@ import {useState, useEffect} from 'react';
 import {appID} from '../utils/variables';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import BackButton from '../components/BackButton';
-import topCategories from '../utils/categories';
 
 const Upload = () => {
   const [preview, setPreview] = useState('logo192.png');
+  const [category, setCategory] = useState('');
   const alkuarvot = {
     title: '',
     description: '',
@@ -46,6 +48,12 @@ const Upload = () => {
   const {postTag} = useTag();
   const navigate = useNavigate();
 
+  const handleChange = (event) => {
+    setCategory(event.target.value);
+  };
+
+  const getCategoryName = ['Home', 'Hobbies', 'Restaurants'];
+
   const doUpload = async () => {
     try {
       console.log('doUpload');
@@ -67,7 +75,16 @@ const Upload = () => {
         },
         token
       );
-      confirm(tagData.message) && navigate('/home');
+      const categoryTag = await postTag(
+        {
+          file_id: mediaData.file_id,
+          tag: category,
+        },
+        token
+      );
+
+      confirm(tagData.message, categoryTag.message, category) &&
+        navigate('/home');
     } catch (err) {
       alert(err.message);
     }
@@ -134,15 +151,34 @@ const Upload = () => {
               onChange={handleInputChange}
             />
 
-            <Autocomplete
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Categories</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={category}
+                label="Category"
+                onChange={handleChange}
+              >
+                {getCategoryName.map((index) => {
+                  return (
+                    <MenuItem key={index} value={index}>
+                      {index}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+
+            {/* <Autocomplete
               disablePortal
               id="combo-box-demo"
-              options={topCategories}
+              options={getTagList}
               sx={{width: 300}}
               renderInput={(params) => (
                 <TextField {...params} label="Category" />
               )}
-            />
+            /> */}
 
             {loading ? (
               <CircularProgress />

@@ -172,6 +172,16 @@ const useTag = () => {
     }
   };
 
+  const getFileTags = async (fileId) => {
+    const tagResult = await fetchJson(baseUrl + 'tags/file/' + fileId);
+    if (tagResult.length > 0) {
+      const filteredCategories = [tagResult[1]];
+      return filteredCategories;
+    } else {
+      throw new Error('No results');
+    }
+  };
+
   const postTag = async (data, token) => {
     const fetchOptions = {
       method: 'POST',
@@ -183,7 +193,7 @@ const useTag = () => {
     };
     return await fetchJson(baseUrl + 'tags', fetchOptions);
   };
-  return {getTag, postTag};
+  return {getTag, getFileTags, postTag};
 };
 
 const useComment = () => {
