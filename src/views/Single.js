@@ -368,7 +368,7 @@ const Single = () => {
                             sx={{
                               position: 'absolute',
                               right: 0,
-                              top: '20%',
+                              top: '15%',
                             }}
                             onClick={(e) => {
                               doDelete(e, item.comment_id);
