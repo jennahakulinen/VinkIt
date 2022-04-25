@@ -7,9 +7,11 @@ import {Link} from 'react-router-dom';
 import {mediaUrl} from '../utils/variables';
 import {safeParseJson} from '../utils/functions';
 import HeartButton from './HeartButton';
+import {useFavourite} from '../hooks/ApiHooks';
 
 const MediaRow = ({file, userId, deleteMedia}) => {
   const {update, setUpdate} = useContext(MediaContext);
+  const {addFavorite} = useFavourite();
   const doDelete = async () => {
     const ok = confirm('Do juu delte?');
     if (ok) {
@@ -24,6 +26,19 @@ const MediaRow = ({file, userId, deleteMedia}) => {
       } catch (err) {
         // console.log(err);
       }
+    }
+  };
+  const doFavorite = async () => {
+    try {
+      const favoriteInfo = await addFavorite(
+        {file_id: file.file_id},
+        localStorage.getItem('token')
+      );
+      if (favoriteInfo) {
+        console.log(favoriteInfo);
+      }
+    } catch (err) {
+      //  console.log(err);
     }
   };
 
@@ -53,6 +68,7 @@ const MediaRow = ({file, userId, deleteMedia}) => {
         `,
         }}
       />
+
       <ImageListItemBar
         sx={{borderBottomLeftRadius: 15, borderBottomRightRadius: 15}}
         actionIcon={
@@ -66,12 +82,7 @@ const MediaRow = ({file, userId, deleteMedia}) => {
             >
               View
             </Button>
-            <HeartButton
-              variant="contained"
-              component={Link}
-              to={'/favorites'}
-              state={{file}}
-            ></HeartButton>
+            <HeartButton variant="contained" onClick={doFavorite}></HeartButton>
 
             {userId === file.user_id && (
               <>
@@ -96,7 +107,7 @@ const MediaRow = ({file, userId, deleteMedia}) => {
           </>
         }
         title={file.title}
-        body1={description}
+        subtitle={description}
       />
     </ImageListItem>
   );
