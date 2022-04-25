@@ -11,7 +11,7 @@ const MyFavorites = () => {
       <Typography component="h1" variant="h2">
         My Favorites
       </Typography>
-      <MediaTable />
+      <MediaTable favorites={true} />
     </>
   );
 };

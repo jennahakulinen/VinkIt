@@ -17,7 +17,7 @@ const fetchJson = async (url, options = {}) => {
   }
 };
 
-const useMedia = (showAllFiles, userId) => {
+const useMedia = (showAllFiles, userId, favorites, token) => {
   const {update} = useContext(MediaContext);
   const [mediaArray, setMediaArray] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -25,6 +25,16 @@ const useMedia = (showAllFiles, userId) => {
     try {
       setLoading(true);
       let media = await useTag().getTag(appID);
+      if (favorites) {
+        const favorites = await useFavourite().getFavourite(token);
+        media = media.filter((file) => {
+          for (const favorite of favorites) {
+            if (favorite.file_id === file.file_id) {
+              return file;
+            }
+          }
+        });
+      }
       // jos !showAllFiles, filteröi kirjautuneen
       // käyttäjän tiedostot media taulukkoon
       if (!showAllFiles) {
@@ -212,15 +222,23 @@ const useComment = () => {
 };
 
 const useFavourite = () => {
-  const getFavourite = async (favorite) => {
-    const favoriteResult = await fetchJson(baseUrl + 'favourites/' + favorite);
+  const getFavourite = async (token) => {
+    const fetchOptions = {
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    const favoriteResult = await fetchJson(
+      baseUrl + 'favourites/',
+      fetchOptions
+    );
     if (favoriteResult.length > 0) {
       return favoriteResult;
     } else {
       throw new Error('No results');
     }
   };
-  const addFavorite = async (fileId, data, token) => {
+  const addFavorite = async (data, token) => {
     const fetchOptions = {
       method: 'POST',
       headers: {
@@ -229,7 +247,7 @@ const useFavourite = () => {
       },
       body: JSON.stringify(data),
     };
-    return await fetchJson(baseUrl + 'favourites' + fileId, fetchOptions);
+    return await fetchJson(baseUrl + 'favourites/', fetchOptions);
   };
 
   const deleteFavourite = async (fileId, token) => {

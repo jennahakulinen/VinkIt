@@ -7,9 +7,14 @@ import MediaRow from './MediaRow';
 import {useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
 
-const MediaTable = ({allFiles = true}) => {
+const MediaTable = ({allFiles = true, favorites = false}) => {
   const {user} = useContext(MediaContext);
-  const {mediaArray, loading, deleteMedia} = useMedia(allFiles, user?.user_id);
+  const {mediaArray, loading, deleteMedia} = useMedia(
+    allFiles,
+    user?.user_id,
+    favorites,
+    localStorage.getItem('token')
+  );
   const windowSize = useWindowSize();
   console.log(mediaArray);
   return (
@@ -40,6 +45,7 @@ const MediaTable = ({allFiles = true}) => {
 
 MediaTable.propTypes = {
   allFiles: PropTypes.bool,
+  favorites: PropTypes.bool,
 };
 
 export default MediaTable;
