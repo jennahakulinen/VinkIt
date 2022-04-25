@@ -262,4 +262,27 @@ const useFavourite = () => {
   return {getFavourite, addFavorite, deleteFavourite};
 };
 
-export {useMedia, useLogin, useUser, useTag, useComment, useFavourite};
+const useSearch = () => {
+  const postResults = async (search, token) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(search),
+    };
+    return await fetchJson(baseUrl + 'media/search', fetchOptions);
+  };
+  return {postResults};
+};
+
+export {
+  useMedia,
+  useLogin,
+  useUser,
+  useTag,
+  useComment,
+  useFavourite,
+  useSearch,
+};

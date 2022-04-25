@@ -7,9 +7,9 @@ import MediaRow from './MediaRow';
 import {useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
 
-const MediaTable = ({allFiles = true, favorites = false}) => {
+const MediaTable = ({allFiles = true, favorites = false, searchterm}) => {
   const {user} = useContext(MediaContext);
-  const {mediaArray, loading, deleteMedia} = useMedia(
+  let {mediaArray, loading, deleteMedia} = useMedia(
     allFiles,
     user?.user_id,
     favorites,
@@ -17,6 +17,14 @@ const MediaTable = ({allFiles = true, favorites = false}) => {
   );
   const windowSize = useWindowSize();
   console.log(mediaArray);
+  if (searchterm?.length > 0) {
+    mediaArray = mediaArray.filter((file) => {
+      if (file.title.toLowerCase().includes(searchterm.toLowerCase())) {
+        return file;
+      }
+    });
+  }
+
   return (
     <>
       {loading ? (
@@ -47,6 +55,7 @@ const MediaTable = ({allFiles = true, favorites = false}) => {
 MediaTable.propTypes = {
   allFiles: PropTypes.bool,
   favorites: PropTypes.bool,
+  searchterm: PropTypes.string,
 };
 
 export default MediaTable;

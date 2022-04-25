@@ -16,7 +16,6 @@ import MyFiles from './views/MyFiles';
 import Modify from './views/Modify';
 import MyFavorites from './views/Favorite';
 import Search from './views/Search';
-import SearchResults from './views/SearchResults';
 
 const theme = createTheme(themeOptions);
 
@@ -39,7 +38,6 @@ const App = () => {
               <Route path="/modify" element={<Modify />} />
               <Route path="/myfavorites" element={<MyFavorites />} />
               <Route path="/search" element={<Search />} />
-              <Route path="/searchresults" element={<SearchResults />} />
             </Routes>
           </Container>
         </ThemeProvider>
