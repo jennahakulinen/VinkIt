@@ -12,12 +12,18 @@ td {
 
 * {
   font-family: 'Lato', sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .commentTitle {
   flex-direction: row;
 }
 
-.MuiButton-root {
-  background-color: #48a0b3;
+.commentList {
+  transform: rotate(180deg);
+}
+
+.commentList li {
+  transform: rotate(-180deg);
 }

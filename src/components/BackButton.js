@@ -8,17 +8,27 @@ const BackButton = () => {
   return (
     <IconButton
       sx={{
+        width: 36,
+        height: 36,
         position: 'absolute',
-        top: 8,
-        left: 8,
+        top: 5,
+        left: 7,
         zIndex: 100,
-        backgroundColor: '#76CFDB',
+        backgroundColor: '#48A0B3',
+        boxShadow:
+          'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
       }}
       onClick={() => {
         navigate(-1);
       }}
     >
-      <ArrowBackIosNew sx={{color: '#05192C'}} />
+      <ArrowBackIosNew
+        color="backgroundColor"
+        sx={{
+          fontSize: 26,
+          paddingRight: 0.5,
+        }}
+      />
     </IconButton>
   );
 };
