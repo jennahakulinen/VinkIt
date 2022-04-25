@@ -14,6 +14,7 @@ import {ThemeProvider, createTheme} from '@mui/material/styles';
 import Upload from './views/Upload';
 import MyFiles from './views/MyFiles';
 import Modify from './views/Modify';
+import MyFavorites from './views/Favorite';
 import Search from './views/Search';
 import SearchResults from './views/SearchResults';
 
@@ -25,8 +26,8 @@ const App = () => {
     <Router basename={process.env.PUBLIC_URL}>
       <MediaProvider>
         <ThemeProvider theme={theme}>
-          <Container maxWidth="lg">
-            <Nav />
+          <Nav />
+          <Container maxWidth="md" disableGutters={true}>
             <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/home" element={<Home />} />
@@ -36,6 +37,7 @@ const App = () => {
               <Route path="/upload" element={<Upload />} />
               <Route path="/myfiles" element={<MyFiles />} />
               <Route path="/modify" element={<Modify />} />
+              <Route path="/myfavorites" element={<MyFavorites />} />
               <Route path="/search" element={<Search />} />
               <Route path="/searchresults" element={<SearchResults />} />
             </Routes>

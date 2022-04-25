@@ -19,6 +19,7 @@ import {
   IconButton,
   TextField,
   Divider,
+  Box,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import {safeParseJson} from '../utils/functions';
@@ -27,6 +28,7 @@ import {useEffect, useState} from 'react';
 import {useTag, useComment, useUser} from '../hooks/ApiHooks';
 import useCommentForm from '../hooks/CommentHook';
 import {MediaContext} from '../contexts/MediaContext';
+import {ChatBubble} from '@mui/icons-material';
 
 const Single = () => {
   const {user} = useContext(MediaContext);
@@ -112,7 +114,7 @@ const Single = () => {
   const {handleSubmitComment, inputs, handleInputChangeComment} =
     useCommentForm(doComment);
 
-  // hae kommentit
+  // hae kaikki kommentit
 
   const fetchComments = async () => {
     try {
@@ -166,11 +168,53 @@ const Single = () => {
 
   return (
     <>
-      <BackButton />
-      <Typography component="h1" variant="h2">
-        {file.title}
-      </Typography>
-      <Card>
+      <Card
+        sx={{
+          borderRadius: 0,
+          position: 'relative',
+          boxShadow: 'none',
+        }}
+      >
+        <BackButton />
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: 'auto',
+            height: 50,
+            position: 'absolute',
+            zIndex: 100,
+            right: 0,
+            backgroundColor: '#48A0B3',
+            borderBottomLeftRadius: 15,
+          }}
+        >
+          <List sx={{marginLeft: 2, marginRight: 2}}>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar
+                  sx={{width: 36, height: 36}}
+                  variant={'circle'}
+                  src={avatar.filename}
+                />
+              </ListItemAvatar>
+              <Typography
+                sx={{
+                  color: '#F7F7F7',
+                  fontWeight: '900',
+                  fontSize: 14,
+                  marginLeft: -1,
+                  letterSpacing: 1,
+                }}
+                component="h5"
+                variant="fontH6"
+              >
+                {username}
+              </Typography>
+            </ListItem>
+          </List>
+        </Box>
         <CardMedia
           component={file.media_type === 'image' ? 'img' : file.media_type}
           controls={true}
@@ -178,7 +222,8 @@ const Single = () => {
           src={mediaUrl + file.filename}
           alt={file.title}
           sx={{
-            height: '60vh',
+            width: '100vw',
+            height: '40vh',
             filter: `
           brightness(${filters.brightness}%)
           contrast(${filters.contrast}%)
@@ -187,29 +232,37 @@ const Single = () => {
           `,
           }}
         />
-        <CardContent>
-          <Rating name="no-value" value={null} />
-          <Typography>{description}</Typography>
-          <List>
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar variant={'circle'} src={avatar.filename} />
-              </ListItemAvatar>
-              <Typography
-                sx={{
-                  fontWeight: 'bold',
-                }}
-                variant="subtitle2"
-              >
-                {username}
-              </Typography>
-            </ListItem>
-          </List>
-          <Button variant="outlined" onClick={handleClickOpen}>
+        <CardContent sx={{display: 'flex', flexDirection: 'column'}}>
+          <Typography component="h3" variant="fontH3">
+            {file.title}
+          </Typography>
+          <Typography sx={{paddingTop: 1, paddingBottom: 1}} variant="subtitle">
+            {description}
+          </Typography>
+          <Button
+            startIcon={<ChatBubble />}
+            color="primaryVariant"
+            variant="contained"
+            sx={{
+              color: '#F7F7F7',
+              minWidth: '250px',
+              margin: 'auto',
+              marginTop: 1,
+              marginBottom: 1,
+            }}
+            onClick={handleClickOpen}
+          >
             Leave a comment
           </Button>
           <Dialog fullWidth maxWidth="sm" open={open} onClose={handleClose}>
-            <DialogTitle>Comment</DialogTitle>
+            <DialogTitle
+              color="primary"
+              component="h3"
+              variant="fontH2"
+              sx={{textAlign: 'center'}}
+            >
+              Comment
+            </DialogTitle>
             <IconButton
               aria-label="close"
               onClick={handleClose}
@@ -223,19 +276,40 @@ const Single = () => {
               <CloseIcon />
             </IconButton>
             <form onSubmit={handleSubmitComment}>
-              <DialogContent>
+              <DialogContent
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  paddingTop: 1,
+                  paddingBottom: 1,
+                }}
+              >
+                <Typography
+                  sx={{margin: 'auto', paddingBottom: 1}}
+                  variant="subtitle"
+                >
+                  Rate vink
+                </Typography>
+                <Rating
+                  sx={{margin: 'auto', paddingBottom: 2}}
+                  name="no-value"
+                  value={null}
+                />
+                <Divider />
                 <TextField
+                  multiline
                   margin="dense"
                   id="name"
                   label="Write a comment..."
                   name="comment"
                   value={inputs.comment}
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   onChange={handleInputChangeComment}
+                  sx={{marginTop: 2}}
                 />
               </DialogContent>
-              <DialogActions sx={{margin: 'auto'}}>
+              <DialogActions sx={{justifyContent: 'center', paddingBottom: 2}}>
                 <Button
                   width="50%"
                   color="primary"
@@ -249,17 +323,19 @@ const Single = () => {
             </form>
           </Dialog>
           <ListItem className="commentTitle">
-            <Typography variant="h5">Comments</Typography>
+            <Typography component="h3" variant="fontH4">
+              Comments
+            </Typography>
             {comments.length > 0 ? (
-              <Typography variant="h5" sx={{marginLeft: 1}}>
+              <Typography component="h3" variant="fontH4" sx={{marginLeft: 1}}>
                 ({comments.length})
               </Typography>
             ) : (
-              <Typography variant="h5"></Typography>
+              <Typography component="h3" variant="fontH4"></Typography>
             )}
           </ListItem>
 
-          <List>
+          <List className="commentList">
             {comments.length > 0 ? (
               comments.map((item, index) => {
                 return (
@@ -271,29 +347,35 @@ const Single = () => {
                             flexDirection: 'column',
                             alignItems: 'flex-start',
                             borderLeft: 5,
-                            borderLeftColor: '#76CFDB ',
+                            borderLeftColor: '#76CFDB',
+                            paddingRight: 5,
                           }}
                           key={item.comment_id}
                         >
-                          <Typography variant="subtitle1">
+                          <Typography variant="body1">
                             {item.comment}
                           </Typography>
                           <Typography
                             sx={{
-                              fontWeight: 'bold',
+                              fontWeight: 900,
                             }}
-                            variant="subtitle2"
+                            component="h5"
+                            variant="fontH6"
                           >
                             {item.username}
                           </Typography>
-                          <Button
-                            variant="contained"
+                          <IconButton
+                            sx={{
+                              position: 'absolute',
+                              right: 0,
+                              top: '20%',
+                            }}
                             onClick={(e) => {
                               doDelete(e, item.comment_id);
                             }}
                           >
-                            Delete
-                          </Button>
+                            <CloseIcon sx={{color: '#48A0B3'}} />
+                          </IconButton>
                         </ListItem>
                         <Divider />
                       </>
@@ -303,17 +385,21 @@ const Single = () => {
                           sx={{
                             flexDirection: 'column',
                             alignItems: 'flex-start',
+                            borderLeft: 5,
+                            borderLeftColor: 'transparent',
+                            paddingRight: 5,
                           }}
                           key={item.comment_id}
                         >
-                          <Typography variant="subtitle1">
+                          <Typography variant="body1">
                             {item.comment}
                           </Typography>
                           <Typography
                             sx={{
-                              fontWeight: 'bold',
+                              fontWeight: 900,
                             }}
-                            variant="subtitle2"
+                            component="h5"
+                            variant="fontH6"
                           >
                             {item.username}
                           </Typography>
@@ -326,7 +412,9 @@ const Single = () => {
               })
             ) : (
               <ListItem>
-                <Typography variant="subtitle2">No comments</Typography>
+                <Typography variant="body1">
+                  No comments yet. Be the first one! 🙂
+                </Typography>
               </ListItem>
             )}
           </List>

@@ -8,6 +8,22 @@ td {
   border-bottom: 1px solid grey;
 } */
 
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Lato:wght@300;400;700;900&display=swap');
+
+* {
+  font-family: 'Lato', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 .commentTitle {
   flex-direction: row;
+}
+
+.commentList {
+  transform: rotate(180deg);
+}
+
+.commentList li {
+  transform: rotate(-180deg);
 }

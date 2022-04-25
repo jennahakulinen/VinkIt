@@ -91,8 +91,13 @@ const useMedia = (showAllFiles, userId) => {
       setLoading(false);
     }
   };
-
-  return {mediaArray, postMedia, deleteMedia, putMedia, loading};
+  return {
+    mediaArray,
+    postMedia,
+    deleteMedia,
+    putMedia,
+    loading,
+  };
 };
 
 const useUser = () => {
@@ -219,4 +224,37 @@ const useSearch = () => {
   return {getResults, postResults};
 };
 
-export {useMedia, useLogin, useUser, useTag, useComment, useSearch};
+const useFavourite = () => {
+  const getFavourite = async (favorite) => {
+    const favoriteResult = await fetchJson(baseUrl + 'favourites/' + favorite);
+    if (favoriteResult.length > 0) {
+      return favoriteResult;
+    } else {
+      throw new Error('No results');
+    }
+  };
+  const addFavorite = async (fileId, data, token) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    return await fetchJson(baseUrl + 'favourites' + fileId, fetchOptions);
+  };
+
+  const deleteFavourite = async (fileId, token) => {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await fetchJson(baseUrl + 'favourites/' + fileId, fetchOptions);
+  };
+  return {getFavourite, addFavorite, deleteFavourite};
+};
+
+export {useMedia, useLogin, useUser, useTag, useComment, useFavourite};

@@ -2,17 +2,18 @@ import React from 'react';
 import MediaTable from '../components/MediaTable';
 import {Typography} from '@mui/material';
 import BackButton from '../components/BackButton';
+// import {useLocation} from 'react-router-dom';
 
-const MyFiles = () => {
+const MyFavorites = () => {
   return (
     <>
       <BackButton />
-      <Typography component="h1" variant="h1">
-        MyFiles
+      <Typography component="h1" variant="h2">
+        My Favorites
       </Typography>
-      <MediaTable allFiles={false} />
+      <MediaTable />
     </>
   );
 };
 
-export default MyFiles;
+export default MyFavorites;
