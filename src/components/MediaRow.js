@@ -1,5 +1,10 @@
 import React from 'react';
-import {Button, ImageListItem, ImageListItemBar} from '@mui/material';
+import {
+  Button,
+  IconButton,
+  ImageListItem,
+  ImageListItemBar,
+} from '@mui/material';
 import PropTypes from 'prop-types';
 import {useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
@@ -8,12 +13,14 @@ import {mediaUrl} from '../utils/variables';
 import {safeParseJson} from '../utils/functions';
 import HeartButton from './HeartButton';
 import {useFavourite} from '../hooks/ApiHooks';
+import {Visibility} from '@mui/icons-material';
+// import {DeleteOutline} from '@mui/icons-material';
 
 const MediaRow = ({file, userId, deleteMedia}) => {
   const {update, setUpdate} = useContext(MediaContext);
   const {addFavorite} = useFavourite();
   const doDelete = async () => {
-    const ok = confirm('Do juu delte?');
+    const ok = confirm('Are you sure?');
     if (ok) {
       try {
         const deleteInfo = await deleteMedia(
@@ -41,6 +48,22 @@ const MediaRow = ({file, userId, deleteMedia}) => {
       //  console.log(err);
     }
   };
+  // const doDeletefavourite = async () => {
+  //   const ok = confirm('Do you want to delete favorite?');
+  //   if (ok) {
+  //     try {
+  //       const deleteFav = await deleteFavourite(
+  //         file.file_id,
+  //         localStorage.getItem('token')
+  //       );
+  //       if (deleteFav) {
+  //         console.log(deleteFav);
+  //       }
+  //     } catch (err) {
+  //       // console.log(err);
+  //     }
+  //   }
+  // };
 
   const {description, filters} = safeParseJson(file.description) || {
     description: file.description,
@@ -73,33 +96,29 @@ const MediaRow = ({file, userId, deleteMedia}) => {
         sx={{borderBottomLeftRadius: 15, borderBottomRightRadius: 15}}
         actionIcon={
           <>
-            <Button
-              color="primaryVariant"
+            <IconButton
               variant="contained"
               component={Link}
               to={'/single'}
               state={{file}}
             >
-              View
-            </Button>
+              <Visibility View />
+            </IconButton>
             <HeartButton variant="contained" onClick={doFavorite}></HeartButton>
+            {/* <DeleteOutline variant="contained" onClick={doDeletefavourite} /> */}
 
             {userId === file.user_id && (
               <>
                 <Button
-                  color="primaryVariant"
                   variant="contained"
+                  color="secondary"
                   component={Link}
                   to={'/modify'}
                   state={{file}}
                 >
                   Edit
                 </Button>
-                <Button
-                  variant="contained"
-                  color="primaryVariant"
-                  onClick={doDelete}
-                >
+                <Button variant="contained" onClick={doDelete}>
                   Delete
                 </Button>
               </>
