@@ -41,7 +41,7 @@ const MediaTable = ({allFiles = true, favorites = false, searchterm}) => {
               <MediaRow
                 key={index}
                 file={item}
-                userId={user.user_id}
+                userId={user?.user_id}
                 deleteMedia={deleteMedia}
               />
             );
