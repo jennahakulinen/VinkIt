@@ -45,3 +45,28 @@ body {
 .MuiImageListItemBar-title {
   color: #05192c;
 }
+
+.heartButton > .MuiButton-startIcon {
+  margin: 0;
+}
+
+.heartButton {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  min-width: 30px !important;
+}
+
+.heartButton:hover {
+  background-color: rgb(252, 252, 252) !important;
+  box-shadow: none;
+}
+
+.MuiImageListItemBar-root,
+.MuiImageListItemBar-positionBottom {
+  height: 50px;
+}
+
+.MuiImageListItemBar-titleWrap {
+  padding-top: 5px !important;
+}
