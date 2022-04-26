@@ -248,6 +248,22 @@ const useFavourite = () => {
       throw new Error('No results');
     }
   };
+  const getFavouriteById = async (token, fileId) => {
+    const fetchOptions = {
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    const favoriteResult = await fetchJson(
+      baseUrl + 'favourites/file/' + fileId,
+      fetchOptions
+    );
+    if (favoriteResult.length > 0) {
+      return favoriteResult;
+    } else {
+      throw new Error('No results');
+    }
+  };
   const addFavorite = async (data, token) => {
     const fetchOptions = {
       method: 'POST',
@@ -267,9 +283,9 @@ const useFavourite = () => {
         'x-access-token': token,
       },
     };
-    return await fetchJson(baseUrl + 'favourites/' + fileId, fetchOptions);
+    return await fetchJson(baseUrl + 'favourites/file/' + fileId, fetchOptions);
   };
-  return {getFavourite, addFavorite, deleteFavourite};
+  return {getFavourite, addFavorite, deleteFavourite, getFavouriteById};
 };
 
 const useSearch = () => {

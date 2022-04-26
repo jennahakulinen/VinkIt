@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Button,
   IconButton,
@@ -17,8 +17,10 @@ import {Visibility} from '@mui/icons-material';
 // import {DeleteOutline} from '@mui/icons-material';
 
 const MediaRow = ({file, userId, deleteMedia}) => {
-  const {update, setUpdate} = useContext(MediaContext);
-  const {addFavorite} = useFavourite();
+  const {update, setUpdate, user} = useContext(MediaContext);
+  const [userfav, setUserfav] = useState(0);
+  const {addFavorite, getFavouriteById, deleteFavourite} = useFavourite();
+
   const doDelete = async () => {
     const ok = confirm('Are you sure?');
     if (ok) {
@@ -43,27 +45,43 @@ const MediaRow = ({file, userId, deleteMedia}) => {
       );
       if (favoriteInfo) {
         console.log(favoriteInfo);
+        setUserfav(1);
       }
     } catch (err) {
       //  console.log(err);
     }
   };
-  // const doDeletefavourite = async () => {
-  //   const ok = confirm('Do you want to delete favorite?');
-  //   if (ok) {
-  //     try {
-  //       const deleteFav = await deleteFavourite(
-  //         file.file_id,
-  //         localStorage.getItem('token')
-  //       );
-  //       if (deleteFav) {
-  //         console.log(deleteFav);
-  //       }
-  //     } catch (err) {
-  //       // console.log(err);
-  //     }
-  //   }
-  // };
+  const fetchFavorites = async () => {
+    try {
+      const favInfo = await getFavouriteById(
+        localStorage.getItem('token'),
+        file.file_id
+      );
+      console.log(favInfo);
+      favInfo.forEach((fav) => {
+        fav.user_id === user.user_id && setUserfav(1);
+      });
+    } catch (err) {
+      //  console.log(err);
+    }
+  };
+  const doDeletefavourite = async () => {
+    const ok = confirm('Do you want to delete favorite?');
+    if (ok) {
+      try {
+        const deleteFav = await deleteFavourite(
+          file.file_id,
+          localStorage.getItem('token')
+        );
+        if (deleteFav) {
+          console.log(deleteFav);
+          setUserfav(0);
+        }
+      } catch (err) {
+        // console.log(err);
+      }
+    }
+  };
 
   const {description, filters} = safeParseJson(file.description) || {
     description: file.description,
@@ -74,6 +92,10 @@ const MediaRow = ({file, userId, deleteMedia}) => {
       sepia: 0,
     },
   };
+
+  useEffect(() => {
+    fetchFavorites();
+  }, []);
 
   return (
     <ImageListItem key={file.file_id}>
@@ -102,10 +124,13 @@ const MediaRow = ({file, userId, deleteMedia}) => {
               to={'/single'}
               state={{file}}
             >
-              <Visibility View />
+              <Visibility />
             </IconButton>
-            <HeartButton variant="contained" onClick={doFavorite}></HeartButton>
-            {/* <DeleteOutline variant="contained" onClick={doDeletefavourite} /> */}
+            <HeartButton
+              variant="contained"
+              onClick={userfav ? doDeletefavourite : doFavorite}
+              userfav={userfav}
+            ></HeartButton>
 
             {userId === file.user_id && (
               <>
