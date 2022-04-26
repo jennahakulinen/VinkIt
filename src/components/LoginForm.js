@@ -39,7 +39,6 @@ const LoginForm = () => {
       sx={{justifyContent: 'center', alignItems: 'center'}}
     >
       <Card
-        fullWidth
         sx={{
           width: '80%',
         }}
@@ -56,19 +55,10 @@ const LoginForm = () => {
           </Typography>
         </Grid>
         <form onSubmit={handleSubmit}>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'flex-end',
-              justifyContent: 'center',
-              my: 2,
-              padding: '0 1rem 0 1rem',
-            }}
-          >
+          <Box className="loginBox">
             <AlternateEmail sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
             <TextField
               fullWidth
-              id="input-with-sx"
               label="Username"
               variant="standard"
               placeholder="Tell me your username"
@@ -77,18 +67,9 @@ const LoginForm = () => {
               value={inputs.username}
             />
           </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'flex-end',
-              justifyContent: 'center',
-              my: 2,
-              padding: '0 1rem 0 1rem',
-            }}
-          >
+          <Box className="loginBox">
             <Key sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
             <TextField
-              id="input-with-sx"
               variant="standard"
               fullWidth
               label="Password"
@@ -99,15 +80,7 @@ const LoginForm = () => {
               value={inputs.password}
             />
           </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              my: 2,
-              padding: '0 1rem 0 1rem',
-            }}
-          >
+          <Box className="loginBox">
             <Button
               color="primary"
               type="submit"

@@ -33,10 +33,10 @@ const RegisterForm = ({setToggle}) => {
       'minimum 3 characters',
       'username not available',
     ],
-    password: ['required field', 'minimum 5 characters'],
-    confirm: ['required field', 'password missmatch'],
-    email: ['required field', 'email is not valid'],
-    full_name: ['minimum 2 characters'],
+    password: ['required field', 'Minimum 5 characters'],
+    confirm: ['required field', 'Passwords do not match'],
+    email: ['required field', 'Email is not valid'],
+    full_name: ['Minimum 2 characters'],
   };
 
   const {postUser, getUsername} = useUser();
@@ -85,15 +85,10 @@ const RegisterForm = ({setToggle}) => {
   return (
     <Grid
       container
-      fullWidth
-      marginTop={10}
-      sx={{
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
+      marginTop={20}
+      sx={{justifyContent: 'center', alignItems: 'center'}}
     >
       <Card
-        fullWidth
         sx={{
           width: '80%',
         }}
@@ -110,18 +105,10 @@ const RegisterForm = ({setToggle}) => {
           </Typography>
         </Grid>
         <ValidatorForm onSubmit={handleSubmit}>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'flex-end',
-              my: 2,
-              padding: '0 1rem 0 1rem',
-            }}
-          >
+          <Box className="loginBox">
             <AlternateEmail sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
             <TextValidator
               variant="standard"
-              fullWidth
               placeholder="Choose your username"
               label="New username"
               name="username"
@@ -131,15 +118,7 @@ const RegisterForm = ({setToggle}) => {
               errorMessages={errorMessages.username}
             />
           </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'flex-end',
-
-              my: 2,
-              padding: '0 1rem 0 1rem',
-            }}
-          >
+          <Box className="loginBox">
             <Key sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
             <TextValidator
               fullWidth
@@ -154,15 +133,7 @@ const RegisterForm = ({setToggle}) => {
               errorMessages={errorMessages.password}
             />
           </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'flex-end',
-
-              my: 2,
-              padding: '0 1rem 0 1rem',
-            }}
-          >
+          <Box className="loginBox">
             <Key sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
             <TextValidator
               fullWidth
@@ -177,15 +148,7 @@ const RegisterForm = ({setToggle}) => {
               errorMessages={errorMessages.confirm}
             />
           </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'flex-end',
-
-              my: 2,
-              padding: '0 1rem 0 1rem',
-            }}
-          >
+          <Box className="loginBox">
             <Email sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
             <TextValidator
               fullWidth
@@ -200,15 +163,7 @@ const RegisterForm = ({setToggle}) => {
               errorMessages={errorMessages.email}
             />
           </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'flex-end',
-
-              my: 2,
-              padding: '0 1rem 0 1rem',
-            }}
-          >
+          <Box className="loginBox">
             <Badge sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
             <TextValidator
               fullWidth
@@ -223,15 +178,7 @@ const RegisterForm = ({setToggle}) => {
             />
           </Box>
 
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              my: 2,
-              padding: '0 1rem 0 1rem',
-            }}
-          >
+          <Box className="loginBox">
             <Button
               color="primary"
               type="submit"
@@ -248,74 +195,6 @@ const RegisterForm = ({setToggle}) => {
         </ValidatorForm>
       </Card>
     </Grid>
-    // <Grid container>
-    //   <Grid item xs={12}>
-    //     <Typography component="h1" variant="h2" gutterBottom>
-    //       Register
-    //     </Typography>
-    //   </Grid>
-
-    //   <Grid item xs={12}>
-    //     <ValidatorForm onSubmit={handleSubmit}>
-    //       <TextValidator
-    //         fullWidth
-    //         placeholder="username"
-    //         label="username"
-    //         name="username"
-    //         onChange={handleInputChange}
-    //         value={inputs.username}
-    //         validators={validators.username}
-    //         errorMessages={errorMessages.username}
-    //       />
-    //       <TextValidator
-    //         fullWidth
-    //         label="password"
-    //         placeholder="password"
-    //         name="password"
-    //         type="password"
-    //         onChange={handleInputChange}
-    //         value={inputs.password}
-    //         validators={validators.password}
-    //         errorMessages={errorMessages.password}
-    //       />
-    //       <TextValidator
-    //         fullWidth
-    //         label="repeat password"
-    //         placeholder="repeat password"
-    //         name="confirm"
-    //         type="password"
-    //         onChange={handleInputChange}
-    //         value={inputs.confirm}
-    //         validators={validators.confirm}
-    //         errorMessages={errorMessages.confirm}
-    //       />
-    //       <TextValidator
-    //         fullWidth
-    //         label="email"
-    //         placeholder="email"
-    //         name="email"
-    //         type="email"
-    //         onChange={handleInputChange}
-    //         value={inputs.email}
-    //         validators={validators.email}
-    //         errorMessages={errorMessages.email}
-    //       />
-    //       <TextValidator
-    //         fullWidth
-    //         label="full name"
-    //         placeholder="full name"
-    //         name="full_name"
-    //         onChange={handleInputChange}
-    //         value={inputs.full_name}
-    //         validators={validators.full_name}
-    //         errorMessages={errorMessages.full_name}
-    //       />
-    //       <Button fullWidth color="primary" type="submit" variant="contained">
-    //         Register
-    //       </Button>
-    //     </ValidatorForm>
-    //   </Grid>
-    // </Grid>
   );
 };
 
