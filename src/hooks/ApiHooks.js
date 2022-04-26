@@ -112,6 +112,9 @@ const useMedia = (showAllFiles, userId, favorites, token) => {
 
 const useUser = () => {
   const getUser = async (token) => {
+    if (token === null) {
+      return null;
+    }
     const fetchOptions = {
       headers: {
         'x-access-token': token,
@@ -126,6 +129,9 @@ const useUser = () => {
   };
 
   const getUserById = async (userId, token) => {
+    if (token === null) {
+      return null;
+    }
     const fetchOptions = {
       headers: {
         'x-access-token': token,

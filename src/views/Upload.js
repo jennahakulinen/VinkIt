@@ -16,7 +16,6 @@ import useForm from '../hooks/FormHooks';
 import {useState, useEffect} from 'react';
 import {appID} from '../utils/variables';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import BackButton from '../components/BackButton';
 
 const Upload = () => {
   const [preview, setPreview] = useState('logo192.png');
@@ -84,8 +83,7 @@ const Upload = () => {
         token
       );
 
-      confirm(tagData.message, categoryTag.message, category) &&
-        navigate('/home');
+      confirm(tagData.message, categoryTag.message, category) && navigate('/');
     } catch (err) {
       alert(err.message);
     }
@@ -117,7 +115,6 @@ const Upload = () => {
     <>
       <Grid container>
         <Grid item xs={12}>
-          <BackButton />
           <Typography component="h1" variant="h2" gutterBottom>
             Upload
           </Typography>

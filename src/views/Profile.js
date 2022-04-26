@@ -15,7 +15,6 @@ import {
   Button,
 } from '@mui/material';
 import {AccountCircle, Badge, ContactMail} from '@mui/icons-material';
-import BackButton from '../components/BackButton';
 import MediaTable from '../components/MediaTable';
 import {Link} from 'react-router-dom';
 
@@ -47,7 +46,6 @@ const Profile = () => {
       {user && (
         <>
           <Card sx={{borderRadius: 0, position: 'relative', boxShadow: 'none'}}>
-            <BackButton />
             <CardContent>
               <List>
                 <ListItem>

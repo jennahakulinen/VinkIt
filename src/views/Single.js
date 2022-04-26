@@ -61,14 +61,11 @@ const Single = () => {
   const {getComment, postComment, deleteComment} = useComment();
   const {getUserById} = useUser();
 
-  console.log(deleteComment);
-
   const fetchFileTags = async () => {
     try {
       if (file) {
         const filetags = await getFileTags(file.file_id);
         setFileTags(filetags);
-        console.log('mitä', filetags);
       }
     } catch (err) {
       // console.log(err);
@@ -78,9 +75,15 @@ const Single = () => {
   const getUsernameByUserId = async (userId) => {
     try {
       const token = localStorage.getItem('token');
-      const user = await getUserById(userId, token);
-      const username = user.username;
-      return username;
+      if (token === null) {
+        const username = 'User ' + userId;
+        return username;
+      } else {
+        const user = await getUserById(userId, token);
+        console.log('tässä käyttäjä', user);
+        const username = user.username;
+        return username;
+      }
     } catch (err) {
       // console.log(err);
     }
@@ -122,8 +125,6 @@ const Single = () => {
     }
   };
 
-  console.log(comments);
-
   const {handleSubmitComment, inputs, handleInputChangeComment} =
     useCommentForm(doComment);
 
@@ -152,7 +153,6 @@ const Single = () => {
         const avatars = await getTag('avatar_' + file.user_id);
         const ava = avatars.pop();
         ava.filename = mediaUrl + ava.filename;
-
         setAvatar(ava);
       }
     } catch (err) {
@@ -262,21 +262,23 @@ const Single = () => {
           <Typography sx={{paddingTop: 1, paddingBottom: 1}} variant="subtitle">
             {description}
           </Typography>
-          <Button
-            startIcon={<ChatBubble />}
-            color="primaryVariant"
-            variant="contained"
-            sx={{
-              color: '#F7F7F7',
-              minWidth: '250px',
-              margin: 'auto',
-              marginTop: 1,
-              marginBottom: 1,
-            }}
-            onClick={handleClickOpen}
-          >
-            Leave a comment
-          </Button>
+          {user ? (
+            <Button
+              startIcon={<ChatBubble />}
+              color="primaryVariant"
+              variant="contained"
+              sx={{
+                color: '#F7F7F7',
+                minWidth: '250px',
+                margin: 'auto',
+                marginTop: 1,
+                marginBottom: 1,
+              }}
+              onClick={handleClickOpen}
+            >
+              Leave a comment
+            </Button>
+          ) : null}
           <Dialog fullWidth maxWidth="sm" open={open} onClose={handleClose}>
             <DialogTitle
               color="primary"

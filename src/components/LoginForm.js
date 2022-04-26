@@ -23,7 +23,7 @@ const LoginForm = () => {
       const userData = await postLogin(inputs);
       localStorage.setItem('token', userData.token);
       setUser(userData.user);
-      navigate('/home');
+      navigate('/');
     } catch (err) {
       alert(err.message);
     }

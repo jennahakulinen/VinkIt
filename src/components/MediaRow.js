@@ -52,7 +52,6 @@ const MediaRow = ({file, userId, deleteMedia}) => {
         localStorage.getItem('token'),
         file.file_id
       );
-      console.log(favInfo);
       favInfo.forEach((fav) => {
         fav.user_id === user.user_id && setUserfav(1);
       });
@@ -115,13 +114,29 @@ const MediaRow = ({file, userId, deleteMedia}) => {
       />
 
       <ImageListItemBar
-        sx={{borderBottomLeftRadius: 15, borderBottomRightRadius: 15}}
+        sx={{
+          borderBottomLeftRadius: 15,
+          borderBottomRightRadius: 15,
+          backgroundColor: 'white',
+          color: '#05192C',
+          boxShadow:
+            'rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px',
+        }}
         actionIcon={
-          <HeartButton
-            variant="contained"
-            onClick={userfav ? doDeletefavourite : doFavorite}
-            userfav={userfav}
-          ></HeartButton>
+          user ? (
+            <HeartButton
+              name="likeButton"
+              sx={{zIndex: 100}}
+              variant="contained"
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                console.log(e);
+                userfav ? doDeletefavourite() : doFavorite();
+              }}
+              userfav={userfav}
+            ></HeartButton>
+          ) : null
         }
         title={file.title}
         subtitle={description}
