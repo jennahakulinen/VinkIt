@@ -147,8 +147,6 @@ const Single = () => {
   };
 
   const fetchAvatar = async () => {
-    const username = await getUsernameByUserId(file.user_id);
-    file.username = username;
     try {
       if (file) {
         const avatars = await getTag('avatar_' + file.user_id);
@@ -365,45 +363,47 @@ const Single = () => {
               comments.map((item, index) => {
                 return (
                   <React.Fragment key={index}>
-                    {item.user_id === user.user_id ? (
-                      <>
-                        <ListItem
-                          sx={{
-                            flexDirection: 'column',
-                            alignItems: 'flex-start',
-                            borderLeft: 5,
-                            borderLeftColor: '#76CFDB',
-                            paddingRight: 5,
-                          }}
-                          key={item.comment_id}
-                        >
-                          <Typography variant="body1">
-                            {item.comment}
-                          </Typography>
-                          <Typography
+                    {item.user_id === user?.user_id ? (
+                      user && (
+                        <>
+                          <ListItem
                             sx={{
-                              fontWeight: 900,
+                              flexDirection: 'column',
+                              alignItems: 'flex-start',
+                              borderLeft: 5,
+                              borderLeftColor: '#76CFDB',
+                              paddingRight: 5,
                             }}
-                            component="h5"
-                            variant="fontH6"
+                            key={item.comment_id}
                           >
-                            {item.username}
-                          </Typography>
-                          <IconButton
-                            sx={{
-                              position: 'absolute',
-                              right: 0,
-                              top: '15%',
-                            }}
-                            onClick={(e) => {
-                              doDelete(e, item.comment_id);
-                            }}
-                          >
-                            <CloseIcon sx={{color: '#48A0B3'}} />
-                          </IconButton>
-                        </ListItem>
-                        <Divider />
-                      </>
+                            <Typography variant="body1">
+                              {item.comment}
+                            </Typography>
+                            <Typography
+                              sx={{
+                                fontWeight: 900,
+                              }}
+                              component="h5"
+                              variant="fontH6"
+                            >
+                              {item.username}
+                            </Typography>
+                            <IconButton
+                              sx={{
+                                position: 'absolute',
+                                right: 0,
+                                top: '15%',
+                              }}
+                              onClick={(e) => {
+                                doDelete(e, item.comment_id);
+                              }}
+                            >
+                              <CloseIcon sx={{color: '#48A0B3'}} />
+                            </IconButton>
+                          </ListItem>
+                          <Divider />
+                        </>
+                      )
                     ) : (
                       <>
                         <ListItem

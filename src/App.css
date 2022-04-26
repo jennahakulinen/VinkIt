@@ -27,3 +27,7 @@ td {
 .commentList li {
   transform: rotate(-180deg);
 }
+
+.MuiContainer-root {
+  padding-bottom: 10%;
+}

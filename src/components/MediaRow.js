@@ -1,10 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Button,
-  IconButton,
-  ImageListItem,
-  ImageListItemBar,
-} from '@mui/material';
+import {ImageListItem, ImageListItemBar} from '@mui/material';
 import PropTypes from 'prop-types';
 import {useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
@@ -13,30 +8,30 @@ import {mediaUrl} from '../utils/variables';
 import {safeParseJson} from '../utils/functions';
 import HeartButton from './HeartButton';
 import {useFavourite} from '../hooks/ApiHooks';
-import {Visibility} from '@mui/icons-material';
 // import {DeleteOutline} from '@mui/icons-material';
 
 const MediaRow = ({file, userId, deleteMedia}) => {
-  const {update, setUpdate, user} = useContext(MediaContext);
+  const {user} = useContext(MediaContext);
   const [userfav, setUserfav] = useState(0);
   const {addFavorite, getFavouriteById, deleteFavourite} = useFavourite();
 
-  const doDelete = async () => {
-    const ok = confirm('Are you sure?');
-    if (ok) {
-      try {
-        const deleteInfo = await deleteMedia(
-          file.file_id,
-          localStorage.getItem('token')
-        );
-        if (deleteInfo) {
-          setUpdate(!update);
-        }
-      } catch (err) {
-        // console.log(err);
-      }
-    }
-  };
+  // const doDelete = async () => {
+  //   const ok = confirm('Are you sure?');
+  //   if (ok) {
+  //     try {
+  //       const deleteInfo = await deleteMedia(
+  //         file.file_id,
+  //         localStorage.getItem('token')
+  //       );
+  //       if (deleteInfo) {
+  //         setUpdate(!update);
+  //       }
+  //     } catch (err) {
+  //       // console.log(err);
+  //     }
+  //   }
+  // };
+
   const doFavorite = async () => {
     try {
       const favoriteInfo = await addFavorite(
@@ -98,7 +93,12 @@ const MediaRow = ({file, userId, deleteMedia}) => {
   }, []);
 
   return (
-    <ImageListItem key={file.file_id}>
+    <ImageListItem
+      key={file.file_id}
+      component={Link}
+      to={'/single'}
+      state={{file}}
+    >
       <img
         src={file.thumbnails ? mediaUrl + file.thumbnails.w320 : 'logo512.png'}
         alt={file.title}
@@ -117,38 +117,11 @@ const MediaRow = ({file, userId, deleteMedia}) => {
       <ImageListItemBar
         sx={{borderBottomLeftRadius: 15, borderBottomRightRadius: 15}}
         actionIcon={
-          <>
-            <IconButton
-              variant="contained"
-              component={Link}
-              to={'/single'}
-              state={{file}}
-            >
-              <Visibility />
-            </IconButton>
-            <HeartButton
-              variant="contained"
-              onClick={userfav ? doDeletefavourite : doFavorite}
-              userfav={userfav}
-            ></HeartButton>
-
-            {userId === file.user_id && (
-              <>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  component={Link}
-                  to={'/modify'}
-                  state={{file}}
-                >
-                  Edit
-                </Button>
-                <Button variant="contained" onClick={doDelete}>
-                  Delete
-                </Button>
-              </>
-            )}
-          </>
+          <HeartButton
+            variant="contained"
+            onClick={userfav ? doDeletefavourite : doFavorite}
+            userfav={userfav}
+          ></HeartButton>
         }
         title={file.title}
         subtitle={description}
