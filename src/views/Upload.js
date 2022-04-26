@@ -71,6 +71,7 @@ const Upload = () => {
       const tagData = await postTag(
         {
           file_id: mediaData.file_id,
+          // jos haku tägeillä, tägin pitää olla uniikki: *inputs* + appID
           tag: appID,
         },
         token

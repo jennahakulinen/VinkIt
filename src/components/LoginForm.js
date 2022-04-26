@@ -34,14 +34,19 @@ const LoginForm = () => {
   return (
     <Grid
       container
-      direction="column"
       justifyContent="center"
       alignItems="center"
-      marginTop={2}
+      marginTop={4}
+      spacing={1}
     >
       <Paper>
         <Grid>
-          <Typography component="h2" variant="fontH2">
+          <Typography
+            component="h2"
+            variant="fontH2"
+            padding={2}
+            textAlign="center"
+          >
             Sign In
           </Typography>
         </Grid>
