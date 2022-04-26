@@ -2,11 +2,13 @@
 import PropTypes from 'prop-types';
 import {useUser} from '../hooks/ApiHooks';
 import useForm from '../hooks/FormHooks';
-import {Grid} from '@mui/material';
+import {Button, Card, Grid} from '@mui/material';
 import {Typography} from '@mui/material';
-import {Button} from '@mui/material';
+// import {Button} from '@mui/material';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {useEffect} from 'react';
+import {Box} from '@mui/system';
+import {AlternateEmail, Badge, Email, Key} from '@mui/icons-material';
 
 const RegisterForm = ({setToggle}) => {
   const alkuarvot = {
@@ -81,74 +83,239 @@ const RegisterForm = ({setToggle}) => {
   }, [inputs]);
 
   return (
-    <Grid container>
-      <Grid item xs={12}>
-        <Typography component="h1" variant="h2" gutterBottom>
-          Register
-        </Typography>
-      </Grid>
-
-      <Grid item xs={12}>
+    <Grid
+      container
+      fullWidth
+      marginTop={10}
+      sx={{
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Card
+        fullWidth
+        sx={{
+          width: '80%',
+        }}
+      >
+        <Grid>
+          <Typography
+            component="h2"
+            variant="fontH2"
+            padding={2}
+            textAlign="center"
+            marginBottom={3}
+          >
+            Register here!
+          </Typography>
+        </Grid>
         <ValidatorForm onSubmit={handleSubmit}>
-          <TextValidator
-            fullWidth
-            placeholder="username"
-            label="username"
-            name="username"
-            onChange={handleInputChange}
-            value={inputs.username}
-            validators={validators.username}
-            errorMessages={errorMessages.username}
-          />
-          <TextValidator
-            fullWidth
-            label="password"
-            placeholder="password"
-            name="password"
-            type="password"
-            onChange={handleInputChange}
-            value={inputs.password}
-            validators={validators.password}
-            errorMessages={errorMessages.password}
-          />
-          <TextValidator
-            fullWidth
-            label="repeat password"
-            placeholder="repeat password"
-            name="confirm"
-            type="password"
-            onChange={handleInputChange}
-            value={inputs.confirm}
-            validators={validators.confirm}
-            errorMessages={errorMessages.confirm}
-          />
-          <TextValidator
-            fullWidth
-            label="email"
-            placeholder="email"
-            name="email"
-            type="email"
-            onChange={handleInputChange}
-            value={inputs.email}
-            validators={validators.email}
-            errorMessages={errorMessages.email}
-          />
-          <TextValidator
-            fullWidth
-            label="full name"
-            placeholder="full name"
-            name="full_name"
-            onChange={handleInputChange}
-            value={inputs.full_name}
-            validators={validators.full_name}
-            errorMessages={errorMessages.full_name}
-          />
-          <Button fullWidth color="primary" type="submit" variant="contained">
-            Register
-          </Button>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'flex-end',
+              my: 2,
+              padding: '0 1rem 0 1rem',
+            }}
+          >
+            <AlternateEmail sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
+            <TextValidator
+              variant="standard"
+              fullWidth
+              placeholder="Choose your username"
+              label="New username"
+              name="username"
+              onChange={handleInputChange}
+              value={inputs.username}
+              validators={validators.username}
+              errorMessages={errorMessages.username}
+            />
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'flex-end',
+
+              my: 2,
+              padding: '0 1rem 0 1rem',
+            }}
+          >
+            <Key sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
+            <TextValidator
+              fullWidth
+              variant="standard"
+              label="New password"
+              placeholder="Choose password"
+              name="password"
+              type="password"
+              onChange={handleInputChange}
+              value={inputs.password}
+              validators={validators.password}
+              errorMessages={errorMessages.password}
+            />
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'flex-end',
+
+              my: 2,
+              padding: '0 1rem 0 1rem',
+            }}
+          >
+            <Key sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
+            <TextValidator
+              fullWidth
+              variant="standard"
+              label="Repeat password"
+              placeholder="Type password again"
+              name="confirm"
+              type="password"
+              onChange={handleInputChange}
+              value={inputs.confirm}
+              validators={validators.confirm}
+              errorMessages={errorMessages.confirm}
+            />
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'flex-end',
+
+              my: 2,
+              padding: '0 1rem 0 1rem',
+            }}
+          >
+            <Email sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
+            <TextValidator
+              fullWidth
+              variant="standard"
+              label="Email"
+              placeholder="Write your email"
+              name="email"
+              type="email"
+              onChange={handleInputChange}
+              value={inputs.email}
+              validators={validators.email}
+              errorMessages={errorMessages.email}
+            />
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'flex-end',
+
+              my: 2,
+              padding: '0 1rem 0 1rem',
+            }}
+          >
+            <Badge sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
+            <TextValidator
+              fullWidth
+              variant="standard"
+              label="Full name"
+              placeholder="Write your full name"
+              name="full_name"
+              onChange={handleInputChange}
+              value={inputs.full_name}
+              validators={validators.full_name}
+              errorMessages={errorMessages.full_name}
+            />
+          </Box>
+
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              my: 2,
+              padding: '0 1rem 0 1rem',
+            }}
+          >
+            <Button
+              color="primary"
+              type="submit"
+              variant="contained"
+              size="large"
+              sx={{
+                fontFamily: ['Fredoka One', 'cursive'].join(','),
+                fontSize: '24px',
+              }}
+            >
+              Register
+            </Button>
+          </Box>
         </ValidatorForm>
-      </Grid>
+      </Card>
     </Grid>
+    // <Grid container>
+    //   <Grid item xs={12}>
+    //     <Typography component="h1" variant="h2" gutterBottom>
+    //       Register
+    //     </Typography>
+    //   </Grid>
+
+    //   <Grid item xs={12}>
+    //     <ValidatorForm onSubmit={handleSubmit}>
+    //       <TextValidator
+    //         fullWidth
+    //         placeholder="username"
+    //         label="username"
+    //         name="username"
+    //         onChange={handleInputChange}
+    //         value={inputs.username}
+    //         validators={validators.username}
+    //         errorMessages={errorMessages.username}
+    //       />
+    //       <TextValidator
+    //         fullWidth
+    //         label="password"
+    //         placeholder="password"
+    //         name="password"
+    //         type="password"
+    //         onChange={handleInputChange}
+    //         value={inputs.password}
+    //         validators={validators.password}
+    //         errorMessages={errorMessages.password}
+    //       />
+    //       <TextValidator
+    //         fullWidth
+    //         label="repeat password"
+    //         placeholder="repeat password"
+    //         name="confirm"
+    //         type="password"
+    //         onChange={handleInputChange}
+    //         value={inputs.confirm}
+    //         validators={validators.confirm}
+    //         errorMessages={errorMessages.confirm}
+    //       />
+    //       <TextValidator
+    //         fullWidth
+    //         label="email"
+    //         placeholder="email"
+    //         name="email"
+    //         type="email"
+    //         onChange={handleInputChange}
+    //         value={inputs.email}
+    //         validators={validators.email}
+    //         errorMessages={errorMessages.email}
+    //       />
+    //       <TextValidator
+    //         fullWidth
+    //         label="full name"
+    //         placeholder="full name"
+    //         name="full_name"
+    //         onChange={handleInputChange}
+    //         value={inputs.full_name}
+    //         validators={validators.full_name}
+    //         errorMessages={errorMessages.full_name}
+    //       />
+    //       <Button fullWidth color="primary" type="submit" variant="contained">
+    //         Register
+    //       </Button>
+    //     </ValidatorForm>
+    //   </Grid>
+    // </Grid>
   );
 };
 

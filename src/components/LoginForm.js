@@ -1,10 +1,11 @@
 import React from 'react';
-import {Button, Grid, Paper, TextField, Typography} from '@mui/material';
+import {Box, Button, Card, Grid, TextField, Typography} from '@mui/material';
 import {useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {MediaContext} from '../contexts/MediaContext';
 import {useLogin} from '../hooks/ApiHooks';
 import useForm from '../hooks/FormHooks';
+import {AlternateEmail, Key} from '@mui/icons-material';
 
 const LoginForm = () => {
   // eslint-disable-next-line no-unused-vars
@@ -34,85 +35,95 @@ const LoginForm = () => {
   return (
     <Grid
       container
-      justifyContent="center"
-      alignItems="center"
-      marginTop={4}
-      spacing={1}
+      marginTop={20}
+      sx={{justifyContent: 'center', alignItems: 'center'}}
     >
-      <Paper>
+      <Card
+        fullWidth
+        sx={{
+          width: '80%',
+        }}
+      >
         <Grid>
           <Typography
             component="h2"
             variant="fontH2"
             padding={2}
             textAlign="center"
+            marginBottom={3}
           >
             Sign In
           </Typography>
         </Grid>
         <form onSubmit={handleSubmit}>
-          <TextField
-            fullWidth
-            label="username"
-            placeholder="username"
-            name="username"
-            onChange={handleInputChange}
-            value={inputs.username}
-          />
-          <TextField
-            fullWidth
-            label="password"
-            placeholder="password"
-            name="password"
-            type="password"
-            onChange={handleInputChange}
-            value={inputs.password}
-          />
-          <Button fullWidth color="primary" type="submit" variant="contained">
-            Login
-          </Button>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'flex-end',
+              justifyContent: 'center',
+              my: 2,
+              padding: '0 1rem 0 1rem',
+            }}
+          >
+            <AlternateEmail sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
+            <TextField
+              fullWidth
+              id="input-with-sx"
+              label="Username"
+              variant="standard"
+              placeholder="Tell me your username"
+              name="username"
+              onChange={handleInputChange}
+              value={inputs.username}
+            />
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'flex-end',
+              justifyContent: 'center',
+              my: 2,
+              padding: '0 1rem 0 1rem',
+            }}
+          >
+            <Key sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
+            <TextField
+              id="input-with-sx"
+              variant="standard"
+              fullWidth
+              label="Password"
+              placeholder="Shh..."
+              name="password"
+              type="password"
+              onChange={handleInputChange}
+              value={inputs.password}
+            />
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              my: 2,
+              padding: '0 1rem 0 1rem',
+            }}
+          >
+            <Button
+              color="primary"
+              type="submit"
+              variant="contained"
+              size="large"
+              sx={{
+                fontFamily: ['Fredoka One', 'cursive'].join(','),
+                fontSize: '24px',
+              }}
+            >
+              Login
+            </Button>
+          </Box>
         </form>
-      </Paper>
+      </Card>
     </Grid>
-    //   <Card>
-    //     <Grid
-    //       container
-    //       justifyContent="center"
-    //       alignItems="center"
-    //       rowSpacing={1}
-    //     >
-    //       <Grid item>
-    //         <Typography component="h1" variant="h2" gutterBottom>
-    //           Login
-    //         </Typography>
-    //       </Grid>
-
-    //       <Grid item>
-    //         <form onSubmit={handleSubmit}>
-    //           <TextField
-    //             fullWidth
-    //             label="username"
-    //             placeholder="username"
-    //             name="username"
-    //             onChange={handleInputChange}
-    //             value={inputs.username}
-    //           />
-    //           <TextField
-    //             fullWidth
-    //             label="password"
-    //             placeholder="password"
-    //             name="password"
-    //             type="password"
-    //             onChange={handleInputChange}
-    //             value={inputs.password}
-    //           />
-    //           <Button fullWidth color="primary" type="submit" variant="contained">
-    //             Login
-    //           </Button>
-    //         </form>
-    //       </Grid>
-    //     </Grid>
-    //   </Card>
   );
 };
 
