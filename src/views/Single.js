@@ -35,6 +35,7 @@ const Single = () => {
   const [avatar, setAvatar] = useState({});
   const [username, setUsername] = useState();
   const [comments, setComments] = useState({});
+  const [fileTags, setFileTags] = useState();
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const file = location.state.file;
@@ -56,11 +57,23 @@ const Single = () => {
     setOpen(false);
   };
 
-  const {getTag} = useTag();
+  const {getTag, getFileTags} = useTag();
   const {getComment, postComment, deleteComment} = useComment();
   const {getUserById} = useUser();
 
   console.log(deleteComment);
+
+  const fetchFileTags = async () => {
+    try {
+      if (file) {
+        const filetags = await getFileTags(file.file_id);
+        setFileTags(filetags);
+        console.log('mitä', filetags);
+      }
+    } catch (err) {
+      // console.log(err);
+    }
+  };
 
   const getUsernameByUserId = async (userId) => {
     try {
@@ -163,6 +176,9 @@ const Single = () => {
   useEffect(() => {
     fetchComments();
     fetchAvatar();
+
+    fetchFileTags();
+
     getUsernameByUserIdname();
   }, []);
 
@@ -233,6 +249,15 @@ const Single = () => {
           }}
         />
         <CardContent sx={{display: 'flex', flexDirection: 'column'}}>
+          {fileTags
+            ? fileTags.map((item, index) => {
+                return (
+                  <Typography key={index} variant="fontH5">
+                    Category: {item.tag}
+                  </Typography>
+                );
+              })
+            : null}
           <Typography component="h3" variant="fontH3">
             {file.title}
           </Typography>
@@ -368,7 +393,7 @@ const Single = () => {
                             sx={{
                               position: 'absolute',
                               right: 0,
-                              top: '20%',
+                              top: '15%',
                             }}
                             onClick={(e) => {
                               doDelete(e, item.comment_id);
