@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Grid, TextField, Typography} from '@mui/material';
+import {Button, Grid, Paper, TextField, Typography} from '@mui/material';
 import {useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {MediaContext} from '../contexts/MediaContext';
@@ -32,14 +32,19 @@ const LoginForm = () => {
   const {inputs, handleInputChange, handleSubmit} = useForm(doLogin, alkuarvot);
   console.log(inputs);
   return (
-    <Grid container>
-      <Grid item xs={12}>
-        <Typography component="h1" variant="h2" gutterBottom>
-          Login
-        </Typography>
-      </Grid>
-
-      <Grid item xs={12}>
+    <Grid
+      container
+      direction="column"
+      justifyContent="center"
+      alignItems="center"
+      marginTop={2}
+    >
+      <Paper>
+        <Grid>
+          <Typography component="h2" variant="fontH2">
+            Sign In
+          </Typography>
+        </Grid>
         <form onSubmit={handleSubmit}>
           <TextField
             fullWidth
@@ -62,8 +67,47 @@ const LoginForm = () => {
             Login
           </Button>
         </form>
-      </Grid>
+      </Paper>
     </Grid>
+    //   <Card>
+    //     <Grid
+    //       container
+    //       justifyContent="center"
+    //       alignItems="center"
+    //       rowSpacing={1}
+    //     >
+    //       <Grid item>
+    //         <Typography component="h1" variant="h2" gutterBottom>
+    //           Login
+    //         </Typography>
+    //       </Grid>
+
+    //       <Grid item>
+    //         <form onSubmit={handleSubmit}>
+    //           <TextField
+    //             fullWidth
+    //             label="username"
+    //             placeholder="username"
+    //             name="username"
+    //             onChange={handleInputChange}
+    //             value={inputs.username}
+    //           />
+    //           <TextField
+    //             fullWidth
+    //             label="password"
+    //             placeholder="password"
+    //             name="password"
+    //             type="password"
+    //             onChange={handleInputChange}
+    //             value={inputs.password}
+    //           />
+    //           <Button fullWidth color="primary" type="submit" variant="contained">
+    //             Login
+    //           </Button>
+    //         </form>
+    //       </Grid>
+    //     </Grid>
+    //   </Card>
   );
 };
 

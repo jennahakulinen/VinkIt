@@ -80,7 +80,19 @@ const themeOptions = {
     },
   },
   shape: {
-    borderRadius: 16,
+    borderRadius: 15,
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: '#F7F7F7',
+          backgroundColor: '#48A0B3',
+          textTransform: 'none',
+          fontFamily: ['Lato', 'sans-serif'].join(','),
+        },
+      },
+    },
   },
 };
 
