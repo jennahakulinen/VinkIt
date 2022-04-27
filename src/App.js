@@ -2,7 +2,7 @@ import React from 'react';
 import {Container} from '@mui/material';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.css';
-import Nav from './components/Nav';
+// import Nav from './components/Nav';
 import {MediaProvider} from './contexts/MediaContext';
 import Home from './views/Home';
 import Login from './views/Login';
@@ -25,7 +25,6 @@ const App = () => {
     <Router basename={process.env.PUBLIC_URL}>
       <MediaProvider>
         <ThemeProvider theme={theme}>
-          <Nav />
           <Container maxWidth="md" disableGutters={true}>
             <Routes>
               <Route path="/" element={<Home />} />

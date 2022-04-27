@@ -17,6 +17,7 @@ import {
 import {AccountCircle, Badge, ContactMail} from '@mui/icons-material';
 import MediaTable from '../components/MediaTable';
 import {Link} from 'react-router-dom';
+import Nav from '../components/Nav';
 
 const Profile = () => {
   const {user} = useContext(MediaContext);
@@ -38,6 +39,7 @@ const Profile = () => {
 
   return (
     <>
+      <Nav />
       <Button component={Link} to={user ? '/logout' : '/'} color="inherit">
         {user && 'Logout'}
       </Button>

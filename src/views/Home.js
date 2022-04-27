@@ -4,10 +4,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import {Link} from 'react-router-dom';
 import {Typography, Box} from '@mui/material';
+import Nav from '../components/Nav';
 
 const Home = () => {
   return (
     <>
+      <Nav />
       <Box
         sx={{
           display: 'flex',

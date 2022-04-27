@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import {useLocation} from 'react-router-dom';
 import {mediaUrl} from '../utils/variables';
 import Rating from '@mui/material/Rating';
+import {Link} from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -20,22 +21,28 @@ import {
   TextField,
   Divider,
   Box,
+  Paper,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import {safeParseJson} from '../utils/functions';
 import BackButton from '../components/BackButton';
 import {useEffect, useState} from 'react';
-import {useTag, useComment, useUser} from '../hooks/ApiHooks';
+import {useTag, useComment, useUser, useFavourite} from '../hooks/ApiHooks';
 import useCommentForm from '../hooks/CommentHook';
 import {MediaContext} from '../contexts/MediaContext';
 import {ChatBubble} from '@mui/icons-material';
+import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined';
+import EditIcon from '@mui/icons-material/Edit';
+import HeartButton from '../components/HeartButton';
 
 const Single = () => {
-  const {user} = useContext(MediaContext);
+  const {user, setUser} = useContext(MediaContext);
   const [avatar, setAvatar] = useState({});
   const [username, setUsername] = useState();
+  const [userId, setUserId] = useState();
   const [comments, setComments] = useState({});
   const [fileTags, setFileTags] = useState();
+  const [userfav, setUserfav] = useState(0);
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const file = location.state.file;
@@ -59,7 +66,76 @@ const Single = () => {
 
   const {getTag, getFileTags} = useTag();
   const {getComment, postComment, deleteComment} = useComment();
-  const {getUserById} = useUser();
+  const {getUserById, getUser} = useUser();
+  const {addFavorite, getFavouriteById, deleteFavourite} = useFavourite();
+
+  const fetchUser = async () => {
+    try {
+      const userData = await getUser(localStorage.getItem('token'));
+      console.log(userData);
+      setUser(userData);
+    } catch (err) {
+      setUser(null);
+    }
+  };
+
+  const fetchUserId = async () => {
+    try {
+      const userData = await getUser(localStorage.getItem('token'));
+      console.log(userData);
+      const userId = userData.user_id;
+      setUserId(userId);
+    } catch (err) {
+      setUserId(null);
+    }
+  };
+
+  const fetchFavorites = async () => {
+    try {
+      const favInfo = await getFavouriteById(
+        localStorage.getItem('token'),
+        file.file_id
+      );
+      favInfo.forEach((fav) => {
+        fav.user_id === user.user_id && setUserfav(1);
+      });
+    } catch (err) {
+      //  console.log(err);
+    }
+  };
+
+  const doFavorite = async () => {
+    try {
+      const favoriteInfo = await addFavorite(
+        {file_id: file.file_id},
+        localStorage.getItem('token')
+      );
+      if (favoriteInfo) {
+        console.log(favoriteInfo);
+        setUserfav(1);
+      }
+    } catch (err) {
+      //  console.log(err);
+    }
+  };
+
+  const doDeletefavourite = async () => {
+    const ok = confirm('Do you want to delete favorite?');
+    if (ok) {
+      try {
+        const deleteFav = await deleteFavourite(
+          file.file_id,
+          localStorage.getItem('token')
+        );
+        if (deleteFav) {
+          console.log(deleteFav);
+          setUserfav(0);
+        }
+      } catch (err) {
+        // console.log(err);
+      }
+    }
+  };
 
   const fetchFileTags = async () => {
     try {
@@ -80,7 +156,6 @@ const Single = () => {
         return username;
       } else {
         const user = await getUserById(userId, token);
-        console.log('tässä käyttäjä', user);
         const username = user.username;
         return username;
       }
@@ -172,16 +247,17 @@ const Single = () => {
   };
 
   useEffect(() => {
+    fetchUser();
+    fetchUserId();
     fetchComments();
     fetchAvatar();
-
+    fetchFavorites();
     fetchFileTags();
-
     getUsernameByUserIdname();
   }, []);
 
   return (
-    <>
+    <Paper sx={{height: '100vh', borderRadius: 0, boxShadow: 'none'}}>
       <Card
         sx={{
           borderRadius: 0,
@@ -237,7 +313,8 @@ const Single = () => {
           alt={file.title}
           sx={{
             width: '100vw',
-            height: '40vh',
+            height: '45vh',
+            objectPosition: 'center 70%',
             filter: `
           brightness(${filters.brightness}%)
           contrast(${filters.contrast}%)
@@ -246,23 +323,89 @@ const Single = () => {
           `,
           }}
         />
-        <CardContent sx={{display: 'flex', flexDirection: 'column'}}>
+        <CardContent
+          sx={{display: 'flex', flexDirection: 'column', paddingTop: 1}}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <Typography
+                sx={{paddingRight: 2}}
+                component="h3"
+                variant="fontH3"
+              >
+                {file.title}
+              </Typography>
+              {userId === file.user_id && (
+                <Button
+                  component={Link}
+                  to={'/modify'}
+                  state={{file}}
+                  className="editButton"
+                  size="small"
+                  sx={{
+                    marginTop: '5px',
+                    fontSize: '10px',
+                    paddingTop: '5px',
+                    paddingRight: '8px',
+                    paddingBottom: '5px',
+                    paddingLeft: '5px',
+                  }}
+                  startIcon={<EditIcon />}
+                >
+                  Edit vink
+                </Button>
+              )}
+            </Box>
+            {user && (
+              <HeartButton
+                className="singleLike"
+                name="likeButton"
+                sx={{zIndex: 100}}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  userfav ? doDeletefavourite() : doFavorite();
+                }}
+                userfav={userfav}
+              ></HeartButton>
+            )}
+          </Box>
           {fileTags
             ? fileTags.map((item, index) => {
                 return (
-                  <Typography key={index} variant="fontH5">
-                    Category: {item.tag}
+                  <Typography
+                    sx={{
+                      paddingTop: 0,
+                      color: '#48A0B3',
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                    key={index}
+                    variant="fontH5"
+                  >
+                    <ClassOutlinedIcon size="small" />
+                    {item.tag}
                   </Typography>
                 );
               })
             : null}
-          <Typography component="h3" variant="fontH3">
-            {file.title}
-          </Typography>
-          <Typography sx={{paddingTop: 1, paddingBottom: 1}} variant="subtitle">
+          <Typography sx={{paddingTop: 2, paddingBottom: 2}} variant="subtitle">
             {description}
           </Typography>
-          {user ? (
+          {user && (
             <Button
               startIcon={<ChatBubble />}
               color="primaryVariant"
@@ -278,7 +421,7 @@ const Single = () => {
             >
               Leave a comment
             </Button>
-          ) : null}
+          )}
           <Dialog fullWidth maxWidth="sm" open={open} onClose={handleClose}>
             <DialogTitle
               color="primary"
@@ -347,7 +490,7 @@ const Single = () => {
               </DialogActions>
             </form>
           </Dialog>
-          <ListItem className="commentTitle">
+          <ListItem sx={{paddingTop: 2}} className="commentTitle">
             <Typography component="h3" variant="fontH4">
               Comments
             </Typography>
@@ -447,10 +590,8 @@ const Single = () => {
           </List>
         </CardContent>
       </Card>
-    </>
+    </Paper>
   );
 };
-
-// TODO in the next task: add propType for location
 
 export default Single;

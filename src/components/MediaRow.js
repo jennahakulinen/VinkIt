@@ -93,7 +93,8 @@ const MediaRow = ({file, userId, deleteMedia}) => {
     }
   };
 
-  const {filters} = safeParseJson(file.description) || {
+  const {description, filters} = safeParseJson(file.description) || {
+    description: file.description,
     filters: {
       brightness: 100,
       contrast: 100,
@@ -101,6 +102,8 @@ const MediaRow = ({file, userId, deleteMedia}) => {
       sepia: 0,
     },
   };
+
+  console.log(description);
 
   useEffect(() => {
     fetchFavorites();
@@ -156,11 +159,10 @@ const MediaRow = ({file, userId, deleteMedia}) => {
                 <DeleteIcon />
               </IconButton>
             )}
-            {user ? (
+            {user && (
               <HeartButton
                 name="likeButton"
                 sx={{zIndex: 100}}
-                variant="contained"
                 onClick={(e) => {
                   e.stopPropagation();
                   e.preventDefault();
@@ -169,7 +171,7 @@ const MediaRow = ({file, userId, deleteMedia}) => {
                 }}
                 userfav={userfav}
               ></HeartButton>
-            ) : null}
+            )}
           </>
         }
         subtitle={fileTags ? fileTags.tag : null}

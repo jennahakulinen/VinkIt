@@ -20,6 +20,10 @@ body {
   background-color: #f7f7f7;
 }
 
+.backButton:hover {
+  background-color: #337a8a !important;
+}
+
 .commentTitle {
   flex-direction: row;
 }
@@ -57,8 +61,17 @@ body {
   min-width: 30px !important;
 }
 
-.heartButton:hover {
-  background-color: rgb(252, 252, 252) !important;
+.editButton > .MuiButton-startIcon {
+  margin: 0;
+  padding-right: 2px;
+}
+
+.editButton:hover {
+  background-color: #337a8a !important;
+}
+
+.heartButton > .MuiButton-startIcon:hover {
+  color: #ff5b5b;
   box-shadow: none;
 }
 
@@ -69,4 +82,9 @@ body {
 
 .MuiImageListItemBar-titleWrap {
   padding-top: 5px !important;
+}
+
+.singleLike > .MuiButton-startIcon > .MuiSvgIcon-fontSizeMedium {
+  font-size: 30px !important;
+  margin-left: 12px;
 }
