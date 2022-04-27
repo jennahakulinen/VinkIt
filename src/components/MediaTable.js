@@ -24,6 +24,26 @@ const MediaTable = ({allFiles = true, favorites = false, searchterm}) => {
     });
   }
 
+  const getPageIndex = (route) => {
+    switch (route) {
+      case '/':
+        return 0;
+      case '/login':
+        return 1;
+      case '/upload':
+        return 1;
+      case '/myfavorites':
+        return 2;
+      case '/profile':
+        return 3;
+      default:
+        return 0;
+    }
+  };
+
+  const value = getPageIndex(window.location.pathname);
+  console.log(value);
+
   return (
     <>
       {loading ? (
@@ -36,9 +56,19 @@ const MediaTable = ({allFiles = true, favorites = false, searchterm}) => {
             marginBottom: 2,
             paddingLeft: 0.5,
             paddingRight: 0.5,
+            paddingBottom: 1,
           }}
-          variant="masonry"
-          cols={windowSize.width > 768 ? 3 : 2}
+          variant={value === 2 ? 'standard' : 'masonry'}
+          cols={
+            value === 2
+              ? windowSize.width > 600
+                ? 4
+                : 2
+              : windowSize.width > 768
+              ? 3
+              : 2
+          }
+          rowHeight={value === 2 ? 250 : 'auto'}
           gap={10}
         >
           {mediaArray.map((item, index) => {
