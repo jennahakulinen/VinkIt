@@ -15,6 +15,7 @@ const MyFavorites = () => {
           justifyContent: 'space-between',
           alignItems: 'center',
           padding: 2,
+          paddingTop: 2.5,
         }}
       >
         <Typography variant="fontH1" color="primary">

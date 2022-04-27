@@ -7,13 +7,21 @@ import MediaRow from './MediaRow';
 import {useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
 
-const MediaTable = ({allFiles = true, favorites = false, searchterm}) => {
+const MediaTable = ({
+  allFiles = true,
+  favorites = false,
+  searchterm,
+  categories = false,
+  tag,
+}) => {
   const {user} = useContext(MediaContext);
   let {mediaArray, loading, deleteMedia} = useMedia(
     allFiles,
     user?.user_id,
     favorites,
-    localStorage.getItem('token')
+    localStorage.getItem('token'),
+    categories,
+    tag
   );
   const windowSize = useWindowSize();
   if (searchterm?.length > 0) {
@@ -36,6 +44,8 @@ const MediaTable = ({allFiles = true, favorites = false, searchterm}) => {
         return 2;
       case '/profile':
         return 3;
+      case '/search':
+        return 4;
       default:
         return 0;
     }
@@ -58,9 +68,11 @@ const MediaTable = ({allFiles = true, favorites = false, searchterm}) => {
             paddingRight: 0.5,
             paddingBottom: 1,
           }}
-          variant={value === 2 ? 'standard' : 'masonry'}
+          variant={
+            value === 2 || value === 3 || value === 4 ? 'standard' : 'masonry'
+          }
           cols={
-            value === 2
+            value === 2 || value === 3 || value === 4
               ? windowSize.width > 600
                 ? 4
                 : 2
@@ -68,7 +80,7 @@ const MediaTable = ({allFiles = true, favorites = false, searchterm}) => {
               ? 3
               : 2
           }
-          rowHeight={value === 2 ? 250 : 'auto'}
+          rowHeight={value === 2 || value === 3 || value === 4 ? 250 : 'auto'}
           gap={10}
         >
           {mediaArray.map((item, index) => {
@@ -91,6 +103,8 @@ MediaTable.propTypes = {
   allFiles: PropTypes.bool,
   favorites: PropTypes.bool,
   searchterm: PropTypes.string,
+  categories: PropTypes.bool,
+  tag: PropTypes.string,
 };
 
 export default MediaTable;

@@ -1,6 +1,6 @@
 import React from 'react';
 import MediaTable from '../components/MediaTable';
-import SearchIcon from '@mui/icons-material/Search';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import IconButton from '@mui/material/IconButton';
 import {Link} from 'react-router-dom';
 import {Typography, Box} from '@mui/material';
@@ -21,8 +21,8 @@ const Home = () => {
         <Typography variant="fontH1" color="primary">
           Vink it!
         </Typography>
-        <IconButton color="primary" component={Link} to={'/search'}>
-          <SearchIcon fontSize="large" />
+        <IconButton color="bodyTextColor" component={Link} to={'/search'}>
+          <SearchRoundedIcon fontSize="large" />
         </IconButton>
       </Box>
       <MediaTable />
