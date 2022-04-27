@@ -126,7 +126,6 @@ const RegisterForm = ({setToggle}) => {
           <Box className="loginBox">
             <Badge className="icon" />
             <TextValidator
-              width="100%"
               variant="standard"
               label="Name"
               placeholder="Enter your name"

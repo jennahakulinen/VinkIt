@@ -9,6 +9,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Card,
 } from '@mui/material';
 import {useMedia, useTag} from '../hooks/ApiHooks';
 import {useNavigate} from 'react-router-dom';
@@ -17,6 +18,8 @@ import {useState, useEffect} from 'react';
 import {appID} from '../utils/variables';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import Nav from '../components/Nav';
+import BackButton from '../components/BackButton';
+import {Box} from '@mui/system';
 
 const Upload = () => {
   const [preview, setPreview] = useState('logo192.png');
@@ -115,60 +118,81 @@ const Upload = () => {
   return (
     <>
       <Nav />
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography component="h1" variant="h2" gutterBottom>
-            Upload
+      <Grid
+        container
+        marginTop={10}
+        sx={{justifyContent: 'center', alignItems: 'center'}}
+      >
+        <BackButton />
+        <Grid>
+          <Typography
+            component="h1"
+            variant="logoFont"
+            color="primary"
+            padding={2}
+            textAlign="center"
+            marginBottom={3}
+          >
+            Add Vink
           </Typography>
         </Grid>
-
-        <Grid item xs={12}>
+        <Card sx={{marginBottom: '20px'}}>
           <ValidatorForm onSubmit={handleSubmit}>
-            <TextValidator
-              fullWidth
-              placeholder="title"
-              name="title"
-              onChange={handleInputChange}
-              value={inputs.title}
-              validators={validators.title}
-              errorMessages={errorMessages.title}
-            />
-            <TextValidator
-              fullWidth
-              placeholder="description"
-              name="description"
-              onChange={handleInputChange}
-              value={inputs.description}
-              validators={validators.description}
-              errorMessages={errorMessages.description}
-            />
-
-            <TextValidator
-              fullWidth
-              type="file"
-              name="file"
-              accept="image/*, video/*, audio/*"
-              onChange={handleInputChange}
-            />
-
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Categories</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={category}
-                label="Category"
-                onChange={handleChange}
-              >
-                {getCategoryName.map((index) => {
-                  return (
-                    <MenuItem key={index} value={index}>
-                      {index}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
+            <Box className="formBox">
+              <TextValidator
+                fullWidth
+                label="Title"
+                placeholder="Enter title"
+                name="title"
+                onChange={handleInputChange}
+                value={inputs.title}
+                validators={validators.title}
+                errorMessages={errorMessages.title}
+              />
+            </Box>
+            <Box className="formBox">
+              <TextValidator
+                fullWidth
+                label="Description"
+                placeholder="Enter description"
+                name="description"
+                onChange={handleInputChange}
+                value={inputs.description}
+                validators={validators.description}
+                errorMessages={errorMessages.description}
+              />
+            </Box>
+            <Box className="formBox">
+              <TextValidator
+                fullWidth
+                type="file"
+                name="file"
+                accept="image/*, video/*, audio/*"
+                onChange={handleInputChange}
+              />
+            </Box>
+            <Box className="formBox">
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Categories
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={category}
+                  label="Category"
+                  onChange={handleChange}
+                >
+                  {getCategoryName.map((index) => {
+                    return (
+                      <MenuItem key={index} value={index}>
+                        {index}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Box>
 
             {/* <Autocomplete
               disablePortal
@@ -183,18 +207,24 @@ const Upload = () => {
             {loading ? (
               <CircularProgress />
             ) : (
-              <Button
-                fullWidth
-                color="primary"
-                type="submit"
-                variant="contained"
-                disabled={!inputs.file}
-              >
-                Upload
-              </Button>
+              <Box className="loginBox">
+                <Button
+                  color="primary"
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  sx={{
+                    fontFamily: ['Fredoka One', 'cursive'].join(','),
+                    fontSize: '24px',
+                  }}
+                  disabled={!inputs.file}
+                >
+                  Upload
+                </Button>
+              </Box>
             )}
           </ValidatorForm>
-        </Grid>
+        </Card>
       </Grid>
       {inputs.file && (
         <Grid container>
@@ -214,7 +244,7 @@ const Upload = () => {
             />
           </Grid>
           <Grid container>
-            <Grid item xs={12}>
+            <Grid item xs={12} padding={3}>
               <Typography>Brightness</Typography>
               <Slider
                 name="brightness"
@@ -226,7 +256,7 @@ const Upload = () => {
                 value={filterInputs.brightness}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} padding={3}>
               <Typography>Contrast</Typography>
               <Slider
                 name="contrast"
@@ -238,7 +268,7 @@ const Upload = () => {
                 value={filterInputs.contrast}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} padding={3}>
               <Typography>Saturation</Typography>
               <Slider
                 name="saturation"
@@ -250,7 +280,7 @@ const Upload = () => {
                 value={filterInputs.saturation}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} padding={3}>
               <Typography>Sepia</Typography>
               <Slider
                 name="sepia"

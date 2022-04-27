@@ -58,6 +58,12 @@ body {
   margin: 1.5rem 0 1.5rem 0;
   padding: 0 1rem 0 1rem;
 }
+.formBox {
+  align-items: flex-end;
+  justify-content: center;
+  margin: 1.5rem 0 1.5rem 0;
+  padding: 0 1rem 0 1rem;
+}
 .Mui-selected,
 .Mui-selected > svg {
   color: #05192c;
