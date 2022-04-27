@@ -20,9 +20,7 @@ import {Link} from 'react-router-dom';
 
 const Profile = () => {
   const {user} = useContext(MediaContext);
-  const [avatar, setAvatar] = useState({
-    filename: 'https://placekitten.com/320',
-  });
+  const [avatar, setAvatar] = useState({});
   const {getTag} = useTag();
 
   const fetchAvatar = async () => {
