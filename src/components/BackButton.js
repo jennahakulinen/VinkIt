@@ -7,6 +7,7 @@ const BackButton = () => {
   const navigate = useNavigate();
   return (
     <IconButton
+      className="backButton"
       sx={{
         width: 36,
         height: 36,

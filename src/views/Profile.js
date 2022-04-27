@@ -15,15 +15,13 @@ import {
   Button,
 } from '@mui/material';
 import {AccountCircle, Badge, ContactMail} from '@mui/icons-material';
-import BackButton from '../components/BackButton';
 import MediaTable from '../components/MediaTable';
 import {Link} from 'react-router-dom';
+import Nav from '../components/Nav';
 
 const Profile = () => {
   const {user} = useContext(MediaContext);
-  const [avatar, setAvatar] = useState({
-    filename: 'https://placekitten.com/320',
-  });
+  const [avatar, setAvatar] = useState({});
   const {getTag} = useTag();
 
   const fetchAvatar = async () => {
@@ -41,13 +39,13 @@ const Profile = () => {
 
   return (
     <>
+      <Nav />
       <Button component={Link} to={user ? '/logout' : '/'} color="inherit">
         {user && 'Logout'}
       </Button>
       {user && (
         <>
           <Card sx={{borderRadius: 0, position: 'relative', boxShadow: 'none'}}>
-            <BackButton />
             <CardContent>
               <List>
                 <ListItem>

@@ -7,9 +7,17 @@ const HeartButton = (props) => {
   const userfav = props.userfav;
   return (
     <Button
+      size="large"
+      className="heartButton"
       {...props}
       startIcon={userfav ? <Favorite /> : <FavoriteBorder />}
-      style={{color: 'red'}}
+      sx={{
+        color: '#FF2222',
+        width: 2,
+        borderRadius: 20,
+        backgroundColor: 'transparent',
+        boxShadow: 'none',
+      }}
     ></Button>
   );
 };

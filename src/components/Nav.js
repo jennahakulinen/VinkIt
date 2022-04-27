@@ -9,34 +9,49 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import HomeIcon from '@mui/icons-material/Home';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PersonIcon from '@mui/icons-material/Person';
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {MediaContext} from '../contexts/MediaContext';
 import {useUser} from '../hooks/ApiHooks';
 
 const Nav = () => {
   const {user, setUser} = useContext(MediaContext);
-  const [value, setValue] = useState(0);
   const ref = useRef(null);
   const {getUser} = useUser();
   const navigate = useNavigate();
 
+  const getPageIndex = (route) => {
+    switch (route) {
+      case '/':
+        return 0;
+      case '/login':
+        return 1;
+      case '/upload':
+        return 1;
+      case '/myfavorites':
+        return 2;
+      case '/profile':
+        return 3;
+      default:
+        return 0;
+    }
+  };
+
+  const value = getPageIndex(window.location.pathname);
+
   const fetchUser = async () => {
     try {
       const userData = await getUser(localStorage.getItem('token'));
-      console.log(userData);
       setUser(userData);
     } catch (err) {
       setUser(null);
-      navigate('/home');
+      navigate('/');
     }
   };
 
   useEffect(() => {
     fetchUser();
   }, []);
-
-  console.log(user, open);
 
   return (
     <Box sx={{width: '100%'}} ref={ref}>
@@ -46,31 +61,41 @@ const Nav = () => {
       >
         {user ? (
           <BottomNavigation
+            sx={{backgroundColor: '#76CFDB'}}
             showLabels
             value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
           >
             <BottomNavigationAction
+              sx={{
+                color: '#F7F7F7',
+              }}
               component={Link}
-              to="/home"
+              to="/"
               label="Home"
               icon={<HomeIcon />}
             />
             <BottomNavigationAction
+              sx={{
+                color: '#F7F7F7',
+              }}
               component={Link}
               to="/upload"
               label="Add"
               icon={<AddCircleIcon />}
             />
             <BottomNavigationAction
+              sx={{
+                color: '#F7F7F7',
+              }}
               component={Link}
               to="/myfavorites"
               label="Favorites"
               icon={<FavoriteIcon />}
             />
             <BottomNavigationAction
+              sx={{
+                color: '#F7F7F7',
+              }}
               component={Link}
               to="/profile"
               label="Profile"
@@ -79,22 +104,25 @@ const Nav = () => {
           </BottomNavigation>
         ) : (
           <BottomNavigation
+            sx={{backgroundColor: '#76CFDB'}}
             showLabels
             value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
           >
             <BottomNavigationAction
+              sx={{
+                color: '#F7F7F7',
+              }}
               component={Link}
-              to="/home"
+              to="/"
               label="Home"
               icon={<HomeIcon />}
             />
-
             <BottomNavigationAction
+              sx={{
+                color: '#F7F7F7',
+              }}
               component={Link}
-              to={!user && '/'}
+              to={!user && '/login'}
               label="Log in"
               color="inherit"
               icon={<PersonIcon />}

@@ -16,7 +16,6 @@ const MediaTable = ({allFiles = true, favorites = false, searchterm}) => {
     localStorage.getItem('token')
   );
   const windowSize = useWindowSize();
-  console.log(mediaArray);
   if (searchterm?.length > 0) {
     mediaArray = mediaArray.filter((file) => {
       if (file.title.toLowerCase().includes(searchterm.toLowerCase())) {
@@ -31,7 +30,13 @@ const MediaTable = ({allFiles = true, favorites = false, searchterm}) => {
         <CircularProgress />
       ) : (
         <ImageList
-          sx={{marginLeft: 2, marginRight: 2}}
+          sx={{
+            marginLeft: 2,
+            marginRight: 2,
+            marginBottom: 2,
+            paddingLeft: 0.5,
+            paddingRight: 0.5,
+          }}
           variant="masonry"
           cols={windowSize.width > 768 ? 3 : 2}
           gap={10}

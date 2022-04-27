@@ -16,6 +16,14 @@ td {
   padding: 0;
 }
 
+body {
+  background-color: #f7f7f7;
+}
+
+.backButton:hover {
+  background-color: #337a8a !important;
+}
+
 .commentTitle {
   flex-direction: row;
 }
@@ -37,4 +45,52 @@ td {
   justify-content: center;
   margin: 1.5rem 0 1.5rem 0;
   padding: 0 1rem 0 1rem;
+}
+.Mui-selected,
+.Mui-selected > svg {
+  color: #05192c;
+}
+
+.MuiImageListItemBar-subtitle,
+.MuiImageListItemBar-title {
+  color: #05192c;
+}
+
+.heartButton > .MuiButton-startIcon {
+  margin: 0;
+}
+
+.heartButton {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  min-width: 30px !important;
+}
+
+.editButton > .MuiButton-startIcon {
+  margin: 0;
+  padding-right: 2px;
+}
+
+.editButton:hover {
+  background-color: #337a8a !important;
+}
+
+.heartButton > .MuiButton-startIcon:hover {
+  color: #ff5b5b;
+  box-shadow: none;
+}
+
+.MuiImageListItemBar-root,
+.MuiImageListItemBar-positionBottom {
+  height: 50px;
+}
+
+.MuiImageListItemBar-titleWrap {
+  padding-top: 5px !important;
+}
+
+.singleLike > .MuiButton-startIcon > .MuiSvgIcon-fontSizeMedium {
+  font-size: 30px !important;
+  margin-left: 12px;
 }
