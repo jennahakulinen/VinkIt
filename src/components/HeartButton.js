@@ -12,7 +12,7 @@ const HeartButton = (props) => {
       {...props}
       startIcon={userfav ? <Favorite /> : <FavoriteBorder />}
       sx={{
-        color: 'red',
+        color: '#FF2222',
         width: 2,
         borderRadius: 20,
         backgroundColor: 'transparent',
