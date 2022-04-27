@@ -12,8 +12,8 @@ const BackButton = () => {
         width: 36,
         height: 36,
         position: 'absolute',
-        top: 5,
-        left: 7,
+        top: '2rem',
+        left: '2rem',
         zIndex: 100,
         backgroundColor: '#48A0B3',
         boxShadow:

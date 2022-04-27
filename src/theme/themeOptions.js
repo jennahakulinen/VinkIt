@@ -33,7 +33,7 @@ const themeOptions = {
     },
 
     // LOGO FONT
-    // Käyttö: variant="logofont"
+    // Käyttö: variant="logoFont"
     logoFont: {
       fontFamily: ['Fredoka One', 'cursive'].join(','),
       fontSize: '38px',

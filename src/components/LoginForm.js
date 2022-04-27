@@ -6,6 +6,7 @@ import {MediaContext} from '../contexts/MediaContext';
 import {useLogin} from '../hooks/ApiHooks';
 import useForm from '../hooks/FormHooks';
 import {AlternateEmail, Key} from '@mui/icons-material';
+import BackButton from './BackButton';
 
 const LoginForm = () => {
   // eslint-disable-next-line no-unused-vars
@@ -35,9 +36,22 @@ const LoginForm = () => {
   return (
     <Grid
       container
-      marginTop={20}
+      marginTop={15}
       sx={{justifyContent: 'center', alignItems: 'center'}}
     >
+      <BackButton />
+      <Grid>
+        <Typography
+          component="h1"
+          variant="logoFont"
+          color="primary"
+          padding={2}
+          textAlign="center"
+          marginBottom={3}
+        >
+          Vink It!
+        </Typography>
+      </Grid>
       <Card
         sx={{
           width: '80%',
@@ -47,33 +61,34 @@ const LoginForm = () => {
           <Typography
             component="h2"
             variant="fontH2"
+            color="primary"
             padding={2}
             textAlign="center"
-            marginBottom={3}
+            my={1}
           >
-            Sign In
+            Login
           </Typography>
         </Grid>
         <form onSubmit={handleSubmit}>
           <Box className="loginBox">
-            <AlternateEmail sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
+            <AlternateEmail className="icon" />
             <TextField
               fullWidth
               label="Username"
               variant="standard"
-              placeholder="Tell me your username"
+              placeholder="Enter your username"
               name="username"
               onChange={handleInputChange}
               value={inputs.username}
             />
           </Box>
           <Box className="loginBox">
-            <Key sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
+            <Key className="icon" />
             <TextField
               variant="standard"
               fullWidth
               label="Password"
-              placeholder="Shh..."
+              placeholder="Enter your password"
               name="password"
               type="password"
               onChange={handleInputChange}
@@ -91,7 +106,7 @@ const LoginForm = () => {
                 fontSize: '24px',
               }}
             >
-              Login
+              Log In
             </Button>
           </Box>
         </form>

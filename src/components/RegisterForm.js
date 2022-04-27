@@ -9,6 +9,7 @@ import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {useEffect} from 'react';
 import {Box} from '@mui/system';
 import {AlternateEmail, Badge, Email, Key} from '@mui/icons-material';
+import BackButton from './BackButton';
 
 const RegisterForm = ({setToggle}) => {
   const alkuarvot = {
@@ -20,23 +21,26 @@ const RegisterForm = ({setToggle}) => {
   };
 
   const validators = {
-    username: ['required', 'minStringLength: 3', 'isAvailable'],
-    password: ['required', 'minStringLength: 5'],
-    confirm: ['required', 'isPasswordMatch'],
+    username: ['required', 'minStringLength: 2', 'isAvailable'],
+    password: ['required', 'minStringLength: 6'],
+    confirm: ['required', 'minStringLength: 6', 'isPasswordMatch'],
     email: ['required', 'isEmail'],
     full_name: ['minStringLength: 2'],
   };
 
   const errorMessages = {
     username: [
-      'required field',
-      'minimum 3 characters',
-      'username not available',
+      'This is a required field',
+      'Username must be two or more characters',
+      'This username is already taken',
     ],
-    password: ['required field', 'Minimum 5 characters'],
-    confirm: ['required field', 'Passwords do not match'],
-    email: ['required field', 'Email is not valid'],
-    full_name: ['Minimum 2 characters'],
+    password: [
+      'This is a required field',
+      'Passwords must be six or more characters',
+    ],
+    confirm: ['This is a required field', 'Passwords do not match'],
+    email: ['This is a required field', 'Please enter a valid email address'],
+    full_name: ['Your name should be two or more characters'],
   };
 
   const {postUser, getUsername} = useUser();
@@ -85,9 +89,22 @@ const RegisterForm = ({setToggle}) => {
   return (
     <Grid
       container
-      marginTop={20}
+      marginTop={10}
       sx={{justifyContent: 'center', alignItems: 'center'}}
     >
+      <BackButton />
+      <Grid>
+        <Typography
+          component="h1"
+          variant="logoFont"
+          color="primary"
+          padding={2}
+          textAlign="center"
+          marginBottom={3}
+        >
+          Vink It!
+        </Typography>
+      </Grid>
       <Card
         sx={{
           width: '80%',
@@ -97,20 +114,35 @@ const RegisterForm = ({setToggle}) => {
           <Typography
             component="h2"
             variant="fontH2"
-            padding={2}
+            color="primary"
+            // padding={2}
             textAlign="center"
-            marginBottom={3}
+            my={3}
           >
             Register here!
           </Typography>
         </Grid>
         <ValidatorForm onSubmit={handleSubmit}>
           <Box className="loginBox">
-            <AlternateEmail sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
+            <Badge className="icon" />
+            <TextValidator
+              width="100%"
+              variant="standard"
+              label="Name"
+              placeholder="Enter your name"
+              name="full_name"
+              onChange={handleInputChange}
+              value={inputs.full_name}
+              validators={validators.full_name}
+              errorMessages={errorMessages.full_name}
+            />
+          </Box>
+          <Box className="loginBox">
+            <AlternateEmail className="icon" />
             <TextValidator
               variant="standard"
               placeholder="Choose your username"
-              label="New username"
+              label="New username *"
               name="username"
               onChange={handleInputChange}
               value={inputs.username}
@@ -119,11 +151,26 @@ const RegisterForm = ({setToggle}) => {
             />
           </Box>
           <Box className="loginBox">
-            <Key sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
+            <Email className="icon" />
             <TextValidator
               fullWidth
               variant="standard"
-              label="New password"
+              label="Email *"
+              placeholder="Enter your email"
+              name="email"
+              type="email"
+              onChange={handleInputChange}
+              value={inputs.email}
+              validators={validators.email}
+              errorMessages={errorMessages.email}
+            />
+          </Box>
+          <Box className="loginBox">
+            <Key className="icon" />
+            <TextValidator
+              fullWidth
+              variant="standard"
+              label="New password *"
               placeholder="Choose password"
               name="password"
               type="password"
@@ -134,11 +181,11 @@ const RegisterForm = ({setToggle}) => {
             />
           </Box>
           <Box className="loginBox">
-            <Key sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
+            <Key className="icon" />
             <TextValidator
               fullWidth
               variant="standard"
-              label="Repeat password"
+              label="Repeat password *"
               placeholder="Type password again"
               name="confirm"
               type="password"
@@ -146,35 +193,6 @@ const RegisterForm = ({setToggle}) => {
               value={inputs.confirm}
               validators={validators.confirm}
               errorMessages={errorMessages.confirm}
-            />
-          </Box>
-          <Box className="loginBox">
-            <Email sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
-            <TextValidator
-              fullWidth
-              variant="standard"
-              label="Email"
-              placeholder="Write your email"
-              name="email"
-              type="email"
-              onChange={handleInputChange}
-              value={inputs.email}
-              validators={validators.email}
-              errorMessages={errorMessages.email}
-            />
-          </Box>
-          <Box className="loginBox">
-            <Badge sx={{fontSize: '2rem', mr: 1, my: 0.5}} />
-            <TextValidator
-              fullWidth
-              variant="standard"
-              label="Full name"
-              placeholder="Write your full name"
-              name="full_name"
-              onChange={handleInputChange}
-              value={inputs.full_name}
-              validators={validators.full_name}
-              errorMessages={errorMessages.full_name}
             />
           </Box>
 
