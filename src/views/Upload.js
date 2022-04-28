@@ -15,7 +15,7 @@ import {useMedia, useTag} from '../hooks/ApiHooks';
 import {useNavigate} from 'react-router-dom';
 import useForm from '../hooks/FormHooks';
 import {useState, useEffect} from 'react';
-import {appID} from '../utils/variables';
+import {appID, getCategoryName} from '../utils/variables';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import Nav from '../components/Nav';
 import BackButton from '../components/BackButton';
@@ -54,8 +54,6 @@ const Upload = () => {
   const handleChange = (event) => {
     setCategory(event.target.value);
   };
-
-  const getCategoryName = ['Home', 'Hobbies', 'Restaurants'];
 
   const doUpload = async () => {
     try {

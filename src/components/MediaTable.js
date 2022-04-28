@@ -7,13 +7,21 @@ import MediaRow from './MediaRow';
 import {useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
 
-const MediaTable = ({allFiles = true, favorites = false, searchterm}) => {
+const MediaTable = ({
+  allFiles = true,
+  favorites = false,
+  searchterm,
+  categories = false,
+  tag,
+}) => {
   const {user} = useContext(MediaContext);
   let {mediaArray, loading, deleteMedia} = useMedia(
     allFiles,
     user?.user_id,
     favorites,
-    localStorage.getItem('token')
+    localStorage.getItem('token'),
+    categories,
+    tag
   );
   const windowSize = useWindowSize();
   if (searchterm?.length > 0) {
@@ -23,6 +31,28 @@ const MediaTable = ({allFiles = true, favorites = false, searchterm}) => {
       }
     });
   }
+
+  const getPageIndex = (route) => {
+    switch (route) {
+      case '/':
+        return 0;
+      case '/login':
+        return 1;
+      case '/upload':
+        return 1;
+      case '/myfavorites':
+        return 2;
+      case '/profile':
+        return 3;
+      case '/search':
+        return 4;
+      default:
+        return 0;
+    }
+  };
+
+  const value = getPageIndex(window.location.pathname);
+  console.log(value);
 
   return (
     <>
@@ -36,9 +66,21 @@ const MediaTable = ({allFiles = true, favorites = false, searchterm}) => {
             marginBottom: 2,
             paddingLeft: 0.5,
             paddingRight: 0.5,
+            paddingBottom: 1,
           }}
-          variant="masonry"
-          cols={windowSize.width > 768 ? 3 : 2}
+          variant={
+            value === 2 || value === 3 || value === 4 ? 'standard' : 'masonry'
+          }
+          cols={
+            value === 2 || value === 3 || value === 4
+              ? windowSize.width > 600
+                ? 4
+                : 2
+              : windowSize.width > 768
+              ? 3
+              : 2
+          }
+          rowHeight={value === 2 || value === 3 || value === 4 ? 250 : 'auto'}
           gap={10}
         >
           {mediaArray.map((item, index) => {
@@ -61,6 +103,8 @@ MediaTable.propTypes = {
   allFiles: PropTypes.bool,
   favorites: PropTypes.bool,
   searchterm: PropTypes.string,
+  categories: PropTypes.bool,
+  tag: PropTypes.string,
 };
 
 export default MediaTable;

@@ -17,7 +17,7 @@ const fetchJson = async (url, options = {}) => {
   }
 };
 
-const useMedia = (showAllFiles, userId, favorites, token) => {
+const useMedia = (showAllFiles, userId, favorites, token, categories, tag) => {
   const {update} = useContext(MediaContext);
   const [mediaArray, setMediaArray] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -35,6 +35,19 @@ const useMedia = (showAllFiles, userId, favorites, token) => {
           }
         });
       }
+
+      if (categories) {
+        const categories = await useTag().getFileTagList(tag);
+        console.log(categories);
+        media = media.filter((file) => {
+          for (const category of categories) {
+            if (category.file_id === file.file_id) {
+              return file;
+            }
+          }
+        });
+      }
+
       // jos !showAllFiles, filteröi kirjautuneen
       // käyttäjän tiedostot media taulukkoon
       if (!showAllFiles) {
@@ -188,6 +201,15 @@ const useTag = () => {
     }
   };
 
+  const getFileTagList = async (tag) => {
+    const tagResult = await fetchJson(baseUrl + 'tags/' + tag);
+    if (tagResult.length > 0) {
+      return tagResult;
+    } else {
+      throw new Error('No results');
+    }
+  };
+
   const postTag = async (data, token) => {
     const fetchOptions = {
       method: 'POST',
@@ -199,7 +221,7 @@ const useTag = () => {
     };
     return await fetchJson(baseUrl + 'tags', fetchOptions);
   };
-  return {getTag, getFileTags, postTag};
+  return {getTag, getFileTags, getFileTagList, postTag};
 };
 
 const useComment = () => {
