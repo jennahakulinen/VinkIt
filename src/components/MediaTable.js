@@ -80,7 +80,7 @@ const MediaTable = ({
               ? 3
               : 2
           }
-          rowHeight={value === 2 || value === 3 || value === 4 ? 250 : 'auto'}
+          rowHeight={value === 2 || value === 3 || value === 4 ? 220 : 'auto'}
           gap={10}
         >
           {mediaArray.map((item, index) => {

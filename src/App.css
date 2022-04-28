@@ -88,3 +88,7 @@ body {
   font-size: 30px !important;
   margin-left: 12px;
 }
+
+.MuiImageList-standard {
+  margin-top: 8px;
+}

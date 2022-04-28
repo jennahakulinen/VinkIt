@@ -1,10 +1,11 @@
-import {Typography, Box} from '@mui/material';
+import {Typography, Box, Button} from '@mui/material';
 import React, {useState} from 'react';
 import BackButton from '../components/BackButton';
 import {TextField, IconButton} from '@mui/material';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import MediaTable from '../components/MediaTable';
+import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined';
 // import {useNavigate} from 'react-router-dom';
 
 import useForm from '../hooks/FormHooks';
@@ -77,35 +78,56 @@ const Search = () => {
 
         <Box
           sx={{
-            paddingLeft: 30,
+            width: '90%',
             display: 'flex',
+            justifyContent: 'space-around',
             alignItems: 'center',
-            flexWrap: 'wrap',
           }}
         >
-          <span>All categories</span>
-          <IconButton onClick={showCategories} color="primary">
-            <FilterListIcon />
-          </IconButton>
-          <span>Filters</span>
-          <IconButton color="primary">
-            <FilterListIcon />
-          </IconButton>
+          <Button
+            sx={{backgroundColor: 'transparent', color: '#48A0B3'}}
+            onClick={showCategories}
+            startIcon={<ClassOutlinedIcon />}
+          >
+            Show categories
+          </Button>
+          <Button
+            sx={{backgroundColor: 'transparent', color: '#48A0B3'}}
+            startIcon={<FilterListIcon />}
+          >
+            Filters
+          </Button>
         </Box>
       </Box>
 
-      <Box sx={{margin: 'auto', textAlign: 'center', paddingBottom: 2}}>
+      <Box
+        sx={{
+          margin: 'auto',
+          textAlign: 'center',
+          paddingBottom: 2,
+          paddingTop: 2,
+        }}
+      >
         <Typography variant="fontH1" color="primary">
           Discover!
         </Typography>
       </Box>
       {searchterm ? (
-        <MediaTable searchterm={searchterm} />
+        <>
+          <Typography>Search results</Typography>
+          <MediaTable searchterm={searchterm} />
+        </>
       ) : (
         getCategoryName.map((item, index) => {
           return (
             <React.Fragment key={index}>
-              <Typography>{item}</Typography>
+              <Typography
+                variant="fontH4"
+                color="bodyTextColor"
+                sx={{paddingLeft: 4}}
+              >
+                {item}
+              </Typography>
               <MediaTable categories={true} tag={item} />
             </React.Fragment>
           );
