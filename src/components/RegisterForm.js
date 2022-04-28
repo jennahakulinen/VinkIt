@@ -107,7 +107,7 @@ const RegisterForm = ({setToggle}) => {
       </Grid>
       <Card
         sx={{
-          width: '80%',
+          width: '90%',
         }}
       >
         <Grid>
@@ -126,6 +126,7 @@ const RegisterForm = ({setToggle}) => {
           <Box className="loginBox">
             <Badge className="icon" />
             <TextValidator
+              fullWidth
               variant="standard"
               label="Name"
               placeholder="Enter your name"
@@ -139,6 +140,7 @@ const RegisterForm = ({setToggle}) => {
           <Box className="loginBox">
             <AlternateEmail className="icon" />
             <TextValidator
+              fullWidth
               variant="standard"
               placeholder="Choose your username"
               label="New username *"

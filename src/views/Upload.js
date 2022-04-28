@@ -43,8 +43,11 @@ const Upload = () => {
   };
 
   const errorMessages = {
-    username: ['required field', 'minimum 3 characters'],
-    description: ['minimum 5 characters'],
+    title: [
+      'This is a required field',
+      'Title must be three or more characters',
+    ],
+    description: ['Description should be five or more characters'],
   };
 
   const {postMedia, loading} = useMedia();

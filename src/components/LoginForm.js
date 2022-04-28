@@ -73,7 +73,7 @@ const LoginForm = () => {
       </Grid>
       <Card
         sx={{
-          width: '80%',
+          width: '90%',
         }}
       >
         <Grid>
