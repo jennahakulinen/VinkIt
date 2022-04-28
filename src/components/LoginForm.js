@@ -1,9 +1,17 @@
 import React from 'react';
-import {Box, Button, Card, Grid, TextField, Typography} from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  CircularProgress,
+  Grid,
+  TextField,
+  Typography,
+} from '@mui/material';
 import {useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {MediaContext} from '../contexts/MediaContext';
-import {useLogin} from '../hooks/ApiHooks';
+import {useLogin, useMedia} from '../hooks/ApiHooks';
 import useForm from '../hooks/FormHooks';
 import {AlternateEmail, Key} from '@mui/icons-material';
 import BackButton from './BackButton';
@@ -18,6 +26,7 @@ const LoginForm = () => {
 
   const {postLogin} = useLogin();
   const navigate = useNavigate();
+  const {loading} = useMedia();
 
   const doLogin = async () => {
     console.log('doLogin');
@@ -33,6 +42,16 @@ const LoginForm = () => {
 
   const {inputs, handleInputChange, handleSubmit} = useForm(doLogin, alkuarvot);
   console.log(inputs);
+
+  // useEffect(() => {
+  //   if (inputs.user) {
+  //     const reader = new FileReader();
+  //     reader.addEventListener('load', () => {
+  //       setPreview(reader.result);
+  //     });
+  //     reader.readAsDataURL(inputs.user);
+  //   }
+  // }, [inputs.user]);
   return (
     <Grid
       container
@@ -95,20 +114,25 @@ const LoginForm = () => {
               value={inputs.password}
             />
           </Box>
-          <Box className="loginBox">
-            <Button
-              color="primary"
-              type="submit"
-              variant="contained"
-              size="large"
-              sx={{
-                fontFamily: ['Fredoka One', 'cursive'].join(','),
-                fontSize: '24px',
-              }}
-            >
-              Log In
-            </Button>
-          </Box>
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <Box className="loginBox">
+              <Button
+                color="primary"
+                type="submit"
+                variant="contained"
+                size="large"
+                sx={{
+                  fontFamily: ['Fredoka One', 'cursive'].join(','),
+                  fontSize: '24px',
+                }}
+                // disabled={!inputs.user}
+              >
+                Log In
+              </Button>
+            </Box>
+          )}
         </form>
       </Card>
     </Grid>

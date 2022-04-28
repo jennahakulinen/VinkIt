@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Button,
+  Card,
   CircularProgress,
   Grid,
   Slider,
@@ -13,6 +14,8 @@ import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {safeParseJson} from '../utils/functions';
 import {mediaUrl} from '../utils/variables';
 import BackButton from '../components/BackButton';
+import Nav from '../components/Nav';
+import {Box} from '@mui/system';
 
 const Modify = () => {
   const location = useLocation();
@@ -84,50 +87,74 @@ const Modify = () => {
 
   return (
     <>
-      <Grid container>
-        <Grid item xs={12}>
-          <BackButton />
-          <Typography component="h1" variant="h2" gutterBottom>
-            Modify
+      <Nav />
+      <Grid
+        container
+        marginTop={10}
+        sx={{justifyContent: 'center', alignItems: 'center'}}
+      >
+        <BackButton />
+        <Grid>
+          <Typography
+            component="h1"
+            variant="logoFont"
+            color="primary"
+            padding={2}
+            textAlign="center"
+            marginBottom={3}
+          >
+            Edit Vink
           </Typography>
         </Grid>
-
-        <Grid item xs={12}>
+        <Card sx={{marginBottom: '20px', width: '90%'}}>
           <ValidatorForm onSubmit={handleSubmit}>
-            <TextValidator
-              fullWidth
-              placeholder="title"
-              name="title"
-              onChange={handleInputChange}
-              value={inputs.title}
-              validators={validators.title}
-              errorMessages={errorMessages.title}
-            />
-            <TextValidator
-              fullWidth
-              placeholder="description"
-              name="description"
-              onChange={handleInputChange}
-              value={inputs.description}
-              validators={validators.description}
-              errorMessages={errorMessages.description}
-            />
+            <Box className="formBox">
+              <TextValidator
+                fullWidth
+                label="Title"
+                placeholder="Edit title"
+                name="title"
+                onChange={handleInputChange}
+                value={inputs.title}
+                validators={validators.title}
+                errorMessages={errorMessages.title}
+              />
+            </Box>
+            <Box className="formBox">
+              <TextValidator
+                fullWidth
+                label="Description"
+                placeholder="Edit description"
+                name="description"
+                onChange={handleInputChange}
+                value={inputs.description}
+                validators={validators.description}
+                errorMessages={errorMessages.description}
+              />
+            </Box>
 
             {loading ? (
               <CircularProgress />
             ) : (
-              <Button
-                fullWidth
-                color="primary"
-                type="submit"
-                variant="contained"
-              >
-                Save
-              </Button>
+              <Box className="loginBox">
+                <Button
+                  color="primary"
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  sx={{
+                    fontFamily: ['Fredoka One', 'cursive'].join(','),
+                    fontSize: '24px',
+                  }}
+                >
+                  Save changes
+                </Button>
+              </Box>
             )}
           </ValidatorForm>
-        </Grid>
+        </Card>
       </Grid>
+
       {file && (
         <Grid container>
           <Grid item xs={12}>
@@ -146,7 +173,7 @@ const Modify = () => {
             />
           </Grid>
           <Grid container>
-            <Grid item xs={12}>
+            <Grid item xs={12} padding={3}>
               <Typography>Brightness</Typography>
               <Slider
                 name="brightness"
@@ -158,7 +185,7 @@ const Modify = () => {
                 value={filterInputs.brightness}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} padding={3}>
               <Typography>Contrast</Typography>
               <Slider
                 name="contrast"
@@ -170,7 +197,7 @@ const Modify = () => {
                 value={filterInputs.contrast}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} padding={3}>
               <Typography>Saturation</Typography>
               <Slider
                 name="saturation"
@@ -182,7 +209,7 @@ const Modify = () => {
                 value={filterInputs.saturation}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} padding={3}>
               <Typography>Sepia</Typography>
               <Slider
                 name="sepia"
