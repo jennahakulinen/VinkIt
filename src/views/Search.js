@@ -1,4 +1,4 @@
-import {Typography, Box, Button} from '@mui/material';
+import {Typography, Box, Button, Divider} from '@mui/material';
 import React, {useState} from 'react';
 import BackButton from '../components/BackButton';
 import {TextField, IconButton} from '@mui/material';
@@ -114,20 +114,58 @@ const Search = () => {
       </Box>
       {searchterm ? (
         <>
-          <Typography>Search results</Typography>
+          <Typography
+            variant="fontH5"
+            color="bodyTextColor"
+            sx={{paddingLeft: 4}}
+          >
+            Search results for{' '}
+            <span style={{color: '#48A0B3'}}>{searchterm}</span>
+          </Typography>
+          <Divider
+            sx={{
+              width: '95%',
+              margin: 'auto',
+              marginTop: 1,
+              marginBottom: 1,
+            }}
+          />
           <MediaTable searchterm={searchterm} />
         </>
       ) : (
         getCategoryName.map((item, index) => {
           return (
             <React.Fragment key={index}>
-              <Typography
-                variant="fontH4"
-                color="bodyTextColor"
-                sx={{paddingLeft: 4}}
+              <Box
+                sx={{
+                  width: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
               >
-                {item}
-              </Typography>
+                <Typography
+                  variant="fontH4"
+                  color="bodyTextColor"
+                  sx={{paddingLeft: 4}}
+                >
+                  {item}
+                </Typography>
+                <Button
+                  sx={{marginRight: 4, paddingRight: 1, paddingLeft: 1}}
+                  size="small"
+                >
+                  See all from {item}
+                </Button>
+              </Box>
+              <Divider
+                sx={{
+                  width: '95%',
+                  margin: 'auto',
+                  marginTop: 1,
+                  marginBottom: 1,
+                }}
+              />
               <MediaTable categories={true} tag={item} />
             </React.Fragment>
           );
