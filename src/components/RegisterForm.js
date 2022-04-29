@@ -2,11 +2,14 @@
 import PropTypes from 'prop-types';
 import {useUser} from '../hooks/ApiHooks';
 import useForm from '../hooks/FormHooks';
-import {Grid} from '@mui/material';
+import {Button, Card, Grid} from '@mui/material';
 import {Typography} from '@mui/material';
-import {Button} from '@mui/material';
+// import {Button} from '@mui/material';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {useEffect} from 'react';
+import {Box} from '@mui/system';
+import {AlternateEmail, Badge, Email, Key} from '@mui/icons-material';
+import BackButton from './BackButton';
 
 const RegisterForm = ({setToggle}) => {
   const alkuarvot = {
@@ -18,23 +21,26 @@ const RegisterForm = ({setToggle}) => {
   };
 
   const validators = {
-    username: ['required', 'minStringLength: 3', 'isAvailable'],
-    password: ['required', 'minStringLength: 5'],
-    confirm: ['required', 'isPasswordMatch'],
+    username: ['required', 'minStringLength: 2', 'isAvailable'],
+    password: ['required', 'minStringLength: 6'],
+    confirm: ['required', 'minStringLength: 6', 'isPasswordMatch'],
     email: ['required', 'isEmail'],
     full_name: ['minStringLength: 2'],
   };
 
   const errorMessages = {
     username: [
-      'required field',
-      'minimum 3 characters',
-      'username not available',
+      'This is a required field',
+      'Username must be two or more characters',
+      'This username is already taken',
     ],
-    password: ['required field', 'minimum 5 characters'],
-    confirm: ['required field', 'password missmatch'],
-    email: ['required field', 'email is not valid'],
-    full_name: ['minimum 2 characters'],
+    password: [
+      'This is a required field',
+      'Passwords must be six or more characters',
+    ],
+    confirm: ['This is a required field', 'Passwords do not match'],
+    email: ['This is a required field', 'Please enter a valid email address'],
+    full_name: ['Your name should be two or more characters'],
   };
 
   const {postUser, getUsername} = useUser();
@@ -81,73 +87,132 @@ const RegisterForm = ({setToggle}) => {
   }, [inputs]);
 
   return (
-    <Grid container>
-      <Grid item xs={12}>
-        <Typography component="h1" variant="h2" gutterBottom>
-          Register
+    <Grid
+      container
+      marginTop={10}
+      sx={{justifyContent: 'center', alignItems: 'center'}}
+    >
+      <BackButton />
+      <Grid>
+        <Typography
+          component="h1"
+          variant="logoFont"
+          color="primary"
+          padding={2}
+          textAlign="center"
+          marginBottom={3}
+        >
+          Vink It!
         </Typography>
       </Grid>
-
-      <Grid item xs={12}>
+      <Card
+        sx={{
+          width: '90%',
+        }}
+      >
+        <Grid>
+          <Typography
+            component="h2"
+            variant="fontH2"
+            color="primary"
+            // padding={2}
+            textAlign="center"
+            my={3}
+          >
+            Register here!
+          </Typography>
+        </Grid>
         <ValidatorForm onSubmit={handleSubmit}>
-          <TextValidator
-            fullWidth
-            placeholder="username"
-            label="username"
-            name="username"
-            onChange={handleInputChange}
-            value={inputs.username}
-            validators={validators.username}
-            errorMessages={errorMessages.username}
-          />
-          <TextValidator
-            fullWidth
-            label="password"
-            placeholder="password"
-            name="password"
-            type="password"
-            onChange={handleInputChange}
-            value={inputs.password}
-            validators={validators.password}
-            errorMessages={errorMessages.password}
-          />
-          <TextValidator
-            fullWidth
-            label="repeat password"
-            placeholder="repeat password"
-            name="confirm"
-            type="password"
-            onChange={handleInputChange}
-            value={inputs.confirm}
-            validators={validators.confirm}
-            errorMessages={errorMessages.confirm}
-          />
-          <TextValidator
-            fullWidth
-            label="email"
-            placeholder="email"
-            name="email"
-            type="email"
-            onChange={handleInputChange}
-            value={inputs.email}
-            validators={validators.email}
-            errorMessages={errorMessages.email}
-          />
-          <TextValidator
-            fullWidth
-            label="full name"
-            placeholder="full name"
-            name="full_name"
-            onChange={handleInputChange}
-            value={inputs.full_name}
-            validators={validators.full_name}
-            errorMessages={errorMessages.full_name}
-          />
-          <Button fullWidth color="primary" type="submit" variant="contained">
-            Register
-          </Button>
+          <Box className="loginBox">
+            <Badge className="icon" />
+            <TextValidator
+              fullWidth
+              variant="standard"
+              label="Name"
+              placeholder="Enter your name"
+              name="full_name"
+              onChange={handleInputChange}
+              value={inputs.full_name}
+              validators={validators.full_name}
+              errorMessages={errorMessages.full_name}
+            />
+          </Box>
+          <Box className="loginBox">
+            <AlternateEmail className="icon" />
+            <TextValidator
+              fullWidth
+              variant="standard"
+              placeholder="Choose your username"
+              label="New username *"
+              name="username"
+              onChange={handleInputChange}
+              value={inputs.username}
+              validators={validators.username}
+              errorMessages={errorMessages.username}
+            />
+          </Box>
+          <Box className="loginBox">
+            <Email className="icon" />
+            <TextValidator
+              fullWidth
+              variant="standard"
+              label="Email *"
+              placeholder="Enter your email"
+              name="email"
+              type="email"
+              onChange={handleInputChange}
+              value={inputs.email}
+              validators={validators.email}
+              errorMessages={errorMessages.email}
+            />
+          </Box>
+          <Box className="loginBox">
+            <Key className="icon" />
+            <TextValidator
+              fullWidth
+              variant="standard"
+              label="New password *"
+              placeholder="Choose password"
+              name="password"
+              type="password"
+              onChange={handleInputChange}
+              value={inputs.password}
+              validators={validators.password}
+              errorMessages={errorMessages.password}
+            />
+          </Box>
+          <Box className="loginBox">
+            <Key className="icon" />
+            <TextValidator
+              fullWidth
+              variant="standard"
+              label="Repeat password *"
+              placeholder="Type password again"
+              name="confirm"
+              type="password"
+              onChange={handleInputChange}
+              value={inputs.confirm}
+              validators={validators.confirm}
+              errorMessages={errorMessages.confirm}
+            />
+          </Box>
+
+          <Box className="loginBox">
+            <Button
+              color="primary"
+              type="submit"
+              variant="contained"
+              size="large"
+              sx={{
+                fontFamily: ['Fredoka One', 'cursive'].join(','),
+                fontSize: '24px',
+              }}
+            >
+              Register
+            </Button>
+          </Box>
         </ValidatorForm>
-      </Grid>
+      </Card>
     </Grid>
   );
 };

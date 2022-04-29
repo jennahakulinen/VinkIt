@@ -20,6 +20,18 @@ body {
   background-color: #f7f7f7;
 }
 
+/* .backButton{
+  width: 36px;
+  height: 36px;
+  position: 'absolute';
+  top: 5;
+  left: 7;
+  z-index: 100;
+  background-color: '#48A0B3';
+  box-shadow:
+  'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px';
+} */
+
 .backButton:hover {
   background-color: #337a8a !important;
 }
@@ -39,7 +51,19 @@ body {
 .MuiContainer-root {
   padding-bottom: 10%;
 }
-
+.loginBox {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin: 1.5rem 0 1.5rem 0;
+  padding: 0 1rem 0 1rem;
+}
+.formBox {
+  align-items: flex-end;
+  justify-content: center;
+  margin: 1.5rem 0 1.5rem 0;
+  padding: 0 1rem 0 1rem;
+}
 .Mui-selected,
 .Mui-selected > svg {
   color: #05192c;
@@ -87,6 +111,11 @@ body {
 .singleLike > .MuiButton-startIcon > .MuiSvgIcon-fontSizeMedium {
   font-size: 30px !important;
   margin-left: 12px;
+}
+
+.icon {
+  margin: 1px 8px 1px 0;
+  color: #05192c;
 }
 
 .MuiImageList-standard {
