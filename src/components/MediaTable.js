@@ -61,6 +61,7 @@ const MediaTable = ({
       ) : (
         <ImageList
           sx={{
+            marginTop: 2,
             marginLeft: 2,
             marginRight: 2,
             marginBottom: 2,
