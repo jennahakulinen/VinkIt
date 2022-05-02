@@ -33,7 +33,11 @@ body {
 } */
 
 .backButton:hover {
-  background-color: #337a8a !important;
+  background-color: #3c8899 !important;
+}
+
+.categoryBut:hover {
+  background-color: #3c8899 !important;
 }
 
 .commentTitle {
@@ -51,6 +55,7 @@ body {
 .MuiContainer-root {
   padding-bottom: 10%;
 }
+
 .loginBox {
   display: flex;
   align-items: flex-end;
@@ -119,10 +124,10 @@ body {
 }
 
 .MuiImageList-standard {
-  margin-top: 8px;
-  margin-bottom: 20px !important;
-}
-.MuiContainer-root {
-  padding-bottom: 0;
+  margin-top: 15px;
+  margin-bottom: 30px !important;
 }
 
+.MuiImageList-masonry {
+  margin-top: 10px;
+}

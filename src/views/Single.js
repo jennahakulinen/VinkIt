@@ -265,7 +265,10 @@ const Single = () => {
           boxShadow: 'none',
         }}
       >
-        <BackButton />
+        <Box sx={{position: 'absolute', top: -15, left: -10}}>
+          <BackButton />
+        </Box>
+
         <Box
           sx={{
             display: 'flex',
@@ -278,6 +281,8 @@ const Single = () => {
             right: 0,
             backgroundColor: '#48A0B3',
             borderBottomLeftRadius: 15,
+            boxShadow:
+              'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
           }}
         >
           <List sx={{marginLeft: 2, marginRight: 2}}>

@@ -61,13 +61,12 @@ const MediaTable = ({
       ) : (
         <ImageList
           sx={{
-            marginTop: 2,
             marginLeft: 2,
             marginRight: 2,
             marginBottom: 2,
             paddingLeft: 0.5,
             paddingRight: 0.5,
-            paddingBottom: 1,
+            paddingBottom: 2,
           }}
           variant={
             value === 2 || value === 3 || value === 4 ? 'standard' : 'masonry'

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ArrowBackIosNew} from '@mui/icons-material';
+import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import {IconButton} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 
@@ -12,8 +12,8 @@ const BackButton = () => {
         width: 36,
         height: 36,
         position: 'absolute',
-        top: '2rem',
-        left: '2rem',
+        top: '1.5rem',
+        left: '1.5rem',
         zIndex: 100,
         backgroundColor: '#48A0B3',
         boxShadow:
@@ -23,7 +23,7 @@ const BackButton = () => {
         navigate(-1);
       }}
     >
-      <ArrowBackIosNew
+      <ArrowBackIosNewRoundedIcon
         color="backgroundColor"
         sx={{
           fontSize: 26,

@@ -46,6 +46,18 @@ const Search = () => {
       <BackButton />
       <Box
         sx={{
+          margin: 'auto',
+          textAlign: 'center',
+          paddingBottom: 2,
+          paddingTop: 2.5,
+        }}
+      >
+        <Typography variant="fontH1" color="primary">
+          Discover!
+        </Typography>
+      </Box>
+      <Box
+        sx={{
           marginTop: 0.5,
           width: '100%',
           display: 'flex',
@@ -54,11 +66,11 @@ const Search = () => {
           alignItems: 'center',
         }}
       >
-        <form style={{paddingTop: 20}} onSubmit={handleSubmit}>
+        <form style={{width: '70%', paddingTop: 5}} onSubmit={handleSubmit}>
           <TextField
             name="title"
             onChange={handleInputChange}
-            sx={{width: 350, margin: 'auto'}}
+            sx={{width: '100%', margin: 'auto'}}
             id="standard-bare"
             variant="outlined"
             placeholder="Search vinks..."
@@ -82,6 +94,7 @@ const Search = () => {
             display: 'flex',
             justifyContent: 'space-around',
             alignItems: 'center',
+            paddingBottom: 3,
           }}
         >
           <Button
@@ -100,18 +113,6 @@ const Search = () => {
         </Box>
       </Box>
 
-      <Box
-        sx={{
-          margin: 'auto',
-          textAlign: 'center',
-          paddingBottom: 2,
-          paddingTop: 2,
-        }}
-      >
-        <Typography variant="fontH1" color="primary">
-          Discover!
-        </Typography>
-      </Box>
       {searchterm ? (
         <>
           <Typography
@@ -152,6 +153,7 @@ const Search = () => {
                   {item}
                 </Typography>
                 <Button
+                  className="categoryBut"
                   sx={{marginRight: 4, paddingRight: 1, paddingLeft: 1}}
                   size="small"
                 >

@@ -50,6 +50,7 @@ const Profile = () => {
               position: 'relative',
               boxShadow: 'none',
               height: '100vh',
+              paddingBottom: '12%',
             }}
           >
             <CardContent sx={{padding: 0}}>
@@ -59,13 +60,10 @@ const Profile = () => {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   padding: 2,
+                  marginTop: 0.5,
                 }}
               >
-                <Typography
-                  variant="fontH1"
-                  color="primary"
-                  sx={{marginLeft: 5}}
-                >
+                <Typography variant="fontH1" color="primary">
                   Vink it!
                 </Typography>
 
