@@ -127,6 +127,11 @@ body {
   margin-top: 15px;
   margin-bottom: 30px !important;
 }
+.MuiListItemText-primary {
+  font-family: 'Fredoka One', cursive !important;
+  color: pink;
+  font-size: large;
+}
 
 .MuiImageList-masonry {
   margin-top: 10px;

@@ -14,7 +14,6 @@ import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {safeParseJson} from '../utils/functions';
 import {mediaUrl} from '../utils/variables';
 import BackButton from '../components/BackButton';
-import Nav from '../components/Nav';
 import {Box} from '@mui/system';
 
 const Modify = () => {
@@ -87,14 +86,13 @@ const Modify = () => {
 
   return (
     <>
-      <Nav />
       <Grid
         container
         marginTop={10}
         sx={{justifyContent: 'center', alignItems: 'center'}}
       >
         <BackButton />
-        <Grid>
+        <Grid item xs={12}>
           <Typography
             component="h1"
             variant="logoFont"
@@ -209,7 +207,7 @@ const Modify = () => {
                 value={filterInputs.saturation}
               />
             </Grid>
-            <Grid item xs={12} padding={3}>
+            <Grid item xs={12} px={3}>
               <Typography>Sepia</Typography>
               <Slider
                 name="sepia"
