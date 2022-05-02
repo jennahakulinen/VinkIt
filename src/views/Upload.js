@@ -156,6 +156,7 @@ const Upload = () => {
                 label="Description"
                 placeholder="Enter description"
                 name="description"
+                multiline
                 onChange={handleInputChange}
                 value={inputs.description}
                 validators={validators.description}

@@ -9,7 +9,6 @@ import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {useEffect} from 'react';
 import {Box} from '@mui/system';
 import {AlternateEmail, Badge, Email, Key} from '@mui/icons-material';
-import BackButton from './BackButton';
 
 const RegisterForm = ({setToggle}) => {
   const alkuarvot = {
@@ -89,10 +88,9 @@ const RegisterForm = ({setToggle}) => {
   return (
     <Grid
       container
-      marginTop={10}
+      marginTop={3}
       sx={{justifyContent: 'center', alignItems: 'center'}}
     >
-      <BackButton />
       <Grid>
         <Typography
           component="h1"
@@ -102,7 +100,7 @@ const RegisterForm = ({setToggle}) => {
           textAlign="center"
           marginBottom={3}
         >
-          Vink It!
+          Vink it!
         </Typography>
       </Grid>
       <Card
@@ -123,10 +121,9 @@ const RegisterForm = ({setToggle}) => {
           </Typography>
         </Grid>
         <ValidatorForm onSubmit={handleSubmit}>
-          <Box className="loginBox">
+          <Box className="loginBox" fullWidth>
             <Badge className="icon" />
             <TextValidator
-              fullWidth
               variant="standard"
               label="Name"
               placeholder="Enter your name"
@@ -137,6 +134,7 @@ const RegisterForm = ({setToggle}) => {
               errorMessages={errorMessages.full_name}
             />
           </Box>
+
           <Box className="loginBox">
             <AlternateEmail className="icon" />
             <TextValidator

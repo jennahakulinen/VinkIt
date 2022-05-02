@@ -14,7 +14,6 @@ import {MediaContext} from '../contexts/MediaContext';
 import {useLogin, useMedia} from '../hooks/ApiHooks';
 import useForm from '../hooks/FormHooks';
 import {AlternateEmail, Key} from '@mui/icons-material';
-import BackButton from './BackButton';
 
 const LoginForm = () => {
   // eslint-disable-next-line no-unused-vars
@@ -55,10 +54,9 @@ const LoginForm = () => {
   return (
     <Grid
       container
-      marginTop={15}
+      marginTop={10}
       sx={{justifyContent: 'center', alignItems: 'center'}}
     >
-      <BackButton />
       <Grid>
         <Typography
           component="h1"
