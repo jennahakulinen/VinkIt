@@ -82,7 +82,6 @@ const Single = () => {
   const fetchUserId = async () => {
     try {
       const userData = await getUser(localStorage.getItem('token'));
-      console.log(userData);
       const userId = userData.user_id;
       setUserId(userId);
     } catch (err) {
@@ -136,6 +135,8 @@ const Single = () => {
       }
     }
   };
+
+  console.log('tykkäys', userfav);
 
   const fetchFileTags = async () => {
     try {
@@ -203,8 +204,6 @@ const Single = () => {
   const {handleSubmitComment, inputs, handleInputChangeComment} =
     useCommentForm(doComment);
 
-  // hae kaikki kommentit
-
   const fetchComments = async () => {
     try {
       if (file) {
@@ -247,11 +246,11 @@ const Single = () => {
   };
 
   useEffect(() => {
+    fetchFavorites();
     fetchUser();
     fetchUserId();
     fetchComments();
     fetchAvatar();
-    fetchFavorites();
     fetchFileTags();
     getUsernameByUserIdname();
   }, []);
@@ -378,11 +377,7 @@ const Single = () => {
                 className="singleLike"
                 name="likeButton"
                 sx={{zIndex: 100}}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  userfav ? doDeletefavourite() : doFavorite();
-                }}
+                onClick={userfav ? doDeletefavourite : doFavorite}
                 userfav={userfav}
               ></HeartButton>
             )}

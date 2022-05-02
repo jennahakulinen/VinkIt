@@ -35,8 +35,6 @@ const Search = () => {
     });
   };
 
-  console.log(searchterm);
-
   const {inputs, handleInputChange, handleSubmit} = useForm(
     doSearch,
     alkuarvot

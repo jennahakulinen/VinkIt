@@ -64,7 +64,6 @@ const MediaTable = ({
   };
 
   const value = getPageIndex(window.location.pathname);
-  console.log(value);
 
   return (
     <>

@@ -87,8 +87,8 @@ const Upload = () => {
         token
       );
 
-      confirm(tagData.message, categoryTag.message, category) &&
-        navigate('/profile');
+      console.log(tagData.message, categoryTag.message, category);
+      confirm('Vink added!') && navigate('/profile');
     } catch (err) {
       alert(err.message);
     }

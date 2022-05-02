@@ -38,7 +38,6 @@ const useMedia = (showAllFiles, userId, favorites, token, categories, tag) => {
 
       if (categories) {
         const categories = await useTag().getFileTagList(tag);
-        console.log(categories);
         media = media.filter((file) => {
           for (const category of categories) {
             if (category.file_id === file.file_id) {
@@ -62,7 +61,7 @@ const useMedia = (showAllFiles, userId, favorites, token, categories, tag) => {
 
       setMediaArray(allFiles);
     } catch (err) {
-      alert(err.message);
+      // console.error(err.message);
     } finally {
       setLoading(false);
     }
@@ -187,7 +186,7 @@ const useTag = () => {
     if (tagResult.length > 0) {
       return tagResult;
     } else {
-      return console.log('No results');
+      throw new Error('No results');
     }
   };
 

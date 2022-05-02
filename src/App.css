@@ -121,6 +121,10 @@ body {
   margin-left: 12px;
 }
 
+.MuiImageListItemBar-actionIconActionPosRight {
+  display: flex;
+}
+
 .icon {
   margin: 1px 8px 1px 0;
   color: #05192c;

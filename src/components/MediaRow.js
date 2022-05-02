@@ -93,6 +93,7 @@ const MediaRow = ({file, userId, deleteMedia}) => {
     }
   };
 
+  // eslint-disable-next-line no-unused-vars
   const {description, filters} = safeParseJson(file.description) || {
     description: file.description,
     filters: {
@@ -102,8 +103,6 @@ const MediaRow = ({file, userId, deleteMedia}) => {
       sepia: 0,
     },
   };
-
-  console.log(description);
 
   useEffect(() => {
     fetchFavorites();
@@ -153,7 +152,6 @@ const MediaRow = ({file, userId, deleteMedia}) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   e.preventDefault();
-                  console.log(e);
                   doDelete();
                 }}
               >
@@ -167,7 +165,6 @@ const MediaRow = ({file, userId, deleteMedia}) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   e.preventDefault();
-                  console.log(e);
                   userfav ? doDeletefavourite() : doFavorite();
                 }}
                 userfav={userfav}
