@@ -113,7 +113,16 @@ body {
   margin-left: 12px;
 }
 
-.icon{
+.icon {
   margin: 1px 8px 1px 0;
-  color: #05192C ;
+  color: #05192c;
 }
+
+.MuiImageList-standard {
+  margin-top: 8px;
+  margin-bottom: 20px !important;
+}
+.MuiContainer-root {
+  padding-bottom: 0;
+}
+

@@ -61,6 +61,7 @@ const MediaTable = ({
       ) : (
         <ImageList
           sx={{
+            marginTop: 2,
             marginLeft: 2,
             marginRight: 2,
             marginBottom: 2,
@@ -80,7 +81,7 @@ const MediaTable = ({
               ? 3
               : 2
           }
-          rowHeight={value === 2 || value === 3 || value === 4 ? 250 : 'auto'}
+          rowHeight={value === 2 || value === 3 || value === 4 ? 220 : 'auto'}
           gap={10}
         >
           {mediaArray.map((item, index) => {

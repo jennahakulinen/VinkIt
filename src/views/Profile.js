@@ -7,17 +7,19 @@ import {
   Avatar,
   Card,
   CardContent,
-  List,
   ListItem,
   ListItemAvatar,
-  ListItemIcon,
   ListItemText,
   Button,
+  Typography,
+  Grid,
+  List,
 } from '@mui/material';
-import {AccountCircle, Badge, ContactMail} from '@mui/icons-material';
+
 import MediaTable from '../components/MediaTable';
 import {Link} from 'react-router-dom';
 import Nav from '../components/Nav';
+import {Box} from '@mui/system';
 
 const Profile = () => {
   const {user} = useContext(MediaContext);
@@ -40,48 +42,85 @@ const Profile = () => {
   return (
     <>
       <Nav />
-      <Button component={Link} to={user ? '/logout' : '/'} color="inherit">
-        {user && 'Logout'}
-      </Button>
       {user && (
         <>
-          <Card sx={{borderRadius: 0, position: 'relative', boxShadow: 'none'}}>
-            <CardContent>
-              <List>
-                <ListItem>
-                  <ListItemAvatar sx={{width: '100%'}}>
-                    <Avatar
-                      variant="square"
-                      src={avatar.filename}
-                      imgProps={{
-                        alt: `${user.username}'s profile image`,
+          <Card
+            sx={{
+              borderRadius: 0,
+              position: 'relative',
+              boxShadow: 'none',
+              height: '100vh',
+            }}
+          >
+            <CardContent sx={{padding: 0}}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: 2,
+                }}
+              >
+                <Typography
+                  variant="fontH1"
+                  color="primary"
+                  sx={{marginLeft: 5}}
+                >
+                  Vink it!
+                </Typography>
+
+                <Button
+                  component={Link}
+                  to={user ? '/logout' : '/'}
+                  color="inherit"
+                >
+                  {user && 'Logout'}
+                </Button>
+              </Box>
+              <Box
+                sx={{
+                  bgcolor: '#76CFDB',
+                }}
+              >
+                <Grid container>
+                  <Grid item xs={5}>
+                    <ListItem>
+                      <ListItemAvatar>
+                        <Avatar
+                          alt="Remy Sharp"
+                          src={avatar.filename}
+                          imgProps={{
+                            alt: `${user.username}'s profile image`,
+                          }}
+                          sx={{width: 200, height: 200}}
+                        />
+                      </ListItemAvatar>
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={7}>
+                    <List
+                      sx={{
+                        paddingTop: 4,
+                        color: '#ffffff',
+                        paddingLeft: 5,
                       }}
-                      sx={{width: '100%', height: '30vh'}}
-                    />
-                  </ListItemAvatar>
-                </ListItem>
-                <ListItem>
-                  <ListItemIcon>
-                    <AccountCircle />
-                  </ListItemIcon>
-                  <ListItemText primary={user.username} />
-                </ListItem>
-                <ListItem>
-                  <ListItemIcon>
-                    <ContactMail />
-                  </ListItemIcon>
-                  <ListItemText primary={user.email} />
-                </ListItem>
-                <ListItem>
-                  <ListItemIcon>
-                    <Badge />
-                  </ListItemIcon>
-                  <ListItemText primary={user.full_name} />
-                </ListItem>
-              </List>
+                    >
+                      <ListItem>
+                        <ListItemText primary={user.username} />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText primary={user.email} />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText primary={user.full_name} />
+                      </ListItem>
+                    </List>
+                  </Grid>
+                </Grid>
+              </Box>
             </CardContent>
+            <MediaTable allFiles={false} />
           </Card>
-          <MediaTable allFiles={false} />
         </>
       )}
     </>
