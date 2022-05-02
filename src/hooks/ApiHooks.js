@@ -163,8 +163,17 @@ const useUser = () => {
     };
     return await fetchJson(baseUrl + 'users', fetchOptions);
   };
+  const deleteUser = async (fileId, token) => {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await fetchJson(baseUrl + 'users/' + fileId, fetchOptions);
+  };
 
-  return {getUser, postUser, getUsername, getUserById};
+  return {getUser, postUser, getUsername, getUserById, deleteUser};
 };
 
 const useLogin = () => {

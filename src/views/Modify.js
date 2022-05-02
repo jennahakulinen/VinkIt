@@ -207,7 +207,7 @@ const Modify = () => {
                 value={filterInputs.saturation}
               />
             </Grid>
-            <Grid item xs={12} px={3}>
+            <Grid item xs={12} px={3} marginBottom={6}>
               <Typography>Sepia</Typography>
               <Slider
                 name="sepia"

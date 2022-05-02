@@ -125,10 +125,14 @@ body {
 .MuiContainer-root {
   padding-bottom: 0;
 }
-.MuiListItemText-primary {
+/* .MuiListItemText-primary {
   font-family: 'Fredoka One', cursive !important;
   color: pink;
   font-size: large;
+} */
+.MuiListItem-root {
+  padding: 0 !important;
+
 }
 
 

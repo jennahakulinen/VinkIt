@@ -68,7 +68,7 @@ const LoginForm = () => {
           textAlign="center"
           marginBottom={3}
         >
-          Vink It!
+          Vink it!
         </Typography>
       </Grid>
       <Card
