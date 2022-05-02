@@ -92,7 +92,7 @@ const Modify = () => {
         sx={{justifyContent: 'center', alignItems: 'center'}}
       >
         <BackButton />
-        <Grid>
+        <Grid item xs={12}>
           <Typography
             component="h1"
             variant="logoFont"

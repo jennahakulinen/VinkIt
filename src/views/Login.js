@@ -22,7 +22,7 @@ const Login = () => {
         }}
       >
         {' '}
-        New user?
+        {toggle ? 'New user?' : 'Already have an account?'}
         <Button
           sx={{
             background: 'none',
@@ -36,7 +36,7 @@ const Login = () => {
         >
           {toggle ? 'Register' : 'Login'}
         </Button>
-        Here!
+        here!
       </Box>
     </>
   );
