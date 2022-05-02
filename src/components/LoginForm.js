@@ -55,7 +55,7 @@ const LoginForm = () => {
   return (
     <Grid
       container
-      marginTop={15}
+      marginTop={10}
       sx={{justifyContent: 'center', alignItems: 'center'}}
     >
       <BackButton />

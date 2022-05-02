@@ -89,7 +89,7 @@ const RegisterForm = ({setToggle}) => {
   return (
     <Grid
       container
-      marginTop={10}
+      marginTop={8}
       sx={{justifyContent: 'center', alignItems: 'center'}}
     >
       <BackButton />
@@ -102,7 +102,7 @@ const RegisterForm = ({setToggle}) => {
           textAlign="center"
           marginBottom={3}
         >
-          Vink It!
+          Vink it!
         </Typography>
       </Grid>
       <Card
@@ -123,10 +123,9 @@ const RegisterForm = ({setToggle}) => {
           </Typography>
         </Grid>
         <ValidatorForm onSubmit={handleSubmit}>
-          <Box className="loginBox">
+          <Box className="loginBox" fullWidth>
             <Badge className="icon" />
             <TextValidator
-              fullWidth
               variant="standard"
               label="Name"
               placeholder="Enter your name"
@@ -137,6 +136,7 @@ const RegisterForm = ({setToggle}) => {
               errorMessages={errorMessages.full_name}
             />
           </Box>
+
           <Box className="loginBox">
             <AlternateEmail className="icon" />
             <TextValidator
