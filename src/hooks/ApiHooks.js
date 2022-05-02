@@ -187,7 +187,7 @@ const useTag = () => {
     if (tagResult.length > 0) {
       return tagResult;
     } else {
-      throw new Error('No results');
+      return console.log('No results');
     }
   };
 

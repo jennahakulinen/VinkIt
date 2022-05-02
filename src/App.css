@@ -17,7 +17,7 @@ td {
 }
 
 body {
-  background-color: #f7f7f7;
+  background-color: #fafafa;
 }
 
 /* .backButton{
@@ -54,6 +54,7 @@ body {
 
 .MuiContainer-root {
   padding-bottom: 10%;
+  background-color: #fafafa;
 }
 
 .loginBox {
@@ -124,9 +125,10 @@ body {
 }
 
 .MuiImageList-standard {
-  margin-top: 15px;
+  margin-top: 5px;
   margin-bottom: 30px !important;
 }
+
 .MuiListItemText-primary {
   font-family: 'Fredoka One', cursive !important;
   color: pink;

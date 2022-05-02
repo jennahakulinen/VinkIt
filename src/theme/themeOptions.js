@@ -14,7 +14,7 @@ const themeOptions = {
       main: '#F5F2EB',
     },
     backgroundColor: {
-      main: '#F7F7F7',
+      main: '#fafafa',
     },
     bodyTextColor: {
       main: '#05192C',

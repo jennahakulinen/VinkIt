@@ -18,7 +18,6 @@ import {useState, useEffect} from 'react';
 import {appID, getCategoryName} from '../utils/variables';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import Nav from '../components/Nav';
-import BackButton from '../components/BackButton';
 import {Box} from '@mui/system';
 
 const Upload = () => {
@@ -88,7 +87,8 @@ const Upload = () => {
         token
       );
 
-      confirm(tagData.message, categoryTag.message, category) && navigate('/');
+      confirm(tagData.message, categoryTag.message, category) &&
+        navigate('/profile');
     } catch (err) {
       alert(err.message);
     }
@@ -124,7 +124,6 @@ const Upload = () => {
         marginTop={10}
         sx={{justifyContent: 'center', alignItems: 'center'}}
       >
-        <BackButton />
         <Grid item xs={12}>
           <Typography
             component="h1"

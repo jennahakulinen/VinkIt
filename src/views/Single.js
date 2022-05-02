@@ -302,7 +302,6 @@ const Single = () => {
                   marginLeft: -1,
                   letterSpacing: 1,
                 }}
-                component="h5"
                 variant="fontH6"
               >
                 {username}

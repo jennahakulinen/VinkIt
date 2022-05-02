@@ -49,8 +49,7 @@ const Profile = () => {
               borderRadius: 0,
               position: 'relative',
               boxShadow: 'none',
-              height: '100vh',
-              paddingBottom: '12%',
+              backgroundColor: '#fafafa',
             }}
           >
             <CardContent sx={{padding: 0}}>
@@ -117,8 +116,8 @@ const Profile = () => {
                 </Grid>
               </Box>
             </CardContent>
-            <MediaTable allFiles={false} />
           </Card>
+          <MediaTable allFiles={false} />
         </>
       )}
     </>

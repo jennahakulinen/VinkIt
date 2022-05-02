@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {CircularProgress, ImageList} from '@mui/material';
+import {CircularProgress, ImageList, Typography} from '@mui/material';
 import {useMedia} from '../hooks/ApiHooks';
 import {useWindowSize} from '../hooks/WindowHooks';
 import MediaRow from './MediaRow';
@@ -30,6 +30,18 @@ const MediaTable = ({
         return file;
       }
     });
+  }
+
+  if (categories === true) {
+    if (mediaArray.length === 0) {
+      return (
+        <Typography
+          sx={{padding: 2, paddingLeft: 4, paddingBottom: 4, fontSize: '14px'}}
+        >
+          No vinks in this category yet
+        </Typography>
+      );
+    }
   }
 
   const getPageIndex = (route) => {
@@ -73,7 +85,7 @@ const MediaTable = ({
           }
           cols={
             value === 2 || value === 3 || value === 4
-              ? windowSize.width > 600
+              ? windowSize.width > 768
                 ? 4
                 : 2
               : windowSize.width > 768
