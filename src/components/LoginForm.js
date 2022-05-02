@@ -66,7 +66,7 @@ const LoginForm = () => {
           textAlign="center"
           marginBottom={3}
         >
-          Vink It!
+          Vink it!
         </Typography>
       </Grid>
       <Card
@@ -83,7 +83,7 @@ const LoginForm = () => {
             textAlign="center"
             my={1}
           >
-            Login
+            Log in
           </Typography>
         </Grid>
         <form onSubmit={handleSubmit}>

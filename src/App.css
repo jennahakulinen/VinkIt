@@ -134,11 +134,14 @@ body {
   margin-top: 5px;
   margin-bottom: 30px !important;
 }
-
-.MuiListItemText-primary {
+/* .MuiListItemText-primary {
   font-family: 'Fredoka One', cursive !important;
   color: pink;
   font-size: large;
+} */
+
+.profileItem {
+  padding: 0 !important;
 }
 
 .MuiImageList-masonry {

@@ -281,7 +281,7 @@ const Upload = () => {
                 value={filterInputs.saturation}
               />
             </Grid>
-            <Grid item xs={12} padding={3}>
+            <Grid item xs={12} padding={3} marginBottom={6}>
               <Typography>Sepia</Typography>
               <Slider
                 name="sepia"

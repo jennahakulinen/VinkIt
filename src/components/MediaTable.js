@@ -23,7 +23,9 @@ const MediaTable = ({
     categories,
     tag
   );
+
   const windowSize = useWindowSize();
+
   if (searchterm?.length > 0) {
     mediaArray = mediaArray.filter((file) => {
       if (file.title.toLowerCase().includes(searchterm.toLowerCase())) {

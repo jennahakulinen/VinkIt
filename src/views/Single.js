@@ -511,6 +511,7 @@ const Single = () => {
                       user && (
                         <>
                           <ListItem
+                            className="commentItem"
                             sx={{
                               flexDirection: 'column',
                               alignItems: 'flex-start',

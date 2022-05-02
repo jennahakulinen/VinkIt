@@ -34,7 +34,7 @@ const Login = () => {
             setToggle(!toggle);
           }}
         >
-          {toggle ? 'Register' : 'Login'}
+          {toggle ? 'Register' : 'Log in'}
         </Button>
         here!
       </Box>
