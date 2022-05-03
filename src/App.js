@@ -26,9 +26,9 @@ const App = () => {
     // eslint-disable-next-line no-undef
     <Router basename={process.env.PUBLIC_URL}>
       <MediaProvider>
-        <UserInfo />
         <ThemeProvider theme={theme}>
           <Container maxWidth="md" disableGutters={true}>
+            <UserInfo />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />

@@ -31,6 +31,8 @@ const Profile = () => {
     }
   };
 
+  console.log(avatar);
+
   useEffect(() => {
     fetchAvatar();
   }, [user]);

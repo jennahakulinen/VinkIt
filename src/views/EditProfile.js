@@ -1,8 +1,8 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, CircularProgress, Grid, Typography} from '@mui/material';
 import BackButton from '../components/BackButton';
 import {Box} from '@mui/system';
-import {useUser} from '../hooks/ApiHooks';
+import {useUser, useTag, useMedia} from '../hooks/ApiHooks';
 
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {useNavigate} from 'react-router-dom';
@@ -12,6 +12,8 @@ import {MediaContext} from '../contexts/MediaContext';
 
 const EditProfile = () => {
   const {user} = useContext(MediaContext);
+  const [preview, setPreview] = useState('logo192.png');
+  const {postTag} = useTag();
 
   console.log(user);
 
@@ -37,21 +39,59 @@ const EditProfile = () => {
   };
 
   const {putUser, loading, getUsername} = useUser();
+  const {postMedia} = useMedia();
   const navigate = useNavigate();
+
+  // const doUploadAvatar = async () => {
+  //   try {
+  //     console.log('doUploadAvatar');
+  //     const token = localStorage.getItem('token');
+  //     const formdata = new FormData();
+  //     formdata.append('file', inputs.file);
+  //     const mediaData = await postMedia(formdata, token);
+  //     const tagData = await postTag(
+  //       {
+  //         file_id: mediaData.file_id,
+  //         tag: 'avatar_' + user.user_id,
+  //       },
+  //       token
+  //     );
+  //     console.log(tagData.message);
+  //     console.log('avatar added!');
+  //   } catch (err) {
+  //     alert(err.message);
+  //   }
+  // };
 
   const doModifyUser = async () => {
     try {
       console.log('doUpload');
+      console.log('doUploadAvatar');
+      if (inputs.file) {
+        const token = localStorage.getItem('token');
+        const formdata = new FormData();
+        formdata.append('file', inputs.file);
+        const mediaData = await postMedia(formdata, token);
+        const tagData = await postTag(
+          {
+            file_id: mediaData.file_id,
+            tag: 'avatar_' + user.user_id,
+          },
+          token
+        );
+        console.log(tagData.message);
+        console.log('avatar added!');
+      }
 
       const data = {
         username: inputs.username,
         email: inputs.email,
         password: inputs.password,
       };
+
       if (data.password.length === 0) {
         delete data.password;
       }
-
       const token = localStorage.getItem('token');
       const userData = await putUser(data, token);
       confirm(userData.message) && navigate(-1);
@@ -66,6 +106,14 @@ const EditProfile = () => {
   );
 
   useEffect(() => {
+    if (inputs.file) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        setPreview(reader.result);
+      });
+      reader.readAsDataURL(inputs.file);
+    }
+
     ValidatorForm.addValidationRule('isAvailable', async (value) => {
       try {
         return await getUsername(value);
@@ -77,7 +125,7 @@ const EditProfile = () => {
     return () => {
       ValidatorForm.removeValidationRule('isAvailable');
     };
-  }, [inputs]);
+  }, [inputs, inputs.file]);
 
   console.log(inputs);
 
@@ -96,10 +144,35 @@ const EditProfile = () => {
             color="primary"
             padding={2}
             textAlign="center"
-            marginBottom={3}
+            marginBottom={1}
           >
             Edit Profile
           </Typography>
+          {inputs.file && (
+            <>
+              <Box
+                sx={{
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginBottom: 4,
+                }}
+              >
+                <img
+                  style={{
+                    width: '250px',
+                    height: '250px',
+                    objectFit: 'cover',
+                    margin: 'auto',
+                    borderRadius: '50%',
+                    border: '2px solid #76CFDB',
+                  }}
+                  src={preview}
+                  alt="preview"
+                />
+              </Box>
+            </>
+          )}
         </Grid>
         <Card sx={{marginBottom: '20px', width: '90%'}}>
           <ValidatorForm onSubmit={handleSubmit}>

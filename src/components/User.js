@@ -13,6 +13,7 @@ const UserInfo = () => {
   const fetchUser = async () => {
     try {
       const userData = await getUser(localStorage.getItem('token'));
+      console.log('tässä userdata', userData);
       setUser(userData);
     } catch (err) {
       setUser(null);
