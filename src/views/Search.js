@@ -38,6 +38,7 @@ const Search = () => {
     doSearch,
     alkuarvot
   );
+
   return (
     <>
       <BackButton />
