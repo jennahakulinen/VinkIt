@@ -1,32 +1,85 @@
-import React, {useContext} from 'react';
-import {Button, Card, Grid, Typography} from '@mui/material';
+import React, {useContext, useEffect} from 'react';
+import {Button, Card, CircularProgress, Grid, Typography} from '@mui/material';
 import BackButton from '../components/BackButton';
 import {Box} from '@mui/system';
 import {useUser} from '../hooks/ApiHooks';
+
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {useNavigate} from 'react-router-dom';
+
+import useForm from '../hooks/FormHooks';
 import {MediaContext} from '../contexts/MediaContext';
 
 const EditProfile = () => {
   const {user} = useContext(MediaContext);
-  const {deleteUser} = useUser();
+
+  console.log(user);
+
+  const alkuarvot = {
+    username: user.username,
+    email: user.email,
+    password: '',
+  };
+
+  const validators = {
+    username: ['minStringLength: 2', 'isAvailable'],
+    email: ['isEmail'],
+    password: ['matchRegexp:^(?:.{6,}|)$'],
+  };
+
+  const errorMessages = {
+    username: [
+      'Username must be two or more characters',
+      'This username is already taken',
+    ],
+    email: ['Please enter a valid email address'],
+    password: ['Passwords must be six or more characters'],
+  };
+
+  const {putUser, loading, getUsername} = useUser();
   const navigate = useNavigate();
 
-  const doDelete = async () => {
-    const ok = confirm('Do you want to delete user?');
-    if (ok) {
-      try {
-        const deleteInfo = await deleteUser(
-          user.user_id,
-          localStorage.getItem('token')
-        );
-        if (deleteInfo) {
-          navigate('/');
-        }
-      } catch (err) {
-        // console.log(err);
+  const doModifyUser = async () => {
+    try {
+      console.log('doUpload');
+
+      const data = {
+        username: inputs.username,
+        email: inputs.email,
+        password: inputs.password,
+      };
+      if (data.password.length === 0) {
+        delete data.password;
       }
+
+      const token = localStorage.getItem('token');
+      const userData = await putUser(data, token);
+      confirm(userData.message) && navigate(-1);
+    } catch (err) {
+      alert(err.message);
     }
   };
+
+  const {inputs, handleInputChange, handleSubmit} = useForm(
+    doModifyUser,
+    alkuarvot
+  );
+
+  useEffect(() => {
+    ValidatorForm.addValidationRule('isAvailable', async (value) => {
+      try {
+        return await getUsername(value);
+      } catch (err) {
+        return true;
+      }
+    });
+
+    return () => {
+      ValidatorForm.removeValidationRule('isAvailable');
+    };
+  }, [inputs]);
+
+  console.log(inputs);
 
   return (
     <>
@@ -49,21 +102,62 @@ const EditProfile = () => {
           </Typography>
         </Grid>
         <Card sx={{marginBottom: '20px', width: '90%'}}>
-          <Box className="loginBox">
-            <Button
-              onClick={doDelete}
-              color="primary"
-              type="submit"
-              variant="contained"
-              size="large"
-              sx={{
-                fontFamily: ['Fredoka One', 'cursive'].join(','),
-                fontSize: '24px',
-              }}
-            >
-              Delete user
-            </Button>
-          </Box>
+          <ValidatorForm onSubmit={handleSubmit}>
+            <Box className="formBox">
+              <TextValidator
+                fullWidth
+                label="Username"
+                placeholder="Edit username"
+                name="username"
+                onChange={handleInputChange}
+                value={inputs.username}
+                validators={validators.username}
+                errorMessages={errorMessages.username}
+              />
+            </Box>
+            <Box className="formBox">
+              <TextValidator
+                fullWidth
+                label="Email"
+                placeholder="Edit email"
+                name="email"
+                onChange={handleInputChange}
+                value={inputs.email}
+                validators={validators.email}
+                errorMessages={errorMessages.email}
+              />
+            </Box>
+            <Box className="formBox">
+              <TextValidator
+                fullWidth
+                label="password"
+                placeholder="Edit password"
+                name="password"
+                onChange={handleInputChange}
+                value={inputs.password}
+                validators={validators.password}
+                errorMessages={errorMessages.password}
+              />
+            </Box>
+            {loading ? (
+              <CircularProgress />
+            ) : (
+              <Box className="loginBox">
+                <Button
+                  color="primary"
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  sx={{
+                    fontFamily: ['Fredoka One', 'cursive'].join(','),
+                    fontSize: '24px',
+                  }}
+                >
+                  Save changes
+                </Button>
+              </Box>
+            )}
+          </ValidatorForm>
         </Card>
       </Grid>
     </>
