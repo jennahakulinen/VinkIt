@@ -102,6 +102,7 @@ const useMedia = (showAllFiles, user, favorites, token, categories, tag) => {
       setLoading(false);
     }
   };
+
   return {
     mediaArray,
     postMedia,
@@ -112,6 +113,7 @@ const useMedia = (showAllFiles, user, favorites, token, categories, tag) => {
 };
 
 const useUser = () => {
+  const [loading, setLoading] = useState(false);
   const getUser = async (token) => {
     if (token === null) {
       return null;
@@ -161,7 +163,32 @@ const useUser = () => {
     return await fetchJson(baseUrl + 'users/' + userId, fetchOptions);
   };
 
-  return {getUser, postUser, getUsername, getUserById, deleteUser};
+  const putUser = async (data, token) => {
+    try {
+      setLoading(true);
+      const fetchOptions = {
+        method: 'PUT',
+        headers: {
+          'x-access-token': token,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      };
+      return await fetchJson(baseUrl + 'users', fetchOptions);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    getUser,
+    postUser,
+    getUsername,
+    getUserById,
+    deleteUser,
+    putUser,
+    loading,
+  };
 };
 
 const useLogin = () => {
