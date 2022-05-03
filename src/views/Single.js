@@ -297,12 +297,12 @@ const Single = () => {
               <Typography
                 sx={{
                   color: '#F7F7F7',
-                  fontWeight: '900',
-                  fontSize: 14,
                   marginLeft: -1,
                   letterSpacing: 1,
+                  fontFamily: ['Fredoka', 'sans-serif'].join(','),
+                  fontSize: '16px',
+                  fontWeight: '600',
                 }}
-                variant="fontH6"
               >
                 {username}
               </Typography>
@@ -360,8 +360,10 @@ const Single = () => {
                   className="editButton"
                   size="small"
                   sx={{
+                    fontFamily: ['Fredoka', 'sans-serif'].join(','),
+                    fontSize: '11px',
+                    fontWeight: '400',
                     marginTop: '5px',
-                    fontSize: '10px',
                     paddingTop: '5px',
                     paddingRight: '8px',
                     paddingBottom: '5px',
@@ -411,6 +413,9 @@ const Single = () => {
               color="primaryVariant"
               variant="contained"
               sx={{
+                fontFamily: ['Fredoka', 'sans-serif'].join(','),
+                fontSize: '16px',
+                fontWeight: '500',
                 color: '#F7F7F7',
                 minWidth: '250px',
                 margin: 'auto',
@@ -479,6 +484,11 @@ const Single = () => {
               </DialogContent>
               <DialogActions sx={{justifyContent: 'center', paddingBottom: 2}}>
                 <Button
+                  sx={{
+                    fontFamily: ['Fredoka', 'cursive'].join(','),
+                    fontWeight: '500',
+                    fontSize: '16px',
+                  }}
                   width="50%"
                   color="primary"
                   type="submit"

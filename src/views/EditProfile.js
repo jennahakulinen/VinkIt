@@ -18,50 +18,23 @@ const EditProfile = () => {
   console.log(user);
 
   const alkuarvot = {
-    username: user.username,
     email: user.email,
     password: '',
   };
 
   const validators = {
-    username: ['minStringLength: 2', 'isAvailable'],
     email: ['isEmail'],
     password: ['matchRegexp:^(?:.{6,}|)$'],
   };
 
   const errorMessages = {
-    username: [
-      'Username must be two or more characters',
-      'This username is already taken',
-    ],
     email: ['Please enter a valid email address'],
     password: ['Passwords must be six or more characters'],
   };
 
-  const {putUser, loading, getUsername} = useUser();
+  const {putUser, loading} = useUser();
   const {postMedia} = useMedia();
   const navigate = useNavigate();
-
-  // const doUploadAvatar = async () => {
-  //   try {
-  //     console.log('doUploadAvatar');
-  //     const token = localStorage.getItem('token');
-  //     const formdata = new FormData();
-  //     formdata.append('file', inputs.file);
-  //     const mediaData = await postMedia(formdata, token);
-  //     const tagData = await postTag(
-  //       {
-  //         file_id: mediaData.file_id,
-  //         tag: 'avatar_' + user.user_id,
-  //       },
-  //       token
-  //     );
-  //     console.log(tagData.message);
-  //     console.log('avatar added!');
-  //   } catch (err) {
-  //     alert(err.message);
-  //   }
-  // };
 
   const doModifyUser = async () => {
     try {
@@ -84,7 +57,6 @@ const EditProfile = () => {
       }
 
       const data = {
-        username: inputs.username,
         email: inputs.email,
         password: inputs.password,
       };
@@ -92,6 +64,7 @@ const EditProfile = () => {
       if (data.password.length === 0) {
         delete data.password;
       }
+
       const token = localStorage.getItem('token');
       const userData = await putUser(data, token);
       confirm(userData.message) && navigate(-1);
@@ -113,19 +86,7 @@ const EditProfile = () => {
       });
       reader.readAsDataURL(inputs.file);
     }
-
-    ValidatorForm.addValidationRule('isAvailable', async (value) => {
-      try {
-        return await getUsername(value);
-      } catch (err) {
-        return true;
-      }
-    });
-
-    return () => {
-      ValidatorForm.removeValidationRule('isAvailable');
-    };
-  }, [inputs, inputs.file]);
+  }, [inputs.file]);
 
   console.log(inputs);
 
@@ -187,18 +148,6 @@ const EditProfile = () => {
                 name="file"
                 accept="image/*, video/*, audio/*"
                 onChange={handleInputChange}
-              />
-            </Box>
-            <Box className="formBox">
-              <TextValidator
-                fullWidth
-                label="Change username"
-                placeholder="Edit username"
-                name="username"
-                onChange={handleInputChange}
-                value={inputs.username}
-                validators={validators.username}
-                errorMessages={errorMessages.username}
               />
             </Box>
             <Box className="formBox">

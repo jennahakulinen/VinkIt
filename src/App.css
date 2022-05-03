@@ -123,6 +123,7 @@ body {
 
 .MuiImageListItemBar-actionIconActionPosRight {
   display: flex;
+  margin-left: 15px;
 }
 
 .icon {
@@ -142,7 +143,6 @@ body {
 
 .profileItem {
   padding: 0 !important;
-
 }
 .profileItemText {
   margin: 0 !important;

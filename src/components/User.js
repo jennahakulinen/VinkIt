@@ -5,7 +5,6 @@ import {useNavigate} from 'react-router-dom';
 import {Box} from '@mui/material';
 
 const UserInfo = () => {
-  // eslint-disable-next-line no-unused-vars
   const {user, setUser} = useContext(MediaContext);
   const {getUser} = useUser();
   const navigate = useNavigate();
@@ -13,7 +12,6 @@ const UserInfo = () => {
   const fetchUser = async () => {
     try {
       const userData = await getUser(localStorage.getItem('token'));
-      console.log('tässä userdata', userData);
       setUser(userData);
     } catch (err) {
       setUser(null);
@@ -24,7 +22,7 @@ const UserInfo = () => {
   useEffect(() => {
     fetchUser();
   }, []);
-
+  console.log('userdata', user);
   return <Box></Box>;
 };
 
