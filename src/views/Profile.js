@@ -89,7 +89,7 @@ const Profile = () => {
                   imgProps={{
                     alt: `${user.username}'s profile image`,
                   }}
-                  sx={{width: 150, height: 150}}
+                  sx={{width: 150, height: 150, border: '2px solid #f7f7f7'}}
                 />
               </Box>
               <Box

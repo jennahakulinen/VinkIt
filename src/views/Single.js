@@ -265,7 +265,7 @@ const Single = () => {
           boxShadow: 'none',
         }}
       >
-        <Box sx={{position: 'absolute', top: -15, left: -10}}>
+        <Box sx={{position: 'absolute', top: -13, left: -10}}>
           <BackButton />
         </Box>
 
@@ -275,7 +275,7 @@ const Single = () => {
             justifyContent: 'center',
             alignItems: 'center',
             width: 'auto',
-            height: 50,
+            height: 55,
             position: 'absolute',
             zIndex: 100,
             right: 0,
@@ -289,7 +289,7 @@ const Single = () => {
             <ListItem>
               <ListItemAvatar>
                 <Avatar
-                  sx={{width: 36, height: 36}}
+                  sx={{width: 36, height: 36, border: '1px solid #F7F7F7'}}
                   variant={'circle'}
                   src={avatar.filename}
                 />
