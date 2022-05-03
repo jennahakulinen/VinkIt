@@ -106,7 +106,20 @@ const EditProfile = () => {
             <Box className="formBox">
               <TextValidator
                 fullWidth
-                label="Username"
+                label="Change profile picture"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                type="file"
+                name="file"
+                accept="image/*, video/*, audio/*"
+                onChange={handleInputChange}
+              />
+            </Box>
+            <Box className="formBox">
+              <TextValidator
+                fullWidth
+                label="Change username"
                 placeholder="Edit username"
                 name="username"
                 onChange={handleInputChange}
@@ -118,7 +131,7 @@ const EditProfile = () => {
             <Box className="formBox">
               <TextValidator
                 fullWidth
-                label="Email"
+                label="Change email"
                 placeholder="Edit email"
                 name="email"
                 onChange={handleInputChange}
@@ -130,9 +143,12 @@ const EditProfile = () => {
             <Box className="formBox">
               <TextValidator
                 fullWidth
-                label="password"
-                placeholder="Edit password"
+                label="Change password"
+                placeholder="New password"
                 name="password"
+                InputLabelProps={{
+                  shrink: true,
+                }}
                 onChange={handleInputChange}
                 value={inputs.password}
                 validators={validators.password}

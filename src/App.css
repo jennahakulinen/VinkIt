@@ -142,6 +142,10 @@ body {
 
 .profileItem {
   padding: 0 !important;
+
+}
+.profileItemText {
+  margin: 0 !important;
 }
 
 .MuiImageList-masonry {

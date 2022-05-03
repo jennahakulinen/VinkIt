@@ -19,6 +19,7 @@ import {appID, getCategoryName} from '../utils/variables';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import Nav from '../components/Nav';
 import {Box} from '@mui/system';
+import BackButton from '../components/BackButton';
 
 const Upload = () => {
   const [preview, setPreview] = useState('logo192.png');
@@ -119,6 +120,7 @@ const Upload = () => {
   return (
     <>
       <Nav />
+      <BackButton />
       <Grid
         container
         marginTop={10}
@@ -166,6 +168,10 @@ const Upload = () => {
             <Box className="formBox">
               <TextValidator
                 fullWidth
+                label="Picture"
+                InputLabelProps={{
+                  shrink: true,
+                }}
                 type="file"
                 name="file"
                 accept="image/*, video/*, audio/*"

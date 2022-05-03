@@ -67,6 +67,9 @@ const Profile = () => {
         <>
           <Box
             sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               bgcolor: '#76CFDB',
               marginBottom: 2,
             }}
@@ -75,9 +78,10 @@ const Profile = () => {
               sx={{
                 display: 'flex',
                 alignItems: 'center',
+                margin: '1rem',
               }}
             >
-              <Box sx={{px: '1.5rem', py: '1.5rem'}}>
+              <Box sx={{px: '0.9rem', py: '0.9rem'}}>
                 <Avatar
                   src={avatar.filename}
                   imgProps={{
@@ -95,6 +99,7 @@ const Profile = () => {
                 <List>
                   <ListItem className="profileItem">
                     <ListItemText
+                      className="profileItemText"
                       sx={{padding: 0}}
                       primary={user.username}
                       primaryTypographyProps={{
@@ -107,6 +112,7 @@ const Profile = () => {
                   </ListItem>
                   <ListItem className="profileItem">
                     <ListItemText
+                      className="profileItemText"
                       primary={user.full_name}
                       primaryTypographyProps={{
                         fontFamily: ['Lato', 'sans-serif'].join(','),
@@ -118,6 +124,7 @@ const Profile = () => {
                   </ListItem>
                   <ListItem className="profileItem">
                     <ListItemText
+                      className="profileItemText"
                       primary={user.email}
                       primaryTypographyProps={{
                         fontFamily: ['Lato', 'sans-serif'].join(','),
