@@ -105,9 +105,12 @@ const MediaRow = ({file, userId, deleteMedia}) => {
   };
 
   useEffect(() => {
-    fetchFavorites();
     fetchFileTags();
   }, []);
+
+  useEffect(() => {
+    fetchFavorites();
+  }, [user]);
 
   return (
     <ImageListItem

@@ -17,7 +17,7 @@ const MediaTable = ({
   const {user} = useContext(MediaContext);
   let {mediaArray, loading, deleteMedia} = useMedia(
     allFiles,
-    user?.user_id,
+    user,
     favorites,
     localStorage.getItem('token'),
     categories,
@@ -32,18 +32,6 @@ const MediaTable = ({
         return file;
       }
     });
-  }
-
-  if (categories === true) {
-    if (mediaArray.length === 0) {
-      return (
-        <Typography
-          sx={{padding: 2, paddingLeft: 4, paddingBottom: 4, fontSize: '14px'}}
-        >
-          No vinks in this category yet
-        </Typography>
-      );
-    }
   }
 
   const getPageIndex = (route) => {
@@ -69,44 +57,56 @@ const MediaTable = ({
 
   return (
     <>
+      {categories && mediaArray.length === 0 && (
+        <Typography
+          sx={{
+            paddingLeft: 4,
+            fontSize: '14px',
+          }}
+        >
+          No vinks in this category yet
+        </Typography>
+      )}
       {loading ? (
         <CircularProgress />
       ) : (
-        <ImageList
-          sx={{
-            marginLeft: 2,
-            marginRight: 2,
-            marginBottom: 2,
-            paddingLeft: 0.5,
-            paddingRight: 0.5,
-            paddingBottom: 2,
-          }}
-          variant={
-            value === 2 || value === 3 || value === 4 ? 'standard' : 'masonry'
-          }
-          cols={
-            value === 2 || value === 3 || value === 4
-              ? windowSize.width > 768
-                ? 4
+        <>
+          <ImageList
+            sx={{
+              marginLeft: 2,
+              marginRight: 2,
+              marginBottom: 2,
+              paddingLeft: 0.5,
+              paddingRight: 0.5,
+              paddingBottom: 2,
+            }}
+            variant={
+              value === 2 || value === 3 || value === 4 ? 'standard' : 'masonry'
+            }
+            cols={
+              value === 2 || value === 3 || value === 4
+                ? windowSize.width > 768
+                  ? 4
+                  : 2
+                : windowSize.width > 768
+                ? 3
                 : 2
-              : windowSize.width > 768
-              ? 3
-              : 2
-          }
-          rowHeight={value === 2 || value === 3 || value === 4 ? 220 : 'auto'}
-          gap={10}
-        >
-          {mediaArray.map((item, index) => {
-            return (
-              <MediaRow
-                key={index}
-                file={item}
-                userId={user?.user_id}
-                deleteMedia={deleteMedia}
-              />
-            );
-          })}
-        </ImageList>
+            }
+            rowHeight={value === 2 || value === 3 || value === 4 ? 220 : 'auto'}
+            gap={10}
+          >
+            {mediaArray.map((item, index) => {
+              return (
+                <MediaRow
+                  key={index}
+                  file={item}
+                  userId={user?.user_id}
+                  deleteMedia={deleteMedia}
+                />
+              );
+            })}
+          </ImageList>
+        </>
       )}
     </>
   );

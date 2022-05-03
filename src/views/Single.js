@@ -46,6 +46,7 @@ const Single = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const file = location.state.file;
+
   const {description, filters} = safeParseJson(file.description) || {
     description: file.description,
     filters: {
@@ -72,7 +73,6 @@ const Single = () => {
   const fetchUser = async () => {
     try {
       const userData = await getUser(localStorage.getItem('token'));
-      console.log(userData);
       setUser(userData);
     } catch (err) {
       setUser(null);
@@ -135,8 +135,6 @@ const Single = () => {
       }
     }
   };
-
-  console.log('tykkäys', userfav);
 
   const fetchFileTags = async () => {
     try {
@@ -246,7 +244,6 @@ const Single = () => {
   };
 
   useEffect(() => {
-    fetchFavorites();
     fetchUser();
     fetchUserId();
     fetchComments();
@@ -254,6 +251,10 @@ const Single = () => {
     fetchFileTags();
     getUsernameByUserIdname();
   }, []);
+
+  useEffect(() => {
+    fetchFavorites();
+  }, [user]);
 
   return (
     <Paper sx={{height: '100vh', borderRadius: 0, boxShadow: 'none'}}>

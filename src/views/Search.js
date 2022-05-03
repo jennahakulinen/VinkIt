@@ -19,7 +19,6 @@ const Search = () => {
   // const navigate = useNavigate();
 
   const doSearch = async () => {
-    console.log('ETSITÄÄN!');
     setSearchterm(inputs.title);
   };
 

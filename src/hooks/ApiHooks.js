@@ -17,14 +17,14 @@ const fetchJson = async (url, options = {}) => {
   }
 };
 
-const useMedia = (showAllFiles, userId, favorites, token, categories, tag) => {
+const useMedia = (showAllFiles, user, favorites, token, categories, tag) => {
   const {update} = useContext(MediaContext);
   const [mediaArray, setMediaArray] = useState([]);
   const [loading, setLoading] = useState(false);
   const getMedia = async () => {
     try {
       setLoading(true);
-      let media = await useTag().getTag(appID);
+      let media = await useTag().getTag(tag || appID);
       if (favorites) {
         const favorites = await useFavourite().getFavourite(token);
         media = media.filter((file) => {
@@ -36,21 +36,10 @@ const useMedia = (showAllFiles, userId, favorites, token, categories, tag) => {
         });
       }
 
-      if (categories) {
-        const categories = await useTag().getFileTagList(tag);
-        media = media.filter((file) => {
-          for (const category of categories) {
-            if (category.file_id === file.file_id) {
-              return file;
-            }
-          }
-        });
-      }
-
       // jos !showAllFiles, filteröi kirjautuneen
       // käyttäjän tiedostot media taulukkoon
       if (!showAllFiles) {
-        media = media.filter((file) => file.user_id === userId);
+        media = media.filter((file) => file.user_id === user.user_id);
       }
 
       const allFiles = await Promise.all(
@@ -69,7 +58,7 @@ const useMedia = (showAllFiles, userId, favorites, token, categories, tag) => {
 
   useEffect(() => {
     getMedia();
-  }, [userId, update]);
+  }, [user, update]);
 
   const postMedia = async (formdata, token) => {
     try {
@@ -209,15 +198,6 @@ const useTag = () => {
     }
   };
 
-  const getFileTagList = async (tag) => {
-    const tagResult = await fetchJson(baseUrl + 'tags/' + tag);
-    if (tagResult.length > 0) {
-      return tagResult;
-    } else {
-      throw new Error('No results');
-    }
-  };
-
   const postTag = async (data, token) => {
     const fetchOptions = {
       method: 'POST',
@@ -229,7 +209,7 @@ const useTag = () => {
     };
     return await fetchJson(baseUrl + 'tags', fetchOptions);
   };
-  return {getTag, getFileTags, getFileTagList, postTag};
+  return {getTag, getFileTags, postTag};
 };
 
 const useComment = () => {

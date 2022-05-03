@@ -17,6 +17,7 @@ import Modify from './views/Modify';
 import MyFavorites from './views/Favorite';
 import Search from './views/Search';
 import EditProfile from './views/EditProfile';
+import UserInfo from './components/User';
 
 const theme = createTheme(themeOptions);
 
@@ -25,6 +26,7 @@ const App = () => {
     // eslint-disable-next-line no-undef
     <Router basename={process.env.PUBLIC_URL}>
       <MediaProvider>
+        <UserInfo />
         <ThemeProvider theme={theme}>
           <Container maxWidth="md" disableGutters={true}>
             <Routes>
