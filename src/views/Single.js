@@ -32,7 +32,7 @@ import {ChatBubble} from '@mui/icons-material';
 import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import HeartButton from '../components/HeartButton';
-import BackButtonHome from '../components/BackButtonHome';
+import BackButton from '../components/BackButton';
 
 const Single = () => {
   const {user, setUser} = useContext(MediaContext);
@@ -263,7 +263,7 @@ const Single = () => {
         }}
       >
         <Box sx={{position: 'absolute', top: -13, left: -10}}>
-          <BackButtonHome />
+          <BackButton />
         </Box>
 
         <Box

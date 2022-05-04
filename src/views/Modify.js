@@ -13,8 +13,8 @@ import useForm from '../hooks/FormHooks';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {safeParseJson} from '../utils/functions';
 import {mediaUrl} from '../utils/variables';
-import BackButton from '../components/BackButton';
 import {Box} from '@mui/system';
+import BackButton from '../components/BackButton';
 
 const Modify = () => {
   const location = useLocation();
