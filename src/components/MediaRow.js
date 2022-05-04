@@ -64,20 +64,17 @@ const MediaRow = ({file, userId, deleteMedia}) => {
     }
   };
   const doDeletefavourite = async () => {
-    const ok = confirm('Do you want to delete favorite?');
-    if (ok) {
-      try {
-        const deleteFav = await deleteFavourite(
-          file.file_id,
-          localStorage.getItem('token')
-        );
-        if (deleteFav) {
-          console.log(deleteFav);
-          setUserfav(0);
-        }
-      } catch (err) {
-        // console.log(err);
+    try {
+      const deleteFav = await deleteFavourite(
+        file.file_id,
+        localStorage.getItem('token')
+      );
+      if (deleteFav) {
+        console.log(deleteFav);
+        setUserfav(0);
       }
+    } catch (err) {
+      // console.log(err);
     }
   };
 

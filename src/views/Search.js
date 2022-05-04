@@ -151,7 +151,14 @@ const Search = () => {
                 </Typography>
                 <Button
                   className="categoryBut"
-                  sx={{marginRight: 4, paddingRight: 1, paddingLeft: 1}}
+                  sx={{
+                    marginRight: 4,
+                    paddingRight: 1,
+                    paddingLeft: 1,
+                    fontFamily: ['Fredoka', 'sans-serif'].join(','),
+                    fontSize: '12px',
+                    fontWeight: '500',
+                  }}
                   size="small"
                 >
                   See all from {item}

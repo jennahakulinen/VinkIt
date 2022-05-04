@@ -40,7 +40,6 @@ const LoginForm = () => {
   };
 
   const {inputs, handleInputChange, handleSubmit} = useForm(doLogin, alkuarvot);
-  console.log(inputs);
 
   // useEffect(() => {
   //   if (inputs.user) {

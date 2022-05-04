@@ -15,10 +15,8 @@ const EditProfile = () => {
   const [preview, setPreview] = useState('logo192.png');
   const {postTag} = useTag();
 
-  console.log(user);
-
   const alkuarvot = {
-    email: user.email,
+    email: '',
     password: '',
   };
 
@@ -73,7 +71,7 @@ const EditProfile = () => {
     }
   };
 
-  const {inputs, handleInputChange, handleSubmit} = useForm(
+  const {inputs, handleInputChange, handleSubmit, setInputs} = useForm(
     doModifyUser,
     alkuarvot
   );
@@ -88,116 +86,127 @@ const EditProfile = () => {
     }
   }, [inputs.file]);
 
-  console.log(inputs);
+  useEffect(() => {
+    if (user) {
+      setInputs({
+        email: user.email,
+        password: '',
+      });
+    }
+  }, [user]);
+
+  console.log(user, alkuarvot);
 
   return (
     <>
-      <Grid
-        container
-        marginTop={10}
-        sx={{justifyContent: 'center', alignItems: 'center'}}
-      >
-        <BackButton />
-        <Grid item xs={12}>
-          <Typography
-            component="h1"
-            variant="logoFont"
-            color="primary"
-            padding={2}
-            textAlign="center"
-            marginBottom={1}
-          >
-            Edit Profile
-          </Typography>
-          {inputs.file && (
-            <>
-              <Box
-                sx={{
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  marginBottom: 4,
-                }}
-              >
-                <img
-                  style={{
-                    width: '250px',
-                    height: '250px',
-                    objectFit: 'cover',
-                    margin: 'auto',
-                    borderRadius: '50%',
-                    border: '2px solid #76CFDB',
-                  }}
-                  src={preview}
-                  alt="preview"
-                />
-              </Box>
-            </>
-          )}
-        </Grid>
-        <Card sx={{marginBottom: '20px', width: '90%'}}>
-          <ValidatorForm onSubmit={handleSubmit}>
-            <Box className="formBox">
-              <TextValidator
-                fullWidth
-                label="Change profile picture"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                type="file"
-                name="file"
-                accept="image/*, video/*, audio/*"
-                onChange={handleInputChange}
-              />
-            </Box>
-            <Box className="formBox">
-              <TextValidator
-                fullWidth
-                label="Change email"
-                placeholder="Edit email"
-                name="email"
-                onChange={handleInputChange}
-                value={inputs.email}
-                validators={validators.email}
-                errorMessages={errorMessages.email}
-              />
-            </Box>
-            <Box className="formBox">
-              <TextValidator
-                fullWidth
-                label="Change password"
-                placeholder="New password"
-                name="password"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                onChange={handleInputChange}
-                value={inputs.password}
-                validators={validators.password}
-                errorMessages={errorMessages.password}
-              />
-            </Box>
-            {loading ? (
-              <CircularProgress />
-            ) : (
-              <Box className="loginBox">
-                <Button
-                  color="primary"
-                  type="submit"
-                  variant="contained"
-                  size="large"
+      {user !== null && (
+        <Grid
+          container
+          marginTop={10}
+          sx={{justifyContent: 'center', alignItems: 'center'}}
+        >
+          <BackButton />
+          <Grid item xs={12}>
+            <Typography
+              component="h1"
+              variant="logoFont"
+              color="primary"
+              padding={2}
+              textAlign="center"
+              marginBottom={1}
+            >
+              Edit Profile
+            </Typography>
+            {inputs.file && (
+              <>
+                <Box
                   sx={{
-                    fontFamily: ['Fredoka One', 'cursive'].join(','),
-                    fontSize: '24px',
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginBottom: 4,
                   }}
                 >
-                  Save changes
-                </Button>
-              </Box>
+                  <img
+                    style={{
+                      width: '250px',
+                      height: '250px',
+                      objectFit: 'cover',
+                      margin: 'auto',
+                      borderRadius: '50%',
+                      border: '2px solid #76CFDB',
+                    }}
+                    src={preview}
+                    alt="preview"
+                  />
+                </Box>
+              </>
             )}
-          </ValidatorForm>
-        </Card>
-      </Grid>
+          </Grid>
+          <Card sx={{marginBottom: '20px', width: '90%'}}>
+            <ValidatorForm onSubmit={handleSubmit}>
+              <Box className="formBox">
+                <TextValidator
+                  fullWidth
+                  label="Change profile picture"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  type="file"
+                  name="file"
+                  accept="image/*, video/*, audio/*"
+                  onChange={handleInputChange}
+                />
+              </Box>
+              <Box className="formBox">
+                <TextValidator
+                  fullWidth
+                  label="Change email"
+                  placeholder="Edit email"
+                  name="email"
+                  onChange={handleInputChange}
+                  value={inputs.email}
+                  validators={validators.email}
+                  errorMessages={errorMessages.email}
+                />
+              </Box>
+              <Box className="formBox">
+                <TextValidator
+                  fullWidth
+                  label="Change password"
+                  placeholder="New password"
+                  name="password"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  onChange={handleInputChange}
+                  value={inputs.password}
+                  validators={validators.password}
+                  errorMessages={errorMessages.password}
+                />
+              </Box>
+              {loading ? (
+                <CircularProgress />
+              ) : (
+                <Box className="loginBox">
+                  <Button
+                    color="primary"
+                    type="submit"
+                    variant="contained"
+                    size="large"
+                    sx={{
+                      fontFamily: ['Fredoka One', 'cursive'].join(','),
+                      fontSize: '24px',
+                    }}
+                  >
+                    Save changes
+                  </Button>
+                </Box>
+              )}
+            </ValidatorForm>
+          </Card>
+        </Grid>
+      )}
     </>
   );
 };

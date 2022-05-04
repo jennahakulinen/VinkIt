@@ -66,7 +66,9 @@ const Modify = () => {
 
       const token = localStorage.getItem('token');
       const mediaData = await putMedia(file.file_id, data, token);
-      confirm(mediaData.message) && navigate(-1);
+      file.title = inputs.title;
+      file.description = JSON.stringify(desc);
+      confirm(mediaData.message) && navigate('/single', {state: {file}});
     } catch (err) {
       alert(err.message);
     }
@@ -88,7 +90,7 @@ const Modify = () => {
     <>
       <Grid
         container
-        marginTop={10}
+        paddingTop={2.5}
         sx={{justifyContent: 'center', alignItems: 'center'}}
       >
         <BackButton />
@@ -97,12 +99,82 @@ const Modify = () => {
             component="h1"
             variant="logoFont"
             color="primary"
-            padding={2}
             textAlign="center"
             marginBottom={3}
           >
             Edit Vink
           </Typography>
+          {file && (
+            <Grid container>
+              <Grid item xs={10} sx={{margin: 'auto'}}>
+                <img
+                  style={{
+                    width: '100%',
+                    borderRadius: 20,
+                    border: '2px solid #76CFDB',
+                    filter: `
+              brightness(${filterInputs.brightness}%)
+              contrast(${filterInputs.contrast}%)
+              saturate(${filterInputs.saturation}%)
+              sepia(${filterInputs.sepia}%)
+              `,
+                  }}
+                  src={mediaUrl + file.filename}
+                  alt="preview"
+                />
+              </Grid>
+              <Grid container>
+                <Grid item xs={9} padding={2} margin={'auto'}>
+                  <Typography>Brightness</Typography>
+                  <Slider
+                    name="brightness"
+                    min={0}
+                    max={200}
+                    step={1}
+                    valueLabelDisplay="on"
+                    onChange={handleSliderChange}
+                    value={filterInputs.brightness}
+                  />
+                </Grid>
+                <Grid item xs={9} padding={2} margin={'auto'}>
+                  <Typography>Contrast</Typography>
+                  <Slider
+                    name="contrast"
+                    min={0}
+                    max={200}
+                    step={1}
+                    valueLabelDisplay="on"
+                    onChange={handleSliderChange}
+                    value={filterInputs.contrast}
+                  />
+                </Grid>
+                <Grid item xs={9} padding={2} margin={'auto'}>
+                  <Typography>Saturation</Typography>
+                  <Slider
+                    name="saturation"
+                    min={0}
+                    max={200}
+                    step={1}
+                    valueLabelDisplay="on"
+                    onChange={handleSliderChange}
+                    value={filterInputs.saturation}
+                  />
+                </Grid>
+                <Grid item xs={9} padding={2} margin={'auto'}>
+                  <Typography>Sepia</Typography>
+                  <Slider
+                    name="sepia"
+                    min={0}
+                    max={100}
+                    step={1}
+                    valueLabelDisplay="on"
+                    onChange={handleSliderChange}
+                    value={filterInputs.sepia}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+          )}
         </Grid>
         <Card sx={{marginBottom: '20px', width: '90%'}}>
           <ValidatorForm onSubmit={handleSubmit}>
@@ -152,76 +224,6 @@ const Modify = () => {
           </ValidatorForm>
         </Card>
       </Grid>
-
-      {file && (
-        <Grid container>
-          <Grid item xs={12}>
-            <img
-              style={{
-                width: '100%',
-                filter: `
-              brightness(${filterInputs.brightness}%)
-              contrast(${filterInputs.contrast}%)
-              saturate(${filterInputs.saturation}%)
-              sepia(${filterInputs.sepia}%)
-              `,
-              }}
-              src={mediaUrl + file.filename}
-              alt="preview"
-            />
-          </Grid>
-          <Grid container>
-            <Grid item xs={12} padding={3}>
-              <Typography>Brightness</Typography>
-              <Slider
-                name="brightness"
-                min={0}
-                max={200}
-                step={1}
-                valueLabelDisplay="on"
-                onChange={handleSliderChange}
-                value={filterInputs.brightness}
-              />
-            </Grid>
-            <Grid item xs={12} padding={3}>
-              <Typography>Contrast</Typography>
-              <Slider
-                name="contrast"
-                min={0}
-                max={200}
-                step={1}
-                valueLabelDisplay="on"
-                onChange={handleSliderChange}
-                value={filterInputs.contrast}
-              />
-            </Grid>
-            <Grid item xs={12} padding={3}>
-              <Typography>Saturation</Typography>
-              <Slider
-                name="saturation"
-                min={0}
-                max={200}
-                step={1}
-                valueLabelDisplay="on"
-                onChange={handleSliderChange}
-                value={filterInputs.saturation}
-              />
-            </Grid>
-            <Grid item xs={12} px={3} marginBottom={6}>
-              <Typography>Sepia</Typography>
-              <Slider
-                name="sepia"
-                min={0}
-                max={100}
-                step={1}
-                valueLabelDisplay="on"
-                onChange={handleSliderChange}
-                value={filterInputs.sepia}
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-      )}
     </>
   );
 };

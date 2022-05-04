@@ -5,6 +5,7 @@ import {useNavigate} from 'react-router-dom';
 import {Box} from '@mui/material';
 
 const UserInfo = () => {
+  // eslint-disable-next-line no-unused-vars
   const {user, setUser} = useContext(MediaContext);
   const {getUser} = useUser();
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const UserInfo = () => {
   useEffect(() => {
     fetchUser();
   }, []);
-  console.log('userdata', user);
+
   return <Box></Box>;
 };
 

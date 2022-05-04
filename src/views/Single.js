@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 import {useLocation} from 'react-router-dom';
 import {mediaUrl} from '../utils/variables';
-import Rating from '@mui/material/Rating';
 import {Link} from 'react-router-dom';
 import {
   Card,
@@ -25,7 +24,6 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import {safeParseJson} from '../utils/functions';
-import BackButton from '../components/BackButton';
 import {useEffect, useState} from 'react';
 import {useTag, useComment, useUser, useFavourite} from '../hooks/ApiHooks';
 import useCommentForm from '../hooks/CommentHook';
@@ -34,6 +32,7 @@ import {ChatBubble} from '@mui/icons-material';
 import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import HeartButton from '../components/HeartButton';
+import BackButtonHome from '../components/BackButtonHome';
 
 const Single = () => {
   const {user, setUser} = useContext(MediaContext);
@@ -46,6 +45,7 @@ const Single = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const file = location.state.file;
+  console.log(location.state);
 
   const {description, filters} = safeParseJson(file.description) || {
     description: file.description,
@@ -119,20 +119,17 @@ const Single = () => {
   };
 
   const doDeletefavourite = async () => {
-    const ok = confirm('Do you want to delete favorite?');
-    if (ok) {
-      try {
-        const deleteFav = await deleteFavourite(
-          file.file_id,
-          localStorage.getItem('token')
-        );
-        if (deleteFav) {
-          console.log(deleteFav);
-          setUserfav(0);
-        }
-      } catch (err) {
-        // console.log(err);
+    try {
+      const deleteFav = await deleteFavourite(
+        file.file_id,
+        localStorage.getItem('token')
+      );
+      if (deleteFav) {
+        console.log(deleteFav);
+        setUserfav(0);
       }
+    } catch (err) {
+      // console.log(err);
     }
   };
 
@@ -266,7 +263,7 @@ const Single = () => {
         }}
       >
         <Box sx={{position: 'absolute', top: -13, left: -10}}>
-          <BackButton />
+          <BackButtonHome />
         </Box>
 
         <Box
@@ -364,10 +361,10 @@ const Single = () => {
                     fontSize: '11px',
                     fontWeight: '400',
                     marginTop: '5px',
-                    paddingTop: '5px',
-                    paddingRight: '8px',
-                    paddingBottom: '5px',
-                    paddingLeft: '5px',
+                    paddingTop: '8px',
+                    paddingRight: '10px',
+                    paddingBottom: '8px',
+                    paddingLeft: '8px',
                   }}
                   startIcon={<EditIcon />}
                 >
@@ -454,21 +451,9 @@ const Single = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   paddingTop: 1,
-                  paddingBottom: 1,
+                  paddingBottom: 2,
                 }}
               >
-                <Typography
-                  sx={{margin: 'auto', paddingBottom: 1}}
-                  variant="subtitle"
-                >
-                  Rate vink
-                </Typography>
-                <Rating
-                  sx={{margin: 'auto', paddingBottom: 2}}
-                  name="no-value"
-                  value={null}
-                />
-                <Divider />
                 <TextField
                   multiline
                   margin="dense"
@@ -479,7 +464,6 @@ const Single = () => {
                   fullWidth
                   variant="outlined"
                   onChange={handleInputChangeComment}
-                  sx={{marginTop: 2}}
                 />
               </DialogContent>
               <DialogActions sx={{justifyContent: 'center', paddingBottom: 2}}>
@@ -488,6 +472,7 @@ const Single = () => {
                     fontFamily: ['Fredoka', 'cursive'].join(','),
                     fontWeight: '500',
                     fontSize: '16px',
+                    paddingTop: 1,
                   }}
                   width="50%"
                   color="primary"

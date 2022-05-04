@@ -47,7 +47,7 @@ const useMedia = (showAllFiles, user, favorites, token, categories, tag) => {
           return await fetchJson(`${baseUrl}media/${file.file_id}`);
         })
       );
-
+      allFiles.reverse();
       setMediaArray(allFiles);
     } catch (err) {
       // console.error(err.message);
