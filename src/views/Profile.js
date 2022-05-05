@@ -47,9 +47,11 @@ const Profile = () => {
           paddingTop: 2.5,
         }}
       >
-        <Typography variant="fontH1" color="primary">
-          Vink it!
-        </Typography>
+        <Link to="/" style={{textDecoration: 'none'}}>
+          <Typography variant="fontH1" color="primary">
+            Vink it!
+          </Typography>
+        </Link>
         <Button
           component={Link}
           to={user ? '/logout' : '/'}

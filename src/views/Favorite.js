@@ -3,6 +3,7 @@ import MediaTable from '../components/MediaTable';
 import {Typography, Box} from '@mui/material';
 import Nav from '../components/Nav';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import {Link} from 'react-router-dom';
 // import {useLocation} from 'react-router-dom';
 
 const MyFavorites = () => {
@@ -18,9 +19,11 @@ const MyFavorites = () => {
           paddingTop: 2.5,
         }}
       >
-        <Typography variant="fontH1" color="primary">
-          Vink it!
-        </Typography>
+        <Link to="/" style={{textDecoration: 'none'}}>
+          <Typography variant="fontH1" color="primary">
+            Vink it!
+          </Typography>
+        </Link>
         <Box
           sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
         >
