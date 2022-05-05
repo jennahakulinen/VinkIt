@@ -156,7 +156,7 @@ const Profile = () => {
               </Box>
             </Box>
           </Box>
-          <MediaTable allFiles={false} />
+          <MediaTable allFiles={false} referrer="/profile" />
         </>
       )}
     </>
