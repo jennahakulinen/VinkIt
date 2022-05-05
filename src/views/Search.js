@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 import BackButton from '../components/BackButton';
 import {TextField, IconButton} from '@mui/material';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import MediaTable from '../components/MediaTable';
 import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined';
 // import {useNavigate} from 'react-router-dom';
@@ -63,7 +62,10 @@ const Search = () => {
           alignItems: 'center',
         }}
       >
-        <form style={{width: '70%', paddingTop: 5}} onSubmit={handleSubmit}>
+        <form
+          style={{width: '70%', paddingTop: 5, paddingBottom: '2rem'}}
+          onSubmit={handleSubmit}
+        >
           <TextField
             name="title"
             onChange={handleInputChange}
@@ -84,34 +86,31 @@ const Search = () => {
             }}
           />
         </form>
-
-        <Box
-          sx={{
-            width: '90%',
-            display: 'flex',
-            justifyContent: 'space-around',
-            alignItems: 'center',
-            paddingBottom: 3,
-          }}
-        >
-          <Button
-            sx={{backgroundColor: 'transparent', color: '#48A0B3'}}
-            onClick={showCategories}
-            startIcon={<ClassOutlinedIcon />}
-          >
-            Show categories
-          </Button>
-          <Button
-            sx={{backgroundColor: 'transparent', color: '#48A0B3'}}
-            startIcon={<FilterListIcon />}
-          >
-            Filters
-          </Button>
-        </Box>
       </Box>
 
       {searchterm ? (
         <>
+          <Box
+            sx={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+              paddingBottom: 3,
+            }}
+          >
+            <Button
+              sx={{
+                backgroundColor: 'transparent',
+                color: '#48A0B3',
+                marginTop: '-2rem',
+              }}
+              onClick={showCategories}
+              startIcon={<ClassOutlinedIcon />}
+            >
+              Show all categories
+            </Button>
+          </Box>
           <Typography
             variant="fontH5"
             color="bodyTextColor"
@@ -149,20 +148,6 @@ const Search = () => {
                 >
                   {item}
                 </Typography>
-                <Button
-                  className="categoryBut"
-                  sx={{
-                    marginRight: 4,
-                    paddingRight: 1,
-                    paddingLeft: 1,
-                    fontFamily: ['Fredoka', 'sans-serif'].join(','),
-                    fontSize: '12px',
-                    fontWeight: '500',
-                  }}
-                  size="small"
-                >
-                  See all from {item}
-                </Button>
               </Box>
               <Divider
                 sx={{

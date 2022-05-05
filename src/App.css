@@ -44,6 +44,10 @@ body {
   background-color: rgb(155, 155, 155) !important;
 }
 
+.categoryNames:first-child {
+  padding-top: 50px;
+}
+
 .categoryBut:hover {
   background-color: #3c8899 !important;
 }
