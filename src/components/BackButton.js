@@ -2,8 +2,10 @@ import React from 'react';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import {IconButton} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const BackButton = () => {
+const BackButton = ({target}) => {
+  console.log(target);
   const navigate = useNavigate();
   return (
     <IconButton
@@ -20,7 +22,7 @@ const BackButton = () => {
           'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
       }}
       onClick={() => {
-        navigate(-1);
+        navigate(target || -1);
       }}
     >
       <ArrowBackIosNewRoundedIcon
@@ -33,5 +35,7 @@ const BackButton = () => {
     </IconButton>
   );
 };
+
+BackButton.propTypes = {target: PropTypes.string};
 
 export default BackButton;

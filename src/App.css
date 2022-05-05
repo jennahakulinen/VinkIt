@@ -36,6 +36,14 @@ body {
   background-color: #3c8899 !important;
 }
 
+.cancelButton {
+  background-color: rgb(180, 180, 180) !important;
+}
+
+.cancelButton:hover {
+  background-color: rgb(155, 155, 155) !important;
+}
+
 .categoryBut:hover {
   background-color: #3c8899 !important;
 }

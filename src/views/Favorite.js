@@ -34,7 +34,7 @@ const MyFavorites = () => {
           </Typography>
         </Box>
       </Box>
-      <MediaTable favorites={true} />
+      <MediaTable favorites={true} referrer="/myfavorites" />
     </>
   );
 };

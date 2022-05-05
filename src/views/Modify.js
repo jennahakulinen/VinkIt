@@ -19,6 +19,7 @@ import BackButton from '../components/BackButton';
 const Modify = () => {
   const location = useLocation();
   const file = location.state.file;
+  const referrer = location.state.referrer;
 
   const {description, filters} = safeParseJson(file.description) || {
     description: file.description,
@@ -68,7 +69,8 @@ const Modify = () => {
       const mediaData = await putMedia(file.file_id, data, token);
       file.title = inputs.title;
       file.description = JSON.stringify(desc);
-      confirm(mediaData.message) && navigate('/single', {state: {file}});
+      console.log(mediaData);
+      navigate('/single', {state: {file, referrer}});
     } catch (err) {
       alert(err.message);
     }

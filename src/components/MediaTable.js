@@ -13,6 +13,7 @@ const MediaTable = ({
   searchterm,
   categories = false,
   tag,
+  referrer,
 }) => {
   const {user} = useContext(MediaContext);
   let {mediaArray, loading, deleteMedia} = useMedia(
@@ -102,6 +103,7 @@ const MediaTable = ({
                   file={item}
                   userId={user?.user_id}
                   deleteMedia={deleteMedia}
+                  referrer={referrer}
                 />
               );
             })}
@@ -118,6 +120,7 @@ MediaTable.propTypes = {
   searchterm: PropTypes.string,
   categories: PropTypes.bool,
   tag: PropTypes.string,
+  referrer: PropTypes.string,
 };
 
 export default MediaTable;

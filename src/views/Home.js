@@ -25,7 +25,7 @@ const Home = () => {
           <SearchRoundedIcon fontSize="large" />
         </IconButton>
       </Box>
-      <MediaTable />
+      <MediaTable referrer="/" />
     </>
   );
 };

@@ -28,7 +28,7 @@ const Search = () => {
       return (
         <React.Fragment key={index}>
           <Typography>{item}</Typography>
-          <MediaTable categories={true} tag={item} />
+          <MediaTable categories={true} tag={item} referrer="/search" />
         </React.Fragment>
       );
     });
@@ -40,7 +40,7 @@ const Search = () => {
   );
   return (
     <>
-      <BackButton />
+      <BackButton target="/" />
       <Box
         sx={{
           margin: 'auto',
@@ -128,7 +128,7 @@ const Search = () => {
               marginBottom: 1,
             }}
           />
-          <MediaTable searchterm={searchterm} />
+          <MediaTable searchterm={searchterm} referrer="/search" />
         </>
       ) : (
         getCategoryName.map((item, index) => {
@@ -172,7 +172,7 @@ const Search = () => {
                   marginBottom: 1,
                 }}
               />
-              <MediaTable categories={true} tag={item} />
+              <MediaTable categories={true} tag={item} referrer="/search" />
             </React.Fragment>
           );
         })

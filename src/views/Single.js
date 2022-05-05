@@ -45,6 +45,7 @@ const Single = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const file = location.state.file;
+  const referrer = location.state.referrer;
   console.log(location.state);
 
   const {description, filters} = safeParseJson(file.description) || {
@@ -161,20 +162,17 @@ const Single = () => {
   };
 
   const doDelete = async (e, commentId) => {
-    const ok = confirm('Do you want to delete comment?');
-    if (ok) {
-      try {
-        const deleteInfo = await deleteComment(
-          commentId,
-          localStorage.getItem('token')
-        );
-        console.log(deleteInfo);
-        if (deleteInfo) {
-          fetchComments();
-        }
-      } catch (err) {
-        // console.log(err);
+    try {
+      const deleteInfo = await deleteComment(
+        commentId,
+        localStorage.getItem('token')
+      );
+      console.log(deleteInfo);
+      if (deleteInfo) {
+        fetchComments();
       }
+    } catch (err) {
+      // console.log(err);
     }
   };
 
@@ -263,7 +261,7 @@ const Single = () => {
         }}
       >
         <Box sx={{position: 'absolute', top: -13, left: -10}}>
-          <BackButton />
+          <BackButton target={referrer} />
         </Box>
 
         <Box
@@ -353,7 +351,7 @@ const Single = () => {
                 <Button
                   component={Link}
                   to={'/modify'}
-                  state={{file}}
+                  state={{file, referrer}}
                   className="editButton"
                   size="small"
                   sx={{

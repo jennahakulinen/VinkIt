@@ -65,7 +65,8 @@ const EditProfile = () => {
 
       const token = localStorage.getItem('token');
       const userData = await putUser(data, token);
-      confirm(userData.message) && navigate(-1);
+      console.log(userData);
+      navigate(-1);
     } catch (err) {
       alert(err.message);
     }
@@ -105,7 +106,7 @@ const EditProfile = () => {
           marginTop={10}
           sx={{justifyContent: 'center', alignItems: 'center'}}
         >
-          <BackButton />
+          <BackButton target="/profile" />
           <Grid item xs={12}>
             <Typography
               component="h1"
