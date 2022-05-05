@@ -18,9 +18,11 @@ const Home = () => {
           padding: 2,
         }}
       >
-        <Typography variant="fontH1" color="primary">
-          Vink it!
-        </Typography>
+        <Link to="/" style={{textDecoration: 'none'}}>
+          <Typography variant="fontH1" color="primary">
+            Vink it!
+          </Typography>
+        </Link>
         <IconButton color="bodyTextColor" component={Link} to={'/search'}>
           <SearchRoundedIcon fontSize="large" />
         </IconButton>
