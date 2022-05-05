@@ -37,17 +37,17 @@ const MediaTable = ({
 
   const getPageIndex = (route) => {
     switch (route) {
-      case '/':
+      case '/~jennash/MPJKK/Project/':
         return 0;
-      case '/login':
+      case '/~jennash/MPJKK/Project/login':
         return 1;
-      case '/upload':
+      case '/~jennash/MPJKK/Project/upload':
         return 1;
-      case '/myfavorites':
+      case '/~jennash/MPJKK/Project/myfavorites':
         return 2;
-      case '/profile':
+      case '/~jennash/MPJKK/Project/profile':
         return 3;
-      case '/search':
+      case '/~jennash/MPJKK/Project/search':
         return 4;
       default:
         return 0;
