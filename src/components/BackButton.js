@@ -1,20 +1,41 @@
 import React from 'react';
-import {ArrowBack} from '@mui/icons-material';
-import {Button} from '@mui/material';
+import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
+import {IconButton} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const BackButton = () => {
+const BackButton = ({target}) => {
+  console.log(target);
   const navigate = useNavigate();
   return (
-    <Button
-      startIcon={<ArrowBack />}
+    <IconButton
+      className="backButton"
+      sx={{
+        width: 36,
+        height: 36,
+        position: 'absolute',
+        top: '1.5rem',
+        left: '1.5rem',
+        zIndex: 100,
+        backgroundColor: '#48A0B3',
+        boxShadow:
+          'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
+      }}
       onClick={() => {
-        navigate(-1);
+        navigate(target || -1);
       }}
     >
-      Back
-    </Button>
+      <ArrowBackIosNewRoundedIcon
+        color="backgroundColor"
+        sx={{
+          fontSize: 26,
+          paddingRight: 0.5,
+        }}
+      />
+    </IconButton>
   );
 };
+
+BackButton.propTypes = {target: PropTypes.string};
 
 export default BackButton;

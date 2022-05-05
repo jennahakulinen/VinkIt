@@ -5,17 +5,24 @@ import {
   Grid,
   Slider,
   Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Card,
 } from '@mui/material';
 import {useMedia, useTag} from '../hooks/ApiHooks';
 import {useNavigate} from 'react-router-dom';
 import useForm from '../hooks/FormHooks';
 import {useState, useEffect} from 'react';
-import {appID} from '../utils/variables';
+import {appID, getCategoryName} from '../utils/variables';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import BackButton from '../components/BackButton';
+import Nav from '../components/Nav';
+import {Box} from '@mui/system';
 
 const Upload = () => {
   const [preview, setPreview] = useState('logo192.png');
+  const [category, setCategory] = useState('');
   const alkuarvot = {
     title: '',
     description: '',
@@ -35,13 +42,20 @@ const Upload = () => {
   };
 
   const errorMessages = {
-    username: ['required field', 'minimum 3 characters'],
-    description: ['minimum 5 characters'],
+    title: [
+      'This is a required field',
+      'Title must be three or more characters',
+    ],
+    description: ['Description should be five or more characters'],
   };
 
   const {postMedia, loading} = useMedia();
   const {postTag} = useTag();
   const navigate = useNavigate();
+
+  const handleChange = (event) => {
+    setCategory(event.target.value);
+  };
 
   const doUpload = async () => {
     try {
@@ -60,11 +74,21 @@ const Upload = () => {
       const tagData = await postTag(
         {
           file_id: mediaData.file_id,
+          // jos haku tägeillä, tägin pitää olla uniikki: *inputs* + appID
           tag: appID,
         },
         token
       );
-      confirm(tagData.message) && navigate('/home');
+      const categoryTag = await postTag(
+        {
+          file_id: mediaData.file_id,
+          tag: category,
+        },
+        token
+      );
+
+      console.log(tagData.message, categoryTag.message, category);
+      navigate('/profile');
     } catch (err) {
       alert(err.message);
     }
@@ -94,128 +118,189 @@ const Upload = () => {
 
   return (
     <>
-      <Grid container>
+      <Nav />
+      <Grid
+        container
+        marginTop={6}
+        sx={{justifyContent: 'center', alignItems: 'center'}}
+      >
         <Grid item xs={12}>
-          <BackButton />
-          <Typography component="h1" variant="h2" gutterBottom>
-            Upload
+          <Typography
+            component="h1"
+            variant="logoFont"
+            color="primary"
+            padding={2}
+            textAlign="center"
+          >
+            Add Vink
           </Typography>
-        </Grid>
-
-        <Grid item xs={12}>
-          <ValidatorForm onSubmit={handleSubmit}>
-            <TextValidator
-              fullWidth
-              placeholder="title"
-              name="title"
-              onChange={handleInputChange}
-              value={inputs.title}
-              validators={validators.title}
-              errorMessages={errorMessages.title}
-            />
-            <TextValidator
-              fullWidth
-              placeholder="description"
-              name="description"
-              onChange={handleInputChange}
-              value={inputs.description}
-              validators={validators.description}
-              errorMessages={errorMessages.description}
-            />
-
-            <TextValidator
-              fullWidth
-              type="file"
-              name="file"
-              accept="image/*, video/*, audio/*"
-              onChange={handleInputChange}
-            />
-
-            {loading ? (
-              <CircularProgress />
-            ) : (
-              <Button
-                fullWidth
-                color="primary"
-                type="submit"
-                variant="contained"
-                disabled={!inputs.file}
-              >
-                Upload
-              </Button>
-            )}
-          </ValidatorForm>
-        </Grid>
-      </Grid>
-      {inputs.file && (
-        <Grid container>
-          <Grid item xs={12}>
-            <img
-              style={{
-                width: '100%',
-                filter: `
+          {inputs.file && (
+            <Grid container>
+              <Grid item xs={9} sx={{margin: 'auto'}}>
+                <img
+                  style={{
+                    width: '100%',
+                    borderRadius: 20,
+                    border: '2px solid #76CFDB',
+                    filter: `
               brightness(${filterInputs.brightness}%)
               contrast(${filterInputs.contrast}%)
               saturate(${filterInputs.saturation}%)
               sepia(${filterInputs.sepia}%)
               `,
-              }}
-              src={preview}
-              alt="preview"
-            />
-          </Grid>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography>Brightness</Typography>
-              <Slider
-                name="brightness"
-                min={0}
-                max={200}
-                step={1}
-                valueLabelDisplay="on"
-                onChange={handleSliderChange}
-                value={filterInputs.brightness}
-              />
+                  }}
+                  src={preview}
+                  alt="preview"
+                />
+              </Grid>
+              <Grid container>
+                <Grid item xs={8} padding={2} margin={'auto'}>
+                  <Typography>Brightness</Typography>
+                  <Slider
+                    name="brightness"
+                    min={0}
+                    max={200}
+                    step={1}
+                    valueLabelDisplay="on"
+                    onChange={handleSliderChange}
+                    value={filterInputs.brightness}
+                  />
+                </Grid>
+                <Grid item xs={8} padding={2} margin={'auto'}>
+                  <Typography>Contrast</Typography>
+                  <Slider
+                    name="contrast"
+                    min={0}
+                    max={200}
+                    step={1}
+                    valueLabelDisplay="on"
+                    onChange={handleSliderChange}
+                    value={filterInputs.contrast}
+                  />
+                </Grid>
+                <Grid item xs={8} padding={2} margin={'auto'}>
+                  <Typography>Saturation</Typography>
+                  <Slider
+                    name="saturation"
+                    min={0}
+                    max={200}
+                    step={1}
+                    valueLabelDisplay="on"
+                    onChange={handleSliderChange}
+                    value={filterInputs.saturation}
+                  />
+                </Grid>
+                <Grid item xs={8} padding={2} margin={'auto'}>
+                  <Typography>Sepia</Typography>
+                  <Slider
+                    name="sepia"
+                    min={0}
+                    max={100}
+                    step={1}
+                    valueLabelDisplay="on"
+                    onChange={handleSliderChange}
+                    value={filterInputs.sepia}
+                  />
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Typography>Contrast</Typography>
-              <Slider
-                name="contrast"
-                min={0}
-                max={200}
-                step={1}
-                valueLabelDisplay="on"
-                onChange={handleSliderChange}
-                value={filterInputs.contrast}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography>Saturation</Typography>
-              <Slider
-                name="saturation"
-                min={0}
-                max={200}
-                step={1}
-                valueLabelDisplay="on"
-                onChange={handleSliderChange}
-                value={filterInputs.saturation}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography>Sepia</Typography>
-              <Slider
-                name="sepia"
-                min={0}
-                max={100}
-                step={1}
-                valueLabelDisplay="on"
-                onChange={handleSliderChange}
-                value={filterInputs.sepia}
-              />
-            </Grid>
-          </Grid>
+          )}
         </Grid>
-      )}
+        <Card sx={{marginBottom: '100px'}}>
+          <ValidatorForm onSubmit={handleSubmit}>
+            <Box className="formBox">
+              <TextValidator
+                fullWidth
+                label="Title"
+                placeholder="Enter title"
+                name="title"
+                onChange={handleInputChange}
+                value={inputs.title}
+                validators={validators.title}
+                errorMessages={errorMessages.title}
+              />
+            </Box>
+            <Box className="formBox">
+              <TextValidator
+                fullWidth
+                label="Description"
+                placeholder="Enter description"
+                name="description"
+                multiline
+                onChange={handleInputChange}
+                value={inputs.description}
+                validators={validators.description}
+                errorMessages={errorMessages.description}
+              />
+            </Box>
+            <Box className="formBox">
+              <TextValidator
+                fullWidth
+                label="Picture"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                type="file"
+                name="file"
+                accept="image/*, video/*, audio/*"
+                onChange={handleInputChange}
+              />
+            </Box>
+            <Box className="formBox">
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Categories
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={category}
+                  label="Category"
+                  onChange={handleChange}
+                >
+                  {getCategoryName.map((index) => {
+                    return (
+                      <MenuItem key={index} value={index}>
+                        {index}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Box>
+
+            {/* <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              options={getTagList}
+              sx={{width: 300}}
+              renderInput={(params) => (
+                <TextField {...params} label="Category" />
+              )}
+            /> */}
+
+            {loading ? (
+              <CircularProgress />
+            ) : (
+              <Box className="loginBox">
+                <Button
+                  color="primary"
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  sx={{
+                    fontFamily: ['Fredoka One', 'cursive'].join(','),
+                    fontSize: '24px',
+                  }}
+                  disabled={!inputs.file}
+                >
+                  Upload
+                </Button>
+              </Box>
+            )}
+          </ValidatorForm>
+        </Card>
+      </Grid>
     </>
   );
 };

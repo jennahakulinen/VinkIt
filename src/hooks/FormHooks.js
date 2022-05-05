@@ -25,6 +25,7 @@ const useForm = (callback, initState) => {
   return {
     handleSubmit,
     handleInputChange,
+    setInputs,
     inputs,
   };
 };

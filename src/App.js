@@ -2,7 +2,7 @@ import React from 'react';
 import {Container} from '@mui/material';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.css';
-import Nav from './components/Nav';
+// import Nav from './components/Nav';
 import {MediaProvider} from './contexts/MediaContext';
 import Home from './views/Home';
 import Login from './views/Login';
@@ -14,6 +14,10 @@ import {ThemeProvider, createTheme} from '@mui/material/styles';
 import Upload from './views/Upload';
 import MyFiles from './views/MyFiles';
 import Modify from './views/Modify';
+import MyFavorites from './views/Favorite';
+import Search from './views/Search';
+import EditProfile from './views/EditProfile';
+import UserInfo from './components/User';
 
 const theme = createTheme(themeOptions);
 
@@ -22,18 +26,21 @@ const App = () => {
     // eslint-disable-next-line no-undef
     <Router basename={process.env.PUBLIC_URL}>
       <MediaProvider>
+        <UserInfo />
         <ThemeProvider theme={theme}>
-          <Container maxWidth="lg">
-            <Nav />
+          <Container maxWidth="md" disableGutters={true}>
             <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="/home" element={<Home />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/single" element={<Single />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/upload" element={<Upload />} />
               <Route path="/myfiles" element={<MyFiles />} />
               <Route path="/modify" element={<Modify />} />
+              <Route path="/myfavorites" element={<MyFavorites />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/editprofile" element={<EditProfile />} />
             </Routes>
           </Container>
         </ThemeProvider>

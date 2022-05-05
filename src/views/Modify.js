@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Button,
+  Card,
   CircularProgress,
   Grid,
   Slider,
@@ -12,11 +13,13 @@ import useForm from '../hooks/FormHooks';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {safeParseJson} from '../utils/functions';
 import {mediaUrl} from '../utils/variables';
+import {Box} from '@mui/system';
 import BackButton from '../components/BackButton';
 
 const Modify = () => {
   const location = useLocation();
   const file = location.state.file;
+  const referrer = location.state.referrer;
 
   const {description, filters} = safeParseJson(file.description) || {
     description: file.description,
@@ -64,7 +67,10 @@ const Modify = () => {
 
       const token = localStorage.getItem('token');
       const mediaData = await putMedia(file.file_id, data, token);
-      confirm(mediaData.message) && navigate(-1);
+      file.title = inputs.title;
+      file.description = JSON.stringify(desc);
+      console.log(mediaData);
+      navigate('/single', {state: {file, referrer}});
     } catch (err) {
       alert(err.message);
     }
@@ -84,119 +90,142 @@ const Modify = () => {
 
   return (
     <>
-      <Grid container>
+      <Grid
+        container
+        paddingTop={2.5}
+        sx={{justifyContent: 'center', alignItems: 'center'}}
+      >
+        <BackButton />
         <Grid item xs={12}>
-          <BackButton />
-          <Typography component="h1" variant="h2" gutterBottom>
-            Modify
+          <Typography
+            component="h1"
+            variant="logoFont"
+            color="primary"
+            textAlign="center"
+            marginBottom={3}
+          >
+            Edit Vink
           </Typography>
-        </Grid>
-
-        <Grid item xs={12}>
-          <ValidatorForm onSubmit={handleSubmit}>
-            <TextValidator
-              fullWidth
-              placeholder="title"
-              name="title"
-              onChange={handleInputChange}
-              value={inputs.title}
-              validators={validators.title}
-              errorMessages={errorMessages.title}
-            />
-            <TextValidator
-              fullWidth
-              placeholder="description"
-              name="description"
-              onChange={handleInputChange}
-              value={inputs.description}
-              validators={validators.description}
-              errorMessages={errorMessages.description}
-            />
-
-            {loading ? (
-              <CircularProgress />
-            ) : (
-              <Button
-                fullWidth
-                color="primary"
-                type="submit"
-                variant="contained"
-              >
-                Save
-              </Button>
-            )}
-          </ValidatorForm>
-        </Grid>
-      </Grid>
-      {file && (
-        <Grid container>
-          <Grid item xs={12}>
-            <img
-              style={{
-                width: '100%',
-                filter: `
+          {file && (
+            <Grid container>
+              <Grid item xs={10} sx={{margin: 'auto'}}>
+                <img
+                  style={{
+                    width: '100%',
+                    borderRadius: 20,
+                    border: '2px solid #76CFDB',
+                    filter: `
               brightness(${filterInputs.brightness}%)
               contrast(${filterInputs.contrast}%)
               saturate(${filterInputs.saturation}%)
               sepia(${filterInputs.sepia}%)
               `,
-              }}
-              src={mediaUrl + file.filename}
-              alt="preview"
-            />
-          </Grid>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography>Brightness</Typography>
-              <Slider
-                name="brightness"
-                min={0}
-                max={200}
-                step={1}
-                valueLabelDisplay="on"
-                onChange={handleSliderChange}
-                value={filterInputs.brightness}
-              />
+                  }}
+                  src={mediaUrl + file.filename}
+                  alt="preview"
+                />
+              </Grid>
+              <Grid container>
+                <Grid item xs={9} padding={2} margin={'auto'}>
+                  <Typography>Brightness</Typography>
+                  <Slider
+                    name="brightness"
+                    min={0}
+                    max={200}
+                    step={1}
+                    valueLabelDisplay="on"
+                    onChange={handleSliderChange}
+                    value={filterInputs.brightness}
+                  />
+                </Grid>
+                <Grid item xs={9} padding={2} margin={'auto'}>
+                  <Typography>Contrast</Typography>
+                  <Slider
+                    name="contrast"
+                    min={0}
+                    max={200}
+                    step={1}
+                    valueLabelDisplay="on"
+                    onChange={handleSliderChange}
+                    value={filterInputs.contrast}
+                  />
+                </Grid>
+                <Grid item xs={9} padding={2} margin={'auto'}>
+                  <Typography>Saturation</Typography>
+                  <Slider
+                    name="saturation"
+                    min={0}
+                    max={200}
+                    step={1}
+                    valueLabelDisplay="on"
+                    onChange={handleSliderChange}
+                    value={filterInputs.saturation}
+                  />
+                </Grid>
+                <Grid item xs={9} padding={2} margin={'auto'}>
+                  <Typography>Sepia</Typography>
+                  <Slider
+                    name="sepia"
+                    min={0}
+                    max={100}
+                    step={1}
+                    valueLabelDisplay="on"
+                    onChange={handleSliderChange}
+                    value={filterInputs.sepia}
+                  />
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Typography>Contrast</Typography>
-              <Slider
-                name="contrast"
-                min={0}
-                max={200}
-                step={1}
-                valueLabelDisplay="on"
-                onChange={handleSliderChange}
-                value={filterInputs.contrast}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography>Saturation</Typography>
-              <Slider
-                name="saturation"
-                min={0}
-                max={200}
-                step={1}
-                valueLabelDisplay="on"
-                onChange={handleSliderChange}
-                value={filterInputs.saturation}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography>Sepia</Typography>
-              <Slider
-                name="sepia"
-                min={0}
-                max={100}
-                step={1}
-                valueLabelDisplay="on"
-                onChange={handleSliderChange}
-                value={filterInputs.sepia}
-              />
-            </Grid>
-          </Grid>
+          )}
         </Grid>
-      )}
+        <Card sx={{marginBottom: '20px', width: '90%'}}>
+          <ValidatorForm onSubmit={handleSubmit}>
+            <Box className="formBox">
+              <TextValidator
+                fullWidth
+                label="Title"
+                placeholder="Edit title"
+                name="title"
+                onChange={handleInputChange}
+                value={inputs.title}
+                validators={validators.title}
+                errorMessages={errorMessages.title}
+              />
+            </Box>
+            <Box className="formBox">
+              <TextValidator
+                fullWidth
+                label="Description"
+                placeholder="Edit description"
+                name="description"
+                onChange={handleInputChange}
+                value={inputs.description}
+                validators={validators.description}
+                errorMessages={errorMessages.description}
+              />
+            </Box>
+
+            {loading ? (
+              <CircularProgress />
+            ) : (
+              <Box className="loginBox">
+                <Button
+                  color="primary"
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  sx={{
+                    fontFamily: ['Fredoka One', 'cursive'].join(','),
+                    fontSize: '24px',
+                  }}
+                >
+                  Save changes
+                </Button>
+              </Box>
+            )}
+          </ValidatorForm>
+        </Card>
+      </Grid>
     </>
   );
 };

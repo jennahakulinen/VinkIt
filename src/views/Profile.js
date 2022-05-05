@@ -5,23 +5,21 @@ import {useTag} from '../hooks/ApiHooks';
 import {mediaUrl} from '../utils/variables';
 import {
   Avatar,
-  Card,
-  CardContent,
-  List,
   ListItem,
-  ListItemAvatar,
-  ListItemIcon,
   ListItemText,
+  Button,
   Typography,
+  Box,
+  List,
 } from '@mui/material';
-import {AccountCircle, Badge, ContactMail} from '@mui/icons-material';
-import BackButton from '../components/BackButton';
+
+import MediaTable from '../components/MediaTable';
+import {Link} from 'react-router-dom';
+import Nav from '../components/Nav';
 
 const Profile = () => {
   const {user} = useContext(MediaContext);
-  const [avatar, setAvatar] = useState({
-    filename: 'https://placekitten.com/320',
-  });
+  const [avatar, setAvatar] = useState({});
   const {getTag} = useTag();
 
   const fetchAvatar = async () => {
@@ -39,47 +37,125 @@ const Profile = () => {
 
   return (
     <>
-      <BackButton />
-      <Typography component="h1" variant="h2">
-        Profile
-      </Typography>
+      <Nav />
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: 2,
+          paddingTop: 2.5,
+        }}
+      >
+        <Typography variant="fontH1" color="primary">
+          Vink it!
+        </Typography>
+        <Button
+          component={Link}
+          to={user ? '/logout' : '/'}
+          sx={{
+            background: 'none',
+            color: '#05192c',
+            fontSize: '16px',
+            fontWeight: '900',
+          }}
+        >
+          {user && 'Log out'}
+        </Button>
+      </Box>
       {user && (
-        <Card>
-          <CardContent>
-            <List>
-              <ListItem>
-                <ListItemAvatar sx={{width: '100%'}}>
-                  <Avatar
-                    variant="square"
-                    src={avatar.filename}
-                    imgProps={{
-                      alt: `${user.username}'s profile image`,
+        <>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              bgcolor: '#76CFDB',
+              marginBottom: 2,
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                margin: '1rem',
+              }}
+            >
+              <Box sx={{px: '0.9rem', py: '0.9rem'}}>
+                <Avatar
+                  src={avatar.filename}
+                  imgProps={{
+                    alt: `${user.username}'s profile image`,
+                  }}
+                  sx={{width: 150, height: 150, border: '2px solid #f7f7f7'}}
+                />
+              </Box>
+              <Box
+                sx={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <List>
+                  <ListItem className="profileItem">
+                    <ListItemText
+                      className="profileItemText"
+                      sx={{padding: 0}}
+                      primary={user.username}
+                      primaryTypographyProps={{
+                        fontFamily: ['Fredoka One', 'cursive'].join(','),
+                        fontSize: '32px',
+                        color: '#F7F7F7',
+                        textAlign: 'center',
+                      }}
+                    />
+                  </ListItem>
+                  <ListItem className="profileItem">
+                    <ListItemText
+                      className="profileItemText"
+                      primary={user.full_name}
+                      primaryTypographyProps={{
+                        fontFamily: ['Lato', 'sans-serif'].join(','),
+                        fontSize: '16px',
+                        fontWeight: '700',
+                        textAlign: 'center',
+                      }}
+                    />
+                  </ListItem>
+                  <ListItem className="profileItem">
+                    <ListItemText
+                      className="profileItemText"
+                      primary={user.email}
+                      primaryTypographyProps={{
+                        fontFamily: ['Lato', 'sans-serif'].join(','),
+                        fontSize: '12px',
+                        fontWeight: '400',
+                        textAlign: 'center',
+                      }}
+                    />
+                  </ListItem>
+                </List>
+                <Box sx={{textAlign: 'center', marginTop: '5px'}}>
+                  <Button
+                    component={Link}
+                    to={'/editprofile'}
+                    color="primary"
+                    type="submit"
+                    variant="contained"
+                    size="small"
+                    sx={{
+                      fontFamily: ['Fredoka One', 'cursive'].join(','),
+                      fontSize: '16px',
                     }}
-                    sx={{width: '100%', height: '30vh'}}
-                  />
-                </ListItemAvatar>
-              </ListItem>
-              <ListItem>
-                <ListItemIcon>
-                  <AccountCircle />
-                </ListItemIcon>
-                <ListItemText primary={user.username} />
-              </ListItem>
-              <ListItem>
-                <ListItemIcon>
-                  <ContactMail />
-                </ListItemIcon>
-                <ListItemText primary={user.email} />
-              </ListItem>
-              <ListItem>
-                <ListItemIcon>
-                  <Badge />
-                </ListItemIcon>
-                <ListItemText primary={user.full_name} />
-              </ListItem>
-            </List>
-          </CardContent>
-        </Card>
+                  >
+                    Edit profile
+                  </Button>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          <MediaTable allFiles={false} />
+        </>
       )}
     </>
   );

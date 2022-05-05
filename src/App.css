@@ -7,3 +7,159 @@ td {
   padding: 1rem;
   border-bottom: 1px solid grey;
 } */
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Lato:wght@300;400;700;900&display=swap');
+
+* {
+  font-family: 'Lato', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #fafafa;
+}
+
+/* .backButton{
+  width: 36px;
+  height: 36px;
+  position: 'absolute';
+  top: 5;
+  left: 7;
+  z-index: 100;
+  background-color: '#48A0B3';
+  box-shadow:
+  'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px';
+} */
+
+.backButton:hover {
+  background-color: #3c8899 !important;
+}
+
+.cancelButton {
+  background-color: rgb(180, 180, 180) !important;
+}
+
+.cancelButton:hover {
+  background-color: rgb(155, 155, 155) !important;
+}
+
+.categoryNames:first-child {
+  padding-top: 50px;
+}
+
+.categoryBut:hover {
+  background-color: #3c8899 !important;
+}
+
+.commentTitle {
+  flex-direction: row;
+}
+
+.commentList {
+  transform: rotate(180deg);
+}
+
+.commentList li {
+  transform: rotate(-180deg);
+}
+
+.MuiContainer-root {
+  padding-bottom: 10%;
+  background-color: #fafafa;
+}
+
+.loginBox {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin: 1.5rem 0 1.5rem 0;
+  padding: 0 1rem 0 1rem;
+}
+
+.formBox {
+  align-items: flex-end;
+  justify-content: center;
+  margin: 1.5rem 0 1.5rem 0;
+  padding: 0 1rem 0 1rem;
+}
+
+.Mui-selected,
+.Mui-selected > svg {
+  color: #05192c;
+}
+
+.MuiImageListItemBar-subtitle,
+.MuiImageListItemBar-title {
+  color: #05192c;
+}
+
+.heartButton > .MuiButton-startIcon {
+  margin: 0;
+}
+
+.heartButton {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  min-width: 30px !important;
+}
+
+.editButton > .MuiButton-startIcon {
+  margin: 0;
+  padding-right: 2px;
+}
+
+.editButton:hover {
+  background-color: #337a8a !important;
+}
+
+.heartButton > .MuiButton-startIcon:hover {
+  color: #ff5b5b;
+  box-shadow: none;
+}
+
+.MuiImageListItemBar-root,
+.MuiImageListItemBar-positionBottom {
+  height: 50px;
+}
+
+.MuiImageListItemBar-titleWrap {
+  padding-top: 5px !important;
+}
+
+.singleLike > .MuiButton-startIcon > .MuiSvgIcon-fontSizeMedium {
+  font-size: 30px !important;
+  margin-left: 12px;
+}
+
+.MuiImageListItemBar-actionIconActionPosRight {
+  display: flex;
+  margin-left: 15px;
+}
+
+.icon {
+  margin: 1px 8px 1px 0;
+  color: #05192c;
+}
+
+.MuiImageList-standard {
+  margin-top: 5px;
+  margin-bottom: 30px !important;
+}
+/* .MuiListItemText-primary {
+  font-family: 'Fredoka One', cursive !important;
+  color: pink;
+  font-size: large;
+} */
+
+.profileItem {
+  padding: 0 !important;
+}
+.profileItemText {
+  margin: 0 !important;
+}
+
+.MuiImageList-masonry {
+  margin-top: 10px;
+}

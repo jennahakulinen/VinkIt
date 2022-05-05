@@ -1,4 +1,3 @@
-// TODO: add necessary imports
 import {useContext, useEffect, useState} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
 import {appID, baseUrl} from '../utils/variables';
@@ -18,18 +17,29 @@ const fetchJson = async (url, options = {}) => {
   }
 };
 
-const useMedia = (showAllFiles, userId) => {
+const useMedia = (showAllFiles, user, favorites, token, categories, tag) => {
   const {update} = useContext(MediaContext);
   const [mediaArray, setMediaArray] = useState([]);
   const [loading, setLoading] = useState(false);
   const getMedia = async () => {
     try {
       setLoading(true);
-      let media = await useTag().getTag(appID);
+      let media = await useTag().getTag(tag || appID);
+      if (favorites) {
+        const favorites = await useFavourite().getFavourite(token);
+        media = media.filter((file) => {
+          for (const favorite of favorites) {
+            if (favorite.file_id === file.file_id) {
+              return file;
+            }
+          }
+        });
+      }
+
       // jos !showAllFiles, filteröi kirjautuneen
       // käyttäjän tiedostot media taulukkoon
       if (!showAllFiles) {
-        media = media.filter((file) => file.user_id === userId);
+        media = media.filter((file) => file.user_id === user.user_id);
       }
 
       const allFiles = await Promise.all(
@@ -37,10 +47,10 @@ const useMedia = (showAllFiles, userId) => {
           return await fetchJson(`${baseUrl}media/${file.file_id}`);
         })
       );
-
+      allFiles.reverse();
       setMediaArray(allFiles);
     } catch (err) {
-      alert(err.message);
+      // console.error(err.message);
     } finally {
       setLoading(false);
     }
@@ -48,7 +58,7 @@ const useMedia = (showAllFiles, userId) => {
 
   useEffect(() => {
     getMedia();
-  }, [userId, update]);
+  }, [user, update]);
 
   const postMedia = async (formdata, token) => {
     try {
@@ -93,11 +103,21 @@ const useMedia = (showAllFiles, userId) => {
     }
   };
 
-  return {mediaArray, postMedia, deleteMedia, putMedia, loading};
+  return {
+    mediaArray,
+    postMedia,
+    deleteMedia,
+    putMedia,
+    loading,
+  };
 };
 
 const useUser = () => {
+  const [loading, setLoading] = useState(false);
   const getUser = async (token) => {
+    if (token === null) {
+      return null;
+    }
     const fetchOptions = {
       headers: {
         'x-access-token': token,
@@ -112,6 +132,9 @@ const useUser = () => {
   };
 
   const getUserById = async (userId, token) => {
+    if (token === null) {
+      return null;
+    }
     const fetchOptions = {
       headers: {
         'x-access-token': token,
@@ -130,8 +153,42 @@ const useUser = () => {
     };
     return await fetchJson(baseUrl + 'users', fetchOptions);
   };
+  const deleteUser = async (userId, token) => {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await fetchJson(baseUrl + 'users/' + userId, fetchOptions);
+  };
 
-  return {getUser, postUser, getUsername, getUserById};
+  const putUser = async (data, token) => {
+    try {
+      setLoading(true);
+      const fetchOptions = {
+        method: 'PUT',
+        headers: {
+          'x-access-token': token,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      };
+      return await fetchJson(baseUrl + 'users', fetchOptions);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    getUser,
+    postUser,
+    getUsername,
+    getUserById,
+    deleteUser,
+    putUser,
+    loading,
+  };
 };
 
 const useLogin = () => {
@@ -158,6 +215,16 @@ const useTag = () => {
     }
   };
 
+  const getFileTags = async (fileId) => {
+    const tagResult = await fetchJson(baseUrl + 'tags/file/' + fileId);
+    if (tagResult.length > 0) {
+      const filteredCategories = [tagResult[1]];
+      return filteredCategories;
+    } else {
+      throw new Error('No results');
+    }
+  };
+
   const postTag = async (data, token) => {
     const fetchOptions = {
       method: 'POST',
@@ -169,7 +236,122 @@ const useTag = () => {
     };
     return await fetchJson(baseUrl + 'tags', fetchOptions);
   };
-  return {getTag, postTag};
+  return {getTag, getFileTags, postTag};
 };
 
-export {useMedia, useLogin, useUser, useTag};
+const useComment = () => {
+  const getComment = async (fileId) => {
+    const commentResult = await fetchJson(baseUrl + 'comments/file/' + fileId);
+    if (commentResult.length > 0) {
+      return commentResult;
+    } else {
+      throw new Error('No results');
+    }
+  };
+
+  const postComment = async (data, token) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    return await fetchJson(baseUrl + 'comments', fetchOptions);
+  };
+
+  const deleteComment = async (commentId, token) => {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await fetchJson(baseUrl + 'comments/' + commentId, fetchOptions);
+  };
+
+  return {getComment, postComment, deleteComment};
+};
+
+const useFavourite = () => {
+  const getFavourite = async (token) => {
+    const fetchOptions = {
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    const favoriteResult = await fetchJson(
+      baseUrl + 'favourites/',
+      fetchOptions
+    );
+    if (favoriteResult.length > 0) {
+      return favoriteResult;
+    } else {
+      throw new Error('No results');
+    }
+  };
+  const getFavouriteById = async (token, fileId) => {
+    const fetchOptions = {
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    const favoriteResult = await fetchJson(
+      baseUrl + 'favourites/file/' + fileId,
+      fetchOptions
+    );
+    if (favoriteResult.length > 0) {
+      return favoriteResult;
+    } else {
+      throw new Error('No results');
+    }
+  };
+  const addFavorite = async (data, token) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    return await fetchJson(baseUrl + 'favourites/', fetchOptions);
+  };
+
+  const deleteFavourite = async (fileId, token) => {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await fetchJson(baseUrl + 'favourites/file/' + fileId, fetchOptions);
+  };
+  return {getFavourite, addFavorite, deleteFavourite, getFavouriteById};
+};
+
+const useSearch = () => {
+  const postResults = async (search, token) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(search),
+    };
+    return await fetchJson(baseUrl + 'media/search', fetchOptions);
+  };
+  return {postResults};
+};
+
+export {
+  useMedia,
+  useLogin,
+  useUser,
+  useTag,
+  useComment,
+  useFavourite,
+  useSearch,
+};
